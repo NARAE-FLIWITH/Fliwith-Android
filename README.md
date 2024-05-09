@@ -2,7 +2,7 @@
 사용자 맞춤형 무장애 여행 SNS로 몸이 불편하신 분들도 자유로운 여행을 할 수 있도록, 여행지 추천 및 관광지 검색, 리뷰 서비스를 제공하는 플랫폼입니다.
 
 ![Android](https://img.shields.io/badge/android-34A853?style=for-the-badge&logo=android&logoColor=white)
-![AndroidStudio](https://img.shields.io/badge/androidstudio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white)
+![AndroidStudio](https://img.shields.io/badge/androidstudio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=black)
 
 ## 브랜치 명명 규칙
 
