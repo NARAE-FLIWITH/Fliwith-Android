@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    tools:context=".src.auth.login.LoginHomeFragment">
+
+    <ImageView
+        android:id="@+id/img_hello_login_home"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/hello_login_home"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/tv_introduce"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/tv_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/introduce"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        android:layout_marginBottom="102dp"
+        app:layout_constraintBottom_toTopOf="@+id/img_logo"
+        app:layout_constraintEnd_toEndOf="@id/img_hello_login_home"
+        app:layout_constraintStart_toStartOf="@id/img_hello_login_home"
+        app:layout_constraintTop_toBottomOf="@+id/img_hello_login_home"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo_lavender"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login_kakaotalk"
+        app:layout_constraintEnd_toEndOf="@id/img_hello_login_home"
+        app:layout_constraintStart_toStartOf="@id/img_hello_login_home"
+        app:layout_constraintTop_toBottomOf="@+id/tv_introduce"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <LinearLayout
+        android:id="@+id/btn_login_kakaotalk"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/button_solid"
+        android:backgroundTint="@color/yellow"
+        android:gravity="center"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login_email"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="16dp">
+
+        <ImageView
+            android:id="@+id/img_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/kakaotalk_bubble" />
+
+        <TextView
+            android:id="@+id/tv_continue_kakaotalk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/continue_kakaotalk"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_login_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/button_solid_outlined"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_kakaotalk"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="-15dp">
+
+        <ImageView
+            android:id="@+id/img_mail"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/mail" />
+
+        <TextView
+            android:id="@+id/tv_continue_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/continue_email"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

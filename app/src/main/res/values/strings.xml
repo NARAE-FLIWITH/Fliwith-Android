@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fliwith</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="introduce">무장애 여행 서비스, Fliwith</string>
+    <string name="continue_kakaotalk">카카오톡으로 계속하기</string>
+    <string name="continue_email">이메일로 계속하기</string>
 </resources>

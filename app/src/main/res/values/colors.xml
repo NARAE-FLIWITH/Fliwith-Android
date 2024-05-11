@@ -6,6 +6,9 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="lightGrey">#FFF9F9F9</color>
+    <color name="brightGrey">#FFDFDFDF</color>
+    <color name="grey">#FF909090</color>
     <color name="lavender">#FFC1BAE5</color>
     <color name="violet">#FF8C7AE9</color>
     <color name="purple">#FF6048DE</color>

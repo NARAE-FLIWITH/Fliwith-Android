@@ -10,14 +10,18 @@
         android:theme="@style/Theme.Fliwith"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".src.auth.AuthActivity"
+            android:exported="false" />
+        <activityx
             android:name=".src.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activityx>
         <activity
             android:name=".src.main.MainActivity"
             android:screenOrientation="portrait"
