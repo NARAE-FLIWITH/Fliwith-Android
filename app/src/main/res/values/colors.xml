@@ -7,13 +7,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightGrey">#FFF9F9F9</color>
-    <color name="brightGrey">#FFDFDFDF</color>
+    <color name="brightGrey">#FFD6D6D6</color>
     <color name="grey">#FF909090</color>
     <color name="lavender">#FFC1BAE5</color>
     <color name="violet">#FF8C7AE9</color>
     <color name="purple">#FF6048DE</color>
     <color name="yellow">#FFFAE64B</color>
+    <color name="red">#FFFE5150</color>
 
-
-    <color name="disableButton">#FFbdbdbd</color>
+    <color name="btnEnabled">#FFC1BAE5</color>
+    <color name="btnDisabled">#FFbdbdbd</color>
 </resources>

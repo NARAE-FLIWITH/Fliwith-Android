@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="textInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/brightGrey</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="helperTextTextColor">@color/red</item>
+    </style>
+
+    <style name="textInputEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:background">@drawable/btn_solid_outlined</item>
+        <item name="android:drawableStart">@drawable/transparent_icon</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>
