@@ -98,7 +98,7 @@
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="@drawable/btn_solid"
+        android:background="@drawable/btn_selector"
         android:backgroundTint="@color/btnDisabled"
         android:text="@string/next"
         android:textColor="@color/white"
