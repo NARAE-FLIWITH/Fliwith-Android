@@ -38,18 +38,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_email"
         style="@style/textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_pw"
         app:layout_constraintTop_toBottomOf="@+id/tv_email"
-        tools:helperText="유효하지 않은 이메일입니다.">
+        tools:helperText="유효하지 않은 이메일입니다."
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             style="@style/textInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
             android:hint="@string/email" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,19 +67,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_pw"
         style="@style/textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-
         app:layout_constraintBottom_toTopOf="@+id/tv_constraint_pw"
         app:layout_constraintTop_toBottomOf="@+id/tv_pw"
-        tools:helperText="비밀번호는 최소 8자 이상이어야 합니다.">
+        tools:helperText="비밀번호는 최소 8자 이상이어야 합니다."
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_pw"
             style="@style/textInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
             android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
