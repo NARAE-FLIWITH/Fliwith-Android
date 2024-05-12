@@ -12,7 +12,7 @@
         <activity
             android:name=".src.auth.AuthActivity"
             android:exported="false" />
-        <activityx
+        <activity
             android:name=".src.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -21,7 +21,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activityx>
+        </activity>
         <activity
             android:name=".src.main.MainActivity"
             android:screenOrientation="portrait"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    tools:background="@color/white"
     tools:context=".src.auth.join.CreateAccountFragment">
 
     <ImageView
@@ -67,7 +68,6 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_pw"
         style="@style/textInputLayout"
-        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_constraint_pw"
         app:layout_constraintTop_toBottomOf="@+id/tv_pw"
         tools:helperText="비밀번호는 최소 8자 이상이어야 합니다."
@@ -84,7 +84,7 @@
         android:id="@+id/tv_constraint_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="45dp"
         android:paddingHorizontal="12dp"
         android:paddingVertical="4dp"
         android:text="@string/constraint_pw"
@@ -98,12 +98,10 @@
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="@drawable/btn_selector"
+        android:background="@drawable/selector_btn_round"
         android:backgroundTint="@color/btnDisabled"
         android:text="@string/next"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textAppearance="@style/btnText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_constraint_pw"
         tools:layout_editor_absoluteX="16dp" />
