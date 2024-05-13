@@ -12,7 +12,6 @@
         android:background="@drawable/image_radius"
         android:src="@drawable/tour_default_image"
         app:layout_constraintDimensionRatio="1:1"
-        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
