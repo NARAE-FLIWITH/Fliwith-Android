@@ -11,6 +11,7 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".src.auth.AuthActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".src.splash.SplashActivity"
