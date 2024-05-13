@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    tools:background="@color/white"
+    tools:context=".src.auth.join.NicknameFragment">
+
+    <ImageView
+        android:id="@+id/img_hello_go_trip"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="118dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/hello_go_trip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:fontFamily="@font/pretendard_semibold"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:text="@string/nickname"
+        android:textColor="@color/dark"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/img_hello_go_trip"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_nickname"
+        style="@style/textInputLayout"
+        android:layout_marginBottom="280dp"
+        app:helperText="@string/existNickname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nickname"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_nickname"
+            style="@style/textInputEditText"
+            android:layout_height="60dp"
+            android:hint="@string/nickname" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_solid"
+        android:backgroundTint="@color/lavender"
+        android:text="@string/next"
+        android:textAppearance="@style/btnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
