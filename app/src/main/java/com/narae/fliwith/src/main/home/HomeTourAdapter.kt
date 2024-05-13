@@ -15,6 +15,8 @@ class HomeTourAdapter (private val tourDataList: MutableList<Tour>) : RecyclerVi
         fun bindInfo(tour: Tour) {
             binding.apply {
                 tourImg.setImageResource(R.drawable.tour_default_image)
+                tourGo.text =">"
+                tourName.text = "관광지 이름"
                 tourImg.clipToOutline = true
             }
         }

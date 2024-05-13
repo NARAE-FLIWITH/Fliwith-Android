@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingRight="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/tour_img"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_radius"
-        android:src="@drawable/tour_default_image"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/tour_img"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_radius"
+            android:src="@drawable/tour_default_image"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_overlay"
+            android:padding="13dp">
+
+            <TextView
+                android:id="@+id/tour_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관광지 이름"
+                android:textSize="18dp"
+                android:layout_alignParentStart="true"
+                android:gravity="start"
+                android:fontWeight="700"
+                android:textStyle="bold"
+                android:font="@font/pretendard_medium"
+                android:textColor="@color/white" />
+
+<!--            <ImageView-->
+<!--                android:id="@+id/go_image_icon"-->
+<!--                android:layout_width="7dp"-->
+<!--                android:layout_height="7dp"-->
+<!--                android:src="@drawable/go_image_icon"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                >-->
+<!--            </ImageView>-->
+
+            <TextView
+                android:id="@+id/tour_go"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:textSize="18dp"
+                android:fontWeight="700"
+                android:font="@font/pretendard_medium"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
