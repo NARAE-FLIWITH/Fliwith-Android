@@ -16,7 +16,7 @@
     <View
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="90dp"
         android:background="@drawable/shadow"
         />
 
@@ -27,6 +27,8 @@
         android:background="@drawable/radius"
         app:labelVisibilityMode="labeled"
         android:elevation="8dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="10dp"
         android:clipToPadding="false"
         style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
         app:itemIconTint="@drawable/main_btm_nav_item_color"
