@@ -1,5 +1,6 @@
 package com.narae.fliwith.src.main.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentHomeBinding
+import com.narae.fliwith.src.main.DESTINATION
+import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.home.models.Store
 import com.narae.fliwith.src.main.home.models.Tour
 
@@ -29,6 +32,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var storeAdapter : HomeStoreAdapter
     private lateinit var tourAdapter : HomeTourAdapter
+
+    private lateinit var mainActivity: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +71,10 @@ class HomeFragment : Fragment() {
         }
         tourAdapter = HomeTourAdapter(tourList)
         binding.tourRv.adapter = tourAdapter
+
+        binding.btnRecommendation.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND)
+        }
 
     }
 
