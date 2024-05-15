@@ -1,14 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="28dp"
+    tools:background="@color/white"
     tools:context=".src.main.mypage.MyPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_mypage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="35dp"
+        android:fontFamily="@font/pretendard_bold"
+        android:paddingHorizontal="3dp"
+        android:paddingVertical="5dp"
+        android:text="@string/mypage"
+        android:textAlignment="textStart"
+        android:textSize="24sp" />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/layout_mypage_box"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/mypage_box"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_marginBottom="13dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#FFDCDCDC"
+            app:strokeWidth="0.6dp">
+
+            <ImageView
+                android:id="@+id/img_wing"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/wing"
+                tools:tint="@color/blind" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="#FF4A4A4A"
+            android:textSize="22sp"
+            tools:text="이름" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="#FF929292"
+            android:textSize="12sp"
+            tools:text="시각장애" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_like_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/box_outlined"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="30dp">
+
+        <ImageView
+            android:id="@+id/ima_heart"
+            android:layout_width="29dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:src="@drawable/heart" />
+
+        <TextView
+            android:id="@+id/tv_liked_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/liked_review"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_write_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_outlined"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="30dp">
+
+        <ImageView
+            android:id="@+id/img_write"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:src="@drawable/write" />
+
+        <TextView
+            android:id="@+id/tv_write_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/write_review"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

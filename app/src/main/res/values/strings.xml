@@ -28,4 +28,7 @@
     <string name="search">현 지도에서 관광지 검색</string>
     <string name="spot">관광지</string>
     <string name="overview">개요</string>
+    <string name="mypage">마이페이지</string>
+    <string name="liked_review">내가 좋아요 한 리뷰</string>
+    <string name="write_review">내가 쓴 리뷰</string>
 </resources>
