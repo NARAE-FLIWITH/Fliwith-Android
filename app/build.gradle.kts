@@ -67,4 +67,7 @@ dependencies {
 
     //framework ktx dependency 추가
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+    // kakao map
+    implementation ("com.kakao.maps.open:android:2.9.5")
 }

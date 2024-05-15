@@ -39,10 +39,11 @@
         android:orientation="vertical"
         android:paddingHorizontal="13dp"
         android:paddingTop="80dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_privacy"
+        app:layout_constraintBottom_toTopOf="@id/checkbox_privacy"
         app:layout_constraintTop_toBottomOf="@id/tv_ask_description">
 
         <RadioGroup
+            android:id="@+id/group_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
@@ -73,55 +74,48 @@
                 android:background="@drawable/selector_btn_notselected"
                 android:text="@string/notSelected" />
         </RadioGroup>
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                >
-                <RadioButton
-                    android:id="@+id/btn_blind"
-                    style="@style/smallRadioBtn"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/selector_btn_blind"
-                    android:text="@string/blind" />
-                <RadioButton
-                    android:id="@+id/btn_deaf"
-                    style="@style/smallRadioBtn"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/selector_btn_deaf"
-                    android:text="@string/deaf" />
-                <RadioButton
-                    android:id="@+id/btn_physical"
-                    style="@style/smallRadioBtn"
-                    android:background="@drawable/selector_btn_physical"
-                    android:text="@string/physical" />
-            </LinearLayout>
-        </RadioGroup>
 
+        <RadioGroup
+            android:id="@+id/group_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btn_blind"
+                style="@style/smallRadioBtn"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_btn_blind"
+                android:text="@string/blind" />
+
+            <RadioButton
+                android:id="@+id/btn_deaf"
+                style="@style/smallRadioBtn"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_btn_deaf"
+                android:text="@string/deaf" />
+
+            <RadioButton
+                android:id="@+id/btn_physical"
+                style="@style/smallRadioBtn"
+                android:background="@drawable/selector_btn_physical"
+                android:text="@string/physical" />
+        </RadioGroup>
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btn_privacy"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkbox_privacy"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="6dp"
         android:layout_marginBottom="40dp"
-        android:backgroundTint="@color/btnUnchecked"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
+        android:background="@drawable/selector_checkbox"
+        android:button="@null"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/btn_next"
-        app:layout_constraintStart_toStartOf="@id/btn_next">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_check_24" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toStartOf="@id/btn_next" />
 
     <TextView
         android:id="@+id/tv_privacy"
@@ -133,9 +127,9 @@
         android:text="@string/privacy_agree"
         android:textColor="@color/btnDisabled"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/btn_privacy"
-        app:layout_constraintStart_toEndOf="@id/btn_privacy"
-        app:layout_constraintTop_toTopOf="@id/btn_privacy" />
+        app:layout_constraintBottom_toBottomOf="@id/checkbox_privacy"
+        app:layout_constraintStart_toEndOf="@id/checkbox_privacy"
+        app:layout_constraintTop_toTopOf="@id/checkbox_privacy" />
 
     <TextView
         android:id="@+id/btn_show_terms"
@@ -146,9 +140,9 @@
         android:text="@string/show_terms"
         android:textColor="#5FBBEC"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/btn_privacy"
+        app:layout_constraintBottom_toBottomOf="@id/checkbox_privacy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_privacy" />
+        app:layout_constraintTop_toTopOf="@id/checkbox_privacy" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"

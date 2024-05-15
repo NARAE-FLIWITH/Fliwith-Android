@@ -8,6 +8,7 @@
         <item name="errorIconDrawable">@null</item>
         <item name="boxStrokeErrorColor">@color/red</item>
         <item name="helperTextTextColor">@color/red</item>
+        <item name="helperTextTextAppearance">@style/helperTextAppearance</item>
     </style>
 
     <style name="textInputEditText" parent="ThemeOverlay.Material3.TextInputEditText">
@@ -44,5 +45,9 @@
         <item name="android:textColor">#FF020202</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="android:button">@android:color/transparent</item>
+    </style>
+
+    <style name="helperTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

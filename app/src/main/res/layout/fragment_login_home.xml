@@ -78,7 +78,8 @@
             android:layout_gravity="center_vertical"
             android:text="@string/continue_kakaotalk"
             android:textAppearance="@style/btnText"
-            android:textColor="@color/kakaoDark" />
+            android:textColor="@color/kakaoDark"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -108,8 +109,35 @@
             android:layout_gravity="center_vertical"
             android:text="@string/continue_email"
             android:textAppearance="@style/btnText"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_already_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_signup"
+        android:textSize="14sp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_email" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="@string/login"
+        android:textColor="@color/blue"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_already_signup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_already_signup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

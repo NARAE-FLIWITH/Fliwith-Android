@@ -39,11 +39,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_email"
         style="@style/textInputLayout"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
+        app:helperText="유효하지 않은 이메일입니다."
         app:layout_constraintBottom_toTopOf="@+id/tv_pw"
         app:layout_constraintTop_toBottomOf="@+id/tv_email"
-        app:helperText="회원가입되지 않은 이메일입니다."
-        tools:helperText="회원가입되지 않은 이메일입니다."
+        tools:helperText="유효하지 않은 이메일입니다."
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -69,10 +69,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_pw"
         style="@style/textInputLayout"
-        app:layout_constraintBottom_toTopOf="@+id/tv_constraint_pw"
+        android:layout_marginBottom="30dp"
+        app:helperText="비밀번호는 최소 8자 이상이어야 합니다."
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintTop_toBottomOf="@+id/tv_pw"
-        app:helperText="비밀번호를 확인해주세요."
-        tools:helperText="비밀번호를 확인해주세요."
+        tools:helperText="비밀번호는 최소 8자 이상이어야 합니다."
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -81,20 +82,6 @@
             android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_constraint_pw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="4dp"
-        android:text="@string/constraint_pw"
-        android:textAlignment="textStart"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintTop_toBottomOf="@+id/layout_pw"
-        tools:layout_editor_absoluteX="16dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
@@ -105,6 +92,6 @@
         android:text="@string/next"
         android:textAppearance="@style/btnText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_constraint_pw"
+        app:layout_constraintTop_toBottomOf="@+id/layout_pw"
         tools:layout_editor_absoluteX="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

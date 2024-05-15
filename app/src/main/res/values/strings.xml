@@ -23,4 +23,9 @@
     <string name="blind">시각장애</string>
     <string name="deaf">청각장애</string>
     <string name="physical">지체장애</string>
+    <string name="already_signup">이미 가입하셨나요?</string>
+    <string name="login"><u>로그인</u></string>
+    <string name="search">현 지도에서 관광지 검색</string>
+    <string name="spot">관광지</string>
+    <string name="overview">개요</string>
 </resources>
