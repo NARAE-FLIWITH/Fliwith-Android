@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/white"
+    android:background="@color/white"
+    android:padding="25dp"
     tools:context=".src.main.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_gravity="center"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo_lavender" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_recommendation"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:textSize="18sp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/btn_solid"
+            android:backgroundTint="@color/lavender"
+            android:text="나에게 딱 맞는 여행지 찾아보기"
+            android:layout_weight="0.5"
+            android:textAppearance="@style/btnText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="요즘 인기 많은 관광지 🌊"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:fontWeight="500"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:font="@font/pretendard_medium">
+        </TextView>
+
+        <!-- 관광지 이미지 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tour_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="192dp"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="지금 가볼만한 식당은? 🍚"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:fontWeight="500"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:font="@font/pretendard_medium">
+        </TextView>
+
+        <!-- 식당 이미지 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/store_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
