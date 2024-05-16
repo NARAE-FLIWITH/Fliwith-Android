@@ -61,8 +61,11 @@ class RecommendDetailFragment : Fragment() {
             transaction.commit()
         }
 
-        binding.sendRecommendDetailBtn.setOnClickListener {
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND)
+        // 여행지 유형 페이지
+        else if(param1=="type") {
+            binding.pageText.text = "여행지 유형 선택"
+            transaction.replace(R.id.recommend_detail_fr, TypeFragment())
+            transaction.commit()
         }
 
     }

@@ -60,6 +60,22 @@ class RecommendFragment : Fragment() {
             mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "region")
         }
 
+        binding.tourBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "type")
+        }
+
+        binding.selectDisableBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "disable")
+        }
+
+        binding.memberBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "member")
+        }
+
+        binding.dateBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "date")
+        }
+
         // AI 추천 화면 으로
         binding.btnRecommendation.setOnClickListener {
 

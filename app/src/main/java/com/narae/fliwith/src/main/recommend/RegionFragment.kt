@@ -54,7 +54,7 @@ class RegionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.Seoul.isSelected = true
-        viewModel.setSelectedButtonText("서울")
+        viewModel.setSelectedRegionButtonText("서울")
 
         val buttons = arrayOf(
             binding.Seoul,
@@ -79,7 +79,7 @@ class RegionFragment : Fragment() {
                 // 클릭된 버튼을 선택하고, 다른 버튼들을 비활성화
                 button.isSelected = true
                 // 클릭된 버튼의 text를 selectedButtonText에 저장
-                viewModel.setSelectedButtonText(button.text.toString())
+                viewModel.setSelectedRegionButtonText(button.text.toString())
                 for (btn in buttons) {
                     if (btn != button) {
                         btn.isSelected = false
