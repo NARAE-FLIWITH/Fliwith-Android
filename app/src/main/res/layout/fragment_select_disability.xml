@@ -64,7 +64,7 @@
                     android:id="@+id/btn_none_disabled"
                     style="@style/bigRadioBtn"
                     android:background="@drawable/selector_btn_nonedisabled"
-                    android:text="@string/noneDisability" />
+                    android:text="@string/notDisability" />
             </LinearLayout>
 
             <RadioButton

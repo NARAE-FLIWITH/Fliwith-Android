@@ -18,8 +18,8 @@
     <string name="privacy_agree">이용약관 동의</string>
     <string name="show_terms"><u>약관보기</u></string>
     <string name="disability">장애</string>
-    <string name="noneDisability">비장애</string>
-    <string name="notSelected">선택 안함</string>
+    <string name="notDisability">비장애</string>
+    <string name="notSelected">선택 안 함</string>
     <string name="blind">시각장애</string>
     <string name="deaf">청각장애</string>
     <string name="physical">지체장애</string>

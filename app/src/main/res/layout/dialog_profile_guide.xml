@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp">
+
+        <TextView
+            android:id="@+id/tv_profile_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="프로필 안내"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_close_24"
+            android:tint="@color/darkGrey"
+            app:layout_constraintBottom_toBottomOf="@id/tv_profile_guide"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_profile_guide" />
+
+        <View
+            android:id="@+id/divide_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_marginVertical="18dp"
+            android:background="#FFD0D0D0"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_guide" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.32" />
+
+        <LinearLayout
+            android:id="@+id/layout_blind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guide_line"
+            app:layout_constraintTop_toBottomOf="@id/divide_line">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="50dp"
+                app:strokeColor="#FFDCDCDC"
+                app:strokeWidth="0.6dp">
+
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/wing"
+                    app:tint="@color/blind" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/blind"
+                android:textColor="@color/darkGrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_deaf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guide_line"
+            app:layout_constraintTop_toBottomOf="@id/layout_blind">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="50dp"
+                app:strokeColor="#FFDCDCDC"
+                app:strokeWidth="0.6dp">
+
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/wing"
+                    app:tint="@color/deaf" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/deaf"
+                android:textColor="@color/darkGrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_physical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guide_line"
+            app:layout_constraintTop_toBottomOf="@id/layout_deaf">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="50dp"
+                app:strokeColor="#FFDCDCDC"
+                app:strokeWidth="0.6dp">
+
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/wing"
+                    app:tint="@color/physical" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/physical"
+                android:textColor="@color/darkGrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_not_disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guide_line"
+            app:layout_constraintTop_toBottomOf="@id/layout_physical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="50dp"
+                app:strokeColor="#FFDCDCDC"
+                app:strokeWidth="0.6dp">
+
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/wing"
+                    app:tint="@color/notDisabled" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/notDisability"
+                android:textColor="@color/darkGrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guide_line"
+            app:layout_constraintTop_toBottomOf="@id/layout_not_disabled">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardCornerRadius="50dp"
+                app:strokeColor="#FFDCDCDC"
+                app:strokeWidth="0.6dp">
+
+                <ImageView
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/wing"
+                    app:tint="@color/notSelected" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/notSelected"
+                android:textColor="@color/darkGrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+

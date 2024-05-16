@@ -17,7 +17,6 @@
         android:padding="8dp"
         android:text="@string/overview"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="pa"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
