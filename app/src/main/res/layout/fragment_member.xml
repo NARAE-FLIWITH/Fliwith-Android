@@ -5,10 +5,56 @@
     android:layout_height="match_parent"
     tools:context=".src.main.recommend.MemberFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- 1인 -->
+            <include
+                android:id="@+id/member_one_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- 2인 -->
+            <include
+                android:id="@+id/member_two_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- 3인 -->
+            <include
+                android:id="@+id/member_three_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- 4인 이상 -->
+            <include
+                android:id="@+id/member_four_up_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

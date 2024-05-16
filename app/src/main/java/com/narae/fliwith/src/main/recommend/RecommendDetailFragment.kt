@@ -68,6 +68,20 @@ class RecommendDetailFragment : Fragment() {
             transaction.commit()
         }
 
+        // 인원 수 선택 페이지
+        else if(param1=="member") {
+            binding.pageText.text = "인원 수 선택"
+            transaction.replace(R.id.recommend_detail_fr, MemberFragment())
+            transaction.commit()
+        }
+
+        // 날짜 선택 페이지
+        else if(param1=="date") {
+            binding.pageText.text = "날짜 선택"
+            transaction.replace(R.id.recommend_detail_fr, MemberFragment())
+            transaction.commit()
+        }
+
     }
 
     companion object {
