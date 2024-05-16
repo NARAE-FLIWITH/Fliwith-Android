@@ -52,13 +52,10 @@ dependencies {
 
     // https://github.com/square/retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-
     // https://github.com/square/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
-
     // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
     // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
@@ -70,7 +67,4 @@ dependencies {
 
     // kakao map
     implementation("com.kakao.maps.open:android:2.9.5")
-
-    // splash screen
-    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

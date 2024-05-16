@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseActivity
 import com.narae.fliwith.databinding.ActivitySplashBinding
 import com.narae.fliwith.src.auth.AuthActivity
@@ -20,6 +19,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
             finish()
         }, 1500)
 
-        setContentView(R.layout.activity_splash)
+        setContentView(binding.root)
     }
 }
