@@ -68,6 +68,12 @@ class RecommendDetailFragment : Fragment() {
             transaction.commit()
         }
 
+        else if(param1=="disable") {
+            binding.pageText.text = "장애 유형 선택"
+            transaction.replace(R.id.recommend_detail_fr, DisableFragment())
+            transaction.commit()
+        }
+
         // 인원 수 선택 페이지
         else if(param1=="member") {
             binding.pageText.text = "인원 수 선택"
