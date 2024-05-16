@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("org.jetbrains.kotlin.kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -34,7 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         dataBinding = true
     }
@@ -51,23 +51,26 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // https://github.com/square/retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     // https://github.com/square/okhttp
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
     // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     // https://github.com/ybq/Android-SpinKit
-    implementation ("com.github.ybq:Android-SpinKit:1.4.0")
+    implementation("com.github.ybq:Android-SpinKit:1.4.0")
 
     //framework ktx dependency 추가
-    implementation ("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     // kakao map
-    implementation ("com.kakao.maps.open:android:2.9.5")
+    implementation("com.kakao.maps.open:android:2.9.5")
+
+    // splash screen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

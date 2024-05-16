@@ -1,17 +1,17 @@
 package com.narae.fliwith.src.auth
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseActivity
+import com.narae.fliwith.databinding.ActivityAuthBinding
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::inflate) {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContentView(R.layout.activity_auth)
-        val tv = findViewById<TextView>(R.id.username);
-        tv.currentTextColor
     }
 }
