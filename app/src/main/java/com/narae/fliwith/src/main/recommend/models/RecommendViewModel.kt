@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.main.recommend
+package com.narae.fliwith.src.main.recommend.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
