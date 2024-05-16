@@ -25,6 +25,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="서울"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -35,6 +36,7 @@
                 android:layout_height="36dp"
                 android:textSize="18sp"
                 android:layout_margin="20dp"
+                android:textStyle="bold"
                 android:background="@drawable/selector_ai_detail"
                 android:text="경기"
                 android:textColor="@drawable/selector_ai_select_color"
@@ -55,6 +57,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="인천"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -67,6 +70,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="강원"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -85,6 +89,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="대전"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -97,6 +102,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="세종"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -115,6 +121,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="전남"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -127,6 +134,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="전북"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -145,6 +153,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="충남"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -157,6 +166,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="충북"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -175,6 +185,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="광주"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -187,6 +198,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="경북"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -205,6 +217,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="대구"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -217,6 +230,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/selector_ai_detail"
                 android:text="부산"
+                android:textStyle="bold"
                 android:textColor="@drawable/selector_ai_select_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
@@ -233,6 +247,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/selector_ai_detail"
             android:text="제주"
+            android:textStyle="bold"
             android:textColor="@drawable/selector_ai_select_color"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="16dp" />
