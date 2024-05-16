@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Fliwith" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Fliwith.Base" parent="Theme.Material3.DayNight.NoActionBar">
         <!--custom font-family 적용-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customButtonFontStyle</item>
@@ -12,10 +12,12 @@
         <item name="android:statusBarColor">@color/white</item>
     </style>
 
-    <style name="Theme.Fliwith.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/splash_icon_foreground</item>
-        <item name="windowSplashScreenBackground">@color/lavender</item>
-        <item name="postSplashScreenTheme">@style/Theme.Fliwith</item>
+    <style name="Theme.Fliwith" parent="Theme.Fliwith.Base">
+        <!-- splash screen -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>

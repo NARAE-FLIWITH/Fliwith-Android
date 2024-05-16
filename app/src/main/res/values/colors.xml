@@ -32,4 +32,5 @@
     <color name="btnDisabled">#FFbdbdbd</color>
     <color name="btnChecked">#FF5EBBEC</color>
     <color name="btnUnchecked">#FFE0E0E0</color>
+    <color name="pink">#F1C3F6</color>
 </resources>
