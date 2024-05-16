@@ -1,11 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lavender"
     tools:context=".src.main.recommend.RecommendFragment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/arrow_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+    </ImageView>
 
-</FrameLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/recommend_iv"
+            android:layout_gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/wing_white" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="어떤 여행지를 원하시나요?"
+                android:textStyle="bold"
+                android:textSize="24dp"
+                android:fontWeight="700"
+                android:gravity="center"
+                android:font="@font/pretendard_medium"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="아래 선택지를 골라 AI 여행지 추천을 받아보세요!"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:fontWeight="500"
+                android:font="@font/pretendard_medium"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- 지역, 여행지 -->
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--  지역  -->
+                <include
+                    android:id="@+id/region_btn"
+                    layout="@layout/layout_select_ai"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--  여행지  -->
+                <include
+                    android:id="@+id/tour_btn"
+                    layout="@layout/layout_select_ai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- 장애 선택, 인원 수 -->
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--  장애 선택  -->
+                <include
+                    android:id="@+id/select_disable_btn"
+                    layout="@layout/layout_select_ai"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--  인원 수  -->
+                <include
+                    android:id="@+id/member_btn"
+                    layout="@layout/layout_select_ai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- 날짜 -->
+            <include
+                layout="@layout/layout_select_ai"
+                android:id="@+id/date_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_recommendation"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textSize="18sp"
+            android:layout_margin="30dp"
+            android:background="@drawable/btn_solid_violet"
+            android:backgroundTint="@color/violet"
+            android:text="추천 받기"
+            android:textAppearance="@style/btnText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
