@@ -10,8 +10,8 @@ import com.narae.fliwith.databinding.ActivityAuthBinding
 class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::inflate) {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        installSplashScreen()
         setContentView(R.layout.activity_auth)
     }
 }
