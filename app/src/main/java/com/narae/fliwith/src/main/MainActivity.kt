@@ -8,11 +8,12 @@ import com.narae.fliwith.databinding.ActivityMainBinding
 import com.narae.fliwith.src.main.home.HomeFragment
 import com.narae.fliwith.src.main.map.MapFragment
 import com.narae.fliwith.src.main.mypage.MyPageFragment
+import com.narae.fliwith.src.main.recommend.RecommendDetailFragment
 import com.narae.fliwith.src.main.recommend.RecommendFragment
 import com.narae.fliwith.src.main.review.ReviewFragment
 
 enum class DESTINATION {
-    HOME, REVIEW, MAP, MYPAGE, RECOMMEND
+    HOME, REVIEW, MAP, MYPAGE, RECOMMEND, RECOMMEND_DETAIL
 }
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -41,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
     }
-    fun changeFragmentView(destination: DESTINATION, dest: Int? = null) {
+    fun changeFragmentView(destination: DESTINATION, dest: String? = null) {
         val transaction = supportFragmentManager.beginTransaction()
         when (destination) {
             DESTINATION.HOME -> {
@@ -74,8 +75,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 viewGone()
             }
 
+            DESTINATION.RECOMMEND_DETAIL -> {
+                val fragment = RecommendDetailFragment.newInstance(dest ?: "", "")
+                transaction.replace(binding.mainFragment.id, fragment)
+                viewGone()
+            }
+
         }
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
     fun viewGone() {

@@ -1,26 +1,37 @@
 package com.narae.fliwith.src.main.recommend
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.R
+import com.narae.fliwith.databinding.FragmentRecommendBinding
+import com.narae.fliwith.databinding.FragmentRegionBinding
+import com.narae.fliwith.src.main.MainActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding : FragmentRegionBinding? = null
+    private val binding
+        get() = _binding!!
+
+    private lateinit var mainActivity: MainActivity
+    private val viewModel: RecommendViewModel by activityViewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +46,58 @@ class RegionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_region, container, false)
+        _binding = FragmentRegionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.Seoul.isSelected = true
+        viewModel.setSelectedButtonText("서울")
+
+        val buttons = arrayOf(
+            binding.Seoul,
+            binding.Gyeonggi,
+            binding.Incheon,
+            binding.Gangwon,
+            binding.Daejeon,
+            binding.Sejong,
+            binding.Jeonnam,
+            binding.Jeonbuk,
+            binding.Chungnam,
+            binding.Chungbuk,
+            binding.Gwangju,
+            binding.Gyeongbuk,
+            binding.Daegu,
+            binding.Busan,
+            binding.Jeju
+        )
+
+        for (button in buttons) {
+            button.setOnClickListener {
+                // 클릭된 버튼을 선택하고, 다른 버튼들을 비활성화
+                button.isSelected = true
+                // 클릭된 버튼의 text를 selectedButtonText에 저장
+                viewModel.setSelectedButtonText(button.text.toString())
+                for (btn in buttons) {
+                    if (btn != button) {
+                        btn.isSelected = false
+                        btn.isEnabled = true
+                    } else {
+                        btn.isEnabled = false
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             RegionFragment().apply {

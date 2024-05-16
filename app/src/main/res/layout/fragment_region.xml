@@ -3,12 +3,240 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.main.recommend.RegionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Seoul"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="서울"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Gyeonggi"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="경기"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Incheon"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="인천"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Gangwon"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="강원"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Daejeon"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="대전"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Sejong"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="세종"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Jeonnam"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="전남"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Jeonbuk"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="전북"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Chungnam"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="충남"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Chungbuk"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="충북"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Gwangju"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="광주"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Gyeongbuk"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="경북"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Daegu"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="대구"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Busan"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:textSize="18sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/selector_ai_detail"
+                android:text="부산"
+                android:textColor="@drawable/selector_ai_select_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Jeju"
+            android:layout_gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="36dp"
+            android:textSize="18sp"
+            android:layout_margin="20dp"
+            android:background="@drawable/selector_ai_detail"
+            android:text="제주"
+            android:textColor="@drawable/selector_ai_select_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </LinearLayout>
 
 </FrameLayout>
