@@ -10,10 +10,11 @@ import com.narae.fliwith.src.main.map.MapFragment
 import com.narae.fliwith.src.main.mypage.MyPageFragment
 import com.narae.fliwith.src.main.recommend.RecommendDetailFragment
 import com.narae.fliwith.src.main.recommend.RecommendFragment
+import com.narae.fliwith.src.main.recommend.RecommendSearchFragment
 import com.narae.fliwith.src.main.review.ReviewFragment
 
 enum class DESTINATION {
-    HOME, REVIEW, MAP, MYPAGE, RECOMMEND, RECOMMEND_DETAIL
+    HOME, REVIEW, MAP, MYPAGE, RECOMMEND, RECOMMEND_DETAIL, RECOMMEND_SEARCH
 }
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -77,6 +78,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
             DESTINATION.RECOMMEND_DETAIL -> {
                 val fragment = RecommendDetailFragment.newInstance(dest ?: "", "")
+                transaction.replace(binding.mainFragment.id, fragment)
+                viewGone()
+            }
+
+            DESTINATION.RECOMMEND_SEARCH -> {
+                val fragment = RecommendSearchFragment.newInstance(dest ?: "", "")
                 transaction.replace(binding.mainFragment.id, fragment)
                 viewGone()
             }

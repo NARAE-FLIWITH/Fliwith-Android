@@ -78,7 +78,7 @@ class RecommendFragment : Fragment() {
 
         // AI 추천 화면 으로
         binding.btnRecommendation.setOnClickListener {
-
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_SEARCH)
         }
     }
 
