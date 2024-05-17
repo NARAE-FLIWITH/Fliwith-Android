@@ -51,4 +51,17 @@
     <style name="helperTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/lavender</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/violet</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@drawable/calender_date_selector</item>
+    </style>
 </resources>

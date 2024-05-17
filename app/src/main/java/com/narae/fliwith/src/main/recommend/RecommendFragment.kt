@@ -1,11 +1,16 @@
 package com.narae.fliwith.src.main.recommend
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentRecommendBinding
+import com.narae.fliwith.src.main.DESTINATION
+import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -16,6 +21,14 @@ class RecommendFragment : Fragment() {
     private var _binding : FragmentRecommendBinding? = null
     private val binding
         get() = _binding!!
+
+    private lateinit var mainActivity: MainActivity
+    private val viewModel: RecommendViewModel by activityViewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +55,36 @@ class RecommendFragment : Fragment() {
         binding.selectDisableBtn.layoutSelectAiText.text = "장애 선택"
         binding.memberBtn.layoutSelectAiText.text = "인원 수"
         binding.dateBtn.layoutSelectAiText.text = "날짜"
+
+        binding.regionBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "region")
+        }
+
+        binding.tourBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "type")
+        }
+
+        binding.selectDisableBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "disable")
+        }
+
+        binding.memberBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "member")
+        }
+
+        binding.dateBtn.layoutSelectAi.setOnClickListener{
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "date")
+        }
+
+        // AI 추천 화면 으로
+        binding.btnRecommendation.setOnClickListener {
+            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_SEARCH)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

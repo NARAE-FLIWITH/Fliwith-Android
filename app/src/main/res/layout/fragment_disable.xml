@@ -5,10 +5,72 @@
     android:layout_height="match_parent"
     tools:context=".src.main.recommend.DisableFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- 시각장애 -->
+            <include
+                android:id="@+id/disable_blind_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- 청각장애 -->
+            <include
+                android:id="@+id/disable_deaf_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- 지체장애 -->
+            <include
+                android:id="@+id/disable_physical_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- 비장애 -->
+            <include
+                android:id="@+id/disable_notDisability_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+
+            <!-- 선택 안 함 -->
+            <include
+                android:id="@+id/disable_notSelected_btn"
+                layout="@layout/layout_select_btn_ai"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
