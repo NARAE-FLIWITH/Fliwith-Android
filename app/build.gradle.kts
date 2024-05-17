@@ -70,4 +70,5 @@ dependencies {
 
     // kakao map
     implementation ("com.kakao.maps.open:android:2.9.5")
+
 }

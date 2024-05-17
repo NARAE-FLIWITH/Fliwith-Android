@@ -84,7 +84,7 @@ class RecommendDetailFragment : Fragment() {
         // 날짜 선택 페이지
         else if(param1=="date") {
             binding.pageText.text = "날짜 선택"
-            transaction.replace(R.id.recommend_detail_fr, MemberFragment())
+            transaction.replace(R.id.recommend_detail_fr, DateFragment())
             transaction.commit()
         }
 
