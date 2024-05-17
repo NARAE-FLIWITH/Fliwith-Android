@@ -73,14 +73,14 @@
                     android:layout_height="33dp"
                     android:layout_gravity="center"
                     android:src="@drawable/wing"
-                    app:tint="@color/blind" />
+                    app:tint="@color/visual" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@string/blind"
+                android:text="@string/visual"
                 android:textColor="@color/darkGrey"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -109,14 +109,14 @@
                     android:layout_height="33dp"
                     android:layout_gravity="center"
                     android:src="@drawable/wing"
-                    app:tint="@color/deaf" />
+                    app:tint="@color/hearing" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@string/deaf"
+                android:text="@string/hearing"
                 android:textColor="@color/darkGrey"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -181,14 +181,14 @@
                     android:layout_height="33dp"
                     android:layout_gravity="center"
                     android:src="@drawable/wing"
-                    app:tint="@color/notDisabled" />
+                    app:tint="@color/nonDisabled" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@string/notDisability"
+                android:text="@string/nonDisabled"
                 android:textColor="@color/darkGrey"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -216,14 +216,14 @@
                     android:layout_height="33dp"
                     android:layout_gravity="center"
                     android:src="@drawable/wing"
-                    app:tint="@color/notSelected" />
+                    app:tint="@color/none" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@string/notSelected"
+                android:text="@string/none"
                 android:textColor="@color/darkGrey"
                 android:textSize="14sp" />
         </LinearLayout>

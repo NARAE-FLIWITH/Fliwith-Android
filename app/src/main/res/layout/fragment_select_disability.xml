@@ -64,7 +64,7 @@
                     android:id="@+id/btn_none_disabled"
                     style="@style/bigRadioBtn"
                     android:background="@drawable/selector_btn_nonedisabled"
-                    android:text="@string/notDisability" />
+                    android:text="@string/nonDisabled" />
             </LinearLayout>
 
             <RadioButton
@@ -72,7 +72,7 @@
                 style="@style/bigRadioBtn"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/selector_btn_notselected"
-                android:text="@string/notSelected" />
+                android:text="@string/none" />
         </RadioGroup>
 
         <RadioGroup
@@ -88,14 +88,14 @@
                 style="@style/smallRadioBtn"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_btn_blind"
-                android:text="@string/blind" />
+                android:text="@string/visual" />
 
             <RadioButton
                 android:id="@+id/btn_deaf"
                 style="@style/smallRadioBtn"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_btn_deaf"
-                android:text="@string/deaf" />
+                android:text="@string/hearing" />
 
             <RadioButton
                 android:id="@+id/btn_physical"
@@ -150,7 +150,7 @@
         android:layout_height="53dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/selector_btn_round"
-        android:text="@string/next"
+        android:text="@string/complete"
         android:textAppearance="@style/btnText"
         app:layout_constraintBottom_toBottomOf="parent" />
 

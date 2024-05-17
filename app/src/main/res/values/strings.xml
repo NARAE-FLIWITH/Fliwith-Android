@@ -18,10 +18,10 @@
     <string name="privacy_agree">이용약관 동의</string>
     <string name="show_terms"><u>약관보기</u></string>
     <string name="disability">장애</string>
-    <string name="notDisability">비장애</string>
-    <string name="notSelected">선택 안 함</string>
-    <string name="blind">시각장애</string>
-    <string name="deaf">청각장애</string>
+    <string name="nonDisabled">비장애</string>
+    <string name="none">선택 안 함</string>
+    <string name="visual">시각장애</string>
+    <string name="hearing">청각장애</string>
     <string name="physical">지체장애</string>
     <string name="already_signup">이미 가입하셨나요?</string>
     <string name="login"><u>로그인</u></string>
@@ -31,4 +31,5 @@
     <string name="mypage">마이페이지</string>
     <string name="liked_review">내가 좋아요 한 리뷰</string>
     <string name="write_review">내가 쓴 리뷰</string>
+    <string name="complete">완료</string>
 </resources>

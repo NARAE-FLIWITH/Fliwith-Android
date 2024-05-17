@@ -47,7 +47,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/wing"
-                tools:tint="@color/blind" />
+                tools:tint="@color/visual" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView

@@ -6,55 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
+import com.narae.fliwith.databinding.FragmentLoginBinding
+import com.narae.fliwith.databinding.FragmentLoginHomeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class LoginHomeFragment :
+    BaseFragment<FragmentLoginHomeBinding>(FragmentLoginHomeBinding::inflate) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginHomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LoginHomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+        /*
+        1. 이메일 입력하면 실시간 중복 체크
+        2. 비밀번호 입력하면 형식에 맞는지 실시간 체크
+        3. 모두 유효하면 버튼 활성화(실시간)
+        4. 다음 눌렀을때 이메일 중복이면 오류 표시
+         */
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private fun setListeners() {
+        // 카카오
+        binding.btnJoinKakaotalk.setOnClickListener {
+            TODO("카카오 소셜 로그인")
+        }
+
+        // 회원가입
+        binding.btnJoinEmail.setOnClickListener {
+            navController.navigate(R.id.action_loginHomeFragment_to_createAccountFragment)
+        }
+
+        // 로그인
+        binding.btnLogin.setOnClickListener {
+            navController.navigate(R.id.action_loginHomeFragment_to_loginFragment)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_home, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginHomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginHomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
