@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.join.CreateAccountFragment">
+    tools:context=".src.auth.signUp.CreateAccountFragment">
 
     <ImageView
         android:id="@+id/img_logo"

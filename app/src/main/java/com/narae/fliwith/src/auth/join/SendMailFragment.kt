@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.auth.join
+package com.narae.fliwith.src.auth.signUp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

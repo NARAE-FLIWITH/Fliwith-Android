@@ -44,21 +44,21 @@
         android:layout_marginBottom="104dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_lavender"
-        app:layout_constraintBottom_toTopOf="@+id/btn_join_kakaotalk"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp_kakaotalk"
         app:layout_constraintEnd_toEndOf="@id/img_hello_login_home"
         app:layout_constraintStart_toStartOf="@id/img_hello_login_home"
         app:layout_constraintTop_toBottomOf="@+id/tv_introduce"
         app:layout_constraintVertical_bias="0.5" />
 
     <LinearLayout
-        android:id="@+id/btn_join_kakaotalk"
+        android:id="@+id/btn_signUp_kakaotalk"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="13dp"
         android:background="@drawable/btn_solid"
         android:backgroundTint="@color/yellow"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/btn_join_email"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp_email"
         app:layout_constraintTop_toBottomOf="@+id/img_logo"
         app:layout_constraintVertical_bias="0.5"
         tools:layout_editor_absoluteX="16dp">
@@ -83,13 +83,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btn_join_email"
+        android:id="@+id/btn_signUp_email"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_solid_outlined_grey"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_join_kakaotalk"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signUp_kakaotalk"
         app:layout_constraintVertical_bias="0.5"
         tools:layout_editor_absoluteX="-15dp">
 
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_login"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_join_email" />
+        app:layout_constraintTop_toBottomOf="@id/btn_signUp_email" />
 
     <TextView
         android:id="@+id/btn_login"

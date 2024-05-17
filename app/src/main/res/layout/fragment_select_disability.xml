@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.join.SelectDisabilityFragment">
+    tools:context=".src.auth.signUp.SelectDisabilityFragment">
 
     <TextView
         android:id="@+id/tv_ask"

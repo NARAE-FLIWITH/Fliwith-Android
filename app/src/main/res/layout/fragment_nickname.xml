@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.join.NicknameFragment">
+    tools:context=".src.auth.signUp.NicknameFragment">
 
     <ImageView
         android:id="@+id/img_hello_go_trip"

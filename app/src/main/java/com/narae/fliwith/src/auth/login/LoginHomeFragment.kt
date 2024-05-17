@@ -26,12 +26,12 @@ class LoginHomeFragment :
 
     private fun setListeners() {
         // 카카오
-        binding.btnJoinKakaotalk.setOnClickListener {
+        binding.btnsignUpKakaotalk.setOnClickListener {
             TODO("카카오 소셜 로그인")
         }
 
         // 회원가입
-        binding.btnJoinEmail.setOnClickListener {
+        binding.btnsignUpEmail.setOnClickListener {
             navController.navigate(R.id.action_loginHomeFragment_to_createAccountFragment)
         }
 

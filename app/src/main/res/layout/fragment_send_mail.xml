@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.join.SendMailFragment">
+    tools:context=".src.auth.signUp.SendMailFragment">
 
     <TextView
         android:id="@+id/tv_send_mail1"

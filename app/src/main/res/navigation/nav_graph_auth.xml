@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.narae.fliwith.src.auth.join.CreateAccountFragment"
+        android:name="com.narae.fliwith.src.auth.signUp.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/sendMailFragment"
-        android:name="com.narae.fliwith.src.auth.join.SendMailFragment"
+        android:name="com.narae.fliwith.src.auth.signUp.SendMailFragment"
         android:label="fragment_send_mail"
         tools:layout="@layout/fragment_send_mail" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/nicknameFragment"
-        android:name="com.narae.fliwith.src.auth.join.NicknameFragment"
+        android:name="com.narae.fliwith.src.auth.signUp.NicknameFragment"
         android:label="fragment_nickname"
         tools:layout="@layout/fragment_nickname" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectDisabilityFragment"
-        android:name="com.narae.fliwith.src.auth.join.SelectDisabilityFragment"
+        android:name="com.narae.fliwith.src.auth.signUp.SelectDisabilityFragment"
         android:label="fragment_select_disability"
         tools:layout="@layout/fragment_select_disability"
         />
