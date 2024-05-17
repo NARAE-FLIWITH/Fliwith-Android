@@ -6,14 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.narae.fliwith.R
-import com.narae.fliwith.databinding.FragmentHomeBinding
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.home.HomeStoreAdapter
-import com.narae.fliwith.src.main.home.HomeTourAdapter
 import com.narae.fliwith.src.main.home.models.Store
-import com.narae.fliwith.src.main.home.models.Tour
 import com.narae.fliwith.src.main.review.models.Review
 
 private const val ARG_PARAM1 = "param1"
@@ -30,7 +26,7 @@ class ReviewFragment : Fragment() {
 
     private var reviewList = mutableListOf<Review>()
 
-    private lateinit var reviewAdapter : ReviewAdapter
+//    private lateinit var reviewAdapter : ReviewAdapter
 
     private lateinit var mainActivity: MainActivity
 
@@ -52,7 +48,19 @@ class ReviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false)
+        _binding = FragmentReviewBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        for (i in 1..20) {
+            reviewList.add(Review(null, userName="유유", heartCount=2))
+        }
+
+//        reviewAdapter = ReviewAdapter(reviewList)
+//        binding.reviewRv.adapter = reviewAdapter
     }
 
     companion object {
