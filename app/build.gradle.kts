@@ -1,8 +1,4 @@
-import java.io.FileInputStream
-import java.util.Properties
-
-var properties = Properties()
-properties.load(FileInputStream("local.properties"))
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id("com.android.application")
@@ -22,8 +18,8 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "SERVER_URL", properties.getProperty("SERVER_URL"))
-        buildConfigField("String", "GPT_KEY", properties.getProperty("GPT_KEY"))
+        buildConfigField("String", "SERVER_URL", getProperty("SERVER_URL"))
+        buildConfigField("String", "GPT_KEY", getProperty("GPT_KEY"))
     }
 
     buildTypes {
@@ -81,4 +77,8 @@ dependencies {
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+}
+
+fun getProperty(keyName: String) : String {
+    return gradleLocalProperties(rootDir).getProperty(keyName)
 }
