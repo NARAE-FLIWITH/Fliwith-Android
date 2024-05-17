@@ -32,33 +32,60 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/review_count"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:font="@font/pretendard_medium"
                 android:fontWeight="500"
-                android:gravity="left"
+                android:gravity="start|center_vertical"
                 android:text="192개의 리뷰"
                 android:textSize="14dp"
                 android:textStyle="bold"/>
 
             <LinearLayout
+                android:id="@+id/review_order_list"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical">
+
+                <ImageView
+                    android:id="@+id/review_order_select_iv"
+                    android:layout_width="14dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/review_order_select_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:font="@font/pretendard_medium"
                     android:fontWeight="500"
-                    android:gravity="left"
                     android:text="최신순"
                     android:textSize="14dp"
                     android:textStyle="bold"/>
 
+                <ImageView
+                    android:id="@+id/down_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="5dp"
+                    android:src="@drawable/down_icon" />
+
             </LinearLayout>
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintTop_toBottomOf="@id/review_count" />
 
     </LinearLayout>
 
