@@ -19,6 +19,9 @@ class ReviewAdapter(private val reviewDataList: MutableList<Review>) : RecyclerV
                 reviewUserName.text = review.userName
                 reviewHeartCount.text = review.heartCount.toString()
                 reviewDefaultImage.clipToOutline = true
+                itemView.setOnClickListener{
+                    itemClickListner.onClick(it, layoutPosition)
+                }
             }
         }
     }
@@ -33,6 +36,20 @@ class ReviewAdapter(private val reviewDataList: MutableList<Review>) : RecyclerV
         holder.apply {
             bindInfo(reviewDataList[position])
         }
+    }
+
+    // item click listener
+    //클릭 인터페이스 정의 사용하는 곳에서 만들어준다.
+    interface ItemClickListener {
+        fun onClick(view: View,  position: Int)
+    }
+
+    //클릭리스너 선언
+    private lateinit var itemClickListner: ItemClickListener
+
+    //클릭리스너 등록 매소드
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListner = itemClickListener
     }
 
     override fun getItemCount(): Int = reviewDataList.size

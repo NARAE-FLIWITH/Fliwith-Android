@@ -13,9 +13,10 @@ import com.narae.fliwith.src.main.recommend.RecommendFragment
 import com.narae.fliwith.src.main.recommend.RecommendSearchFragment
 import com.narae.fliwith.src.main.review.ReviewDetailFragment
 import com.narae.fliwith.src.main.review.ReviewFragment
+import com.narae.fliwith.src.main.review.ReviewWriteFragment
 
 enum class DESTINATION {
-    HOME, REVIEW, MAP, MYPAGE, RECOMMEND, RECOMMEND_DETAIL, RECOMMEND_SEARCH, REVIEW_DETAIL
+    HOME, REVIEW, MAP, MYPAGE, RECOMMEND, RECOMMEND_DETAIL, RECOMMEND_SEARCH, REVIEW_DETAIL, REVIEW_WRITE
 }
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -95,6 +96,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 viewGone()
             }
 
+            DESTINATION.REVIEW_WRITE -> {
+                val fragment = ReviewWriteFragment.newInstance(dest ?: "", "")
+                transaction.replace(binding.mainFragment.id, fragment)
+                viewGone()
+            }
         }
         transaction.commitAllowingStateLoss()
     }

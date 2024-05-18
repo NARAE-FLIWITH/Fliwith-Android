@@ -65,8 +65,14 @@ class ReviewFragment : Fragment() {
         binding.reviewRv.adapter = reviewAdapter
 
         binding.reviewWriteBtn.setOnClickListener {
-            mainActivity.changeFragmentView(DESTINATION.REVIEW_DETAIL)
+            mainActivity.changeFragmentView(DESTINATION.REVIEW_WRITE)
         }
+
+        reviewAdapter.setItemClickListener(object : ReviewAdapter.ItemClickListener {
+            override fun onClick(view: View, position: Int) {
+                mainActivity.changeFragmentView(DESTINATION.REVIEW_DETAIL)
+            }
+        })
 
     }
 
