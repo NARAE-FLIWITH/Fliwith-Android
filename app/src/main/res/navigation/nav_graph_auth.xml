@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.narae.fliwith.src.auth.signUp.CreateAccountFragment"
+        android:name="com.narae.fliwith.src.auth.signup.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/sendMailFragment"
-        android:name="com.narae.fliwith.src.auth.signUp.SendMailFragment"
+        android:name="com.narae.fliwith.src.auth.signup.SendMailFragment"
         android:label="fragment_send_mail"
         tools:layout="@layout/fragment_send_mail" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/nicknameFragment"
-        android:name="com.narae.fliwith.src.auth.signUp.NicknameFragment"
+        android:name="com.narae.fliwith.src.auth.signup.NicknameFragment"
         android:label="fragment_nickname"
         tools:layout="@layout/fragment_nickname" >
         <action
@@ -45,15 +45,28 @@
     </fragment>
     <fragment
         android:id="@+id/selectDisabilityFragment"
-        android:name="com.narae.fliwith.src.auth.signUp.SelectDisabilityFragment"
+        android:name="com.narae.fliwith.src.auth.signup.SelectDisabilityFragment"
         android:label="fragment_select_disability"
         tools:layout="@layout/fragment_select_disability"
-        />
+        >
+        <action
+            android:id="@+id/action_selectDisabilityFragment_to_completeFragment"
+            app:destination="@id/completeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.narae.fliwith.src.auth.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"
         />
+    <fragment
+        android:id="@+id/completeFragment"
+        android:name="com.narae.fliwith.src.auth.signup.CompleteFragment"
+        android:label="fragment_complete"
+        tools:layout="@layout/fragment_complete" >
+        <action
+            android:id="@+id/action_completeFragment_to_loginHomeFragment"
+            app:destination="@id/loginHomeFragment" />
+    </fragment>
 
 </navigation>

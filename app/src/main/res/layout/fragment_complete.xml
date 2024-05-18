@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    tools:context=".src.auth.signup.CompleteFragment">
+
+    <TextView
+        android:id="@+id/tv_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_semibold"
+        android:padding="8dp"
+        android:text="회원가입이 완료되었습니다!"
+        android:layout_marginBottom="9dp"
+        android:textSize="24sp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/tv_good_trip"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/tv_good_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_regular"
+        android:padding="8dp"
+        android:text="앞으로 이곳저곳 편하게 여행 다녀보아요. :)"
+        android:layout_marginBottom="43dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/img_wing"
+        app:layout_constraintTop_toBottomOf="@+id/tv_complete"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <ImageView
+        android:id="@+id/img_wing"
+        android:layout_width="91dp"
+        android:layout_height="91dp"
+        android:src="@drawable/wing_lavender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintTop_toBottomOf="@+id/tv_good_trip"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/selector_btn_round"
+        android:text="확인"
+        android:textAppearance="@style/btnText"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
