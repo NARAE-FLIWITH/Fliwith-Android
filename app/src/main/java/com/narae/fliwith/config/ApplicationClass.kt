@@ -3,6 +3,7 @@ package com.narae.fliwith.config
 import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.narae.fliwith.BuildConfig
 import com.narae.fliwith.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,16 +11,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-// 앱이 실행될때 1번만 실행이 됩니다.
 class ApplicationClass : Application() {
     //ends with '/'
-    val API_URL = "http://192.168.33.120:9988/vue/"
-
-    // 테스트 서버 주소
-    // val API_URL = "http://dev-api.test.com/"
-
-    // 실 서버 주소
-    // val API_URL = "http://api.test.com/"
+    val API_URL = BuildConfig.SERVER_URL
+    val GPT_KEY = BuildConfig.GPT_KEY
 
     // 코틀린의 전역변수
     companion object {
@@ -68,7 +63,7 @@ class ApplicationClass : Application() {
     }
 
     //GSon은 엄격한 json type을 요구하는데, 느슨하게 하기 위한 설정. success, fail이 json이 아니라 단순 문자열로 리턴될 경우 처리..
-    val gson : Gson = GsonBuilder()
+    val gson: Gson = GsonBuilder()
         .setLenient()
         .create()
 }

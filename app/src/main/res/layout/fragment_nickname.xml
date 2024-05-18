@@ -6,17 +6,23 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.signUp.NicknameFragment">
+    tools:context=".src.auth.signup.NicknameFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
 
     <ImageView
         android:id="@+id/img_hello_go_trip"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="118dp"
         android:adjustViewBounds="true"
         android:src="@drawable/hello_go_trip"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guide_line"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView

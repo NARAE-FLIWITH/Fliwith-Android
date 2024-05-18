@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pretendard_medium"
-        android:text="@string/login"
+        android:text="@string/login_underline"
         android:textColor="@color/blue"
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@id/tv_already_signup"

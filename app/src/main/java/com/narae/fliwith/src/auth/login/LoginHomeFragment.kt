@@ -16,12 +16,7 @@ class LoginHomeFragment :
         super.onViewCreated(view, savedInstanceState)
         setListeners()
 
-        /*
-        1. 이메일 입력하면 실시간 중복 체크
-        2. 비밀번호 입력하면 형식에 맞는지 실시간 체크
-        3. 모두 유효하면 버튼 활성화(실시간)
-        4. 다음 눌렀을때 이메일 중복이면 오류 표시
-         */
+
     }
 
     private fun setListeners() {

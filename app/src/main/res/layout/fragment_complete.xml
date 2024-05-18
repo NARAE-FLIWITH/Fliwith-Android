@@ -7,6 +7,13 @@
     android:paddingHorizontal="16dp"
     tools:context=".src.auth.signup.CompleteFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
     <TextView
         android:id="@+id/tv_complete"
         android:layout_width="match_parent"
@@ -14,11 +21,9 @@
         android:fontFamily="@font/pretendard_semibold"
         android:padding="8dp"
         android:text="회원가입이 완료되었습니다!"
-        android:layout_marginBottom="9dp"
         android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="@id/guide_line"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintBottom_toTopOf="@+id/tv_good_trip"
-        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
@@ -28,9 +33,7 @@
         android:fontFamily="@font/pretendard_regular"
         android:padding="8dp"
         android:text="앞으로 이곳저곳 편하게 여행 다녀보아요. :)"
-        android:layout_marginBottom="43dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/img_wing"
         app:layout_constraintTop_toBottomOf="@+id/tv_complete"
         tools:layout_editor_absoluteX="1dp" />
 
@@ -38,12 +41,11 @@
         android:id="@+id/img_wing"
         android:layout_width="91dp"
         android:layout_height="91dp"
+        android:layout_marginTop="45dp"
         android:src="@drawable/wing_lavender"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintTop_toBottomOf="@+id/tv_good_trip"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_good_trip" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"

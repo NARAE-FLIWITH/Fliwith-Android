@@ -6,19 +6,35 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
     tools:background="@color/white"
-    tools:context=".src.auth.signUp.SelectDisabilityFragment">
+    tools:context=".src.auth.signup.SelectDisabilityFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:gravity="center"
+        android:layout_width="14dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/arrow" />
 
     <TextView
         android:id="@+id/tv_ask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
         android:layout_marginBottom="18dp"
         android:fontFamily="@font/pretendard_semibold"
         android:padding="8dp"
         android:text="@string/ask"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/guide_line" />
 
     <TextView
         android:id="@+id/tv_ask_description"
@@ -150,7 +166,7 @@
         android:layout_height="53dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/selector_btn_round"
-        android:text="@string/complete"
+        android:text="가입 완료"
         android:textAppearance="@style/btnText"
         app:layout_constraintBottom_toBottomOf="parent" />
 
