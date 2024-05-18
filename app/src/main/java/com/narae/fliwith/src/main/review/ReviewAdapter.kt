@@ -1,39 +1,40 @@
-//package com.narae.fliwith.src.main.review
-//
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import androidx.recyclerview.widget.RecyclerView
-//import com.narae.fliwith.R
-//import com.narae.fliwith.databinding.StoreItemBinding
-//import com.narae.fliwith.src.main.home.HomeStoreAdapter
-//import com.narae.fliwith.src.main.home.models.Store
-//
-//class ReviewAdapter(private val storeDataList: MutableList<Store>) : RecyclerView.Adapter<HomeStoreAdapter.StoreHolder>(){
-//
-//    private lateinit var binding: StoreItemBinding
-//    inner class StoreHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-//        fun bindInfo(tour: Store) {
-//            binding.apply {
-//                storeImg.setImageResource(R.drawable.store_default_image)
-//                storeName.text = "식당1"
-//                storeImg.clipToOutline = true
-//            }
-//        }
-//    }
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeStoreAdapter.StoreHolder {
-//        val inflater = LayoutInflater.from(parent.context)
-//        binding = StoreItemBinding.inflate(inflater, parent, false)
-//        return StoreHolder(binding.root)
-//    }
-//
-//    // View Holder에 실제 데이터 binding
-//    override fun onBindViewHolder(holder: HomeStoreAdapter.StoreHolder, position: Int) {
-//        holder.apply {
-//            bindInfo(storeDataList[position])
-//        }
-//    }
-//
-//    override fun getItemCount(): Int = storeDataList.size
-//
-//}
+package com.narae.fliwith.src.main.review
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.narae.fliwith.R
+import com.narae.fliwith.databinding.ItemReviewBinding
+import com.narae.fliwith.src.main.review.models.Review
+
+class ReviewAdapter(private val reviewDataList: MutableList<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewHolder>(){
+
+    private lateinit var binding: ItemReviewBinding
+    inner class ReviewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        fun bindInfo(review: Review) {
+            binding.apply {
+                reviewDefaultImage.setImageResource(R.drawable.review_default_image)
+                reviewProfileImage.setImageResource(R.drawable.profile_image)
+                reviewUserName.text = review.userName
+                reviewHeartCount.text = review.heartCount.toString()
+                reviewDefaultImage.clipToOutline = true
+            }
+        }
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.ReviewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        binding = ItemReviewBinding.inflate(inflater, parent, false)
+        return ReviewHolder(binding.root)
+    }
+
+    // View Holder에 실제 데이터 binding
+    override fun onBindViewHolder(holder: ReviewAdapter.ReviewHolder, position: Int) {
+        holder.apply {
+            bindInfo(reviewDataList[position])
+        }
+    }
+
+    override fun getItemCount(): Int = reviewDataList.size
+
+}

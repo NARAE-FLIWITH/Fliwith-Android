@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_width="53dp"
             android:layout_height="53dp"
-            android:layout_weight="1"
+
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:src="@drawable/logo_lavender" />
@@ -37,7 +38,7 @@
             android:background="@drawable/btn_solid"
             android:backgroundTint="@color/lavender"
             android:text="나에게 딱 맞는 여행지 찾아보기"
-            android:layout_weight="0.5"
+
             android:textAppearance="@style/btnText"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="16dp" />
@@ -50,7 +51,6 @@
             android:textSize="20dp"
             android:fontWeight="500"
             android:layout_marginBottom="20dp"
-            android:layout_weight="1"
             android:font="@font/pretendard_medium">
         </TextView>
 
@@ -59,7 +59,6 @@
             android:id="@+id/tour_rv"
             android:layout_width="wrap_content"
             android:layout_height="192dp"
-            android:layout_weight="4"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
@@ -71,8 +70,8 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:fontWeight="500"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_weight="1"
             android:font="@font/pretendard_medium">
         </TextView>
 
@@ -80,8 +79,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/store_rv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_height="100dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />

@@ -61,13 +61,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         for (i in 1..10) {
-            storeList.add(Store(imageUrl = null))
+            storeList.add(Store(imageUrl = null, "식당1"))
         }
         storeAdapter = HomeStoreAdapter(storeList)
         binding.storeRv.adapter = storeAdapter
 
         for (i in 1..10) {
-            tourList.add(Tour(imageUrl = null))
+            tourList.add(Tour(imageUrl = null, "관광지 이름"))
         }
         tourAdapter = HomeTourAdapter(tourList)
         binding.tourRv.adapter = tourAdapter
