@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.main.review.ReviewWriteFragment">
 
     <LinearLayout
@@ -24,6 +25,8 @@
             android:background="@color/grey"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
+
+
 
         <LinearLayout
             android:padding="20dp"
@@ -98,11 +101,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <View
-                    android:background="@drawable/btn_outlined"
+                <ImageView
+                    android:id="@+id/review_write_image_frame"
                     android:layout_width="120dp"
-                    android:layout_height="93dp">
-                </View>
+                    android:layout_height="93dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/review_write_image_frame" />
+
+                <ImageView
+                    android:id="@+id/review_write_image_frame_small"
+                    android:layout_width="62dp"
+                    android:layout_height="93dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/review_write_image_frame_small" />
 
             </LinearLayout>
 
@@ -116,15 +129,55 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:font="@font/pretendard_medium"
+                android:fontWeight="400"
+                android:text="57자 / 최소 20자"
+                android:layout_marginBottom="10dp"
+                android:textSize="12dp"
+                android:textStyle="normal"
+                android:textColor="@color/grey"/>
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="156dp"
                 android:id="@+id/review_write_comment"
                 style="@style/textInputEditText"
+                android:layout_marginBottom="20dp"
                 android:hint="" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/review_write_btn_disabled"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:background="@drawable/btn_solid_violet"
+        android:backgroundTint="@color/btnDisabled"
+        android:text="작성하기"
+        android:textAppearance="@style/btnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/review_write_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:background="@drawable/btn_solid_violet"
+        android:backgroundTint="@color/lavender"
+        android:text="작성하기"
+        android:visibility="gone"
+        android:textAppearance="@style/btnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
