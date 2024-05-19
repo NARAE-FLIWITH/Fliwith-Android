@@ -91,7 +91,7 @@ class ReviewFragment : Fragment() {
                 }
                 false
             }
-            popupMenu.show();
+            popupMenu.show()
         }
 
     }
