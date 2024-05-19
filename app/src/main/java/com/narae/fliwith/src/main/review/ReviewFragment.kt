@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
@@ -69,13 +70,15 @@ class ReviewFragment : Fragment() {
         reviewAdapter = ReviewAdapter(reviewList)
         binding.reviewRv.adapter = reviewAdapter
 
+        val navController = findNavController()
+
         binding.reviewWriteBtn.setOnClickListener {
-            mainActivity.changeFragmentView(DESTINATION.REVIEW_WRITE)
+            navController.navigate(R.id.action_reviewFragment_to_reviewWriteFragment)
         }
 
         reviewAdapter.setItemClickListener(object : ReviewAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int) {
-                mainActivity.changeFragmentView(DESTINATION.REVIEW_DETAIL)
+                navController.navigate(R.id.action_reviewFragment_to_reviewDetailFragment)
             }
         })
 

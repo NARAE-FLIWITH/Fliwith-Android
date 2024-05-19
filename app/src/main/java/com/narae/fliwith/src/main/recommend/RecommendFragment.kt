@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentRecommendBinding
 import com.narae.fliwith.src.main.DESTINATION
 import com.narae.fliwith.src.main.MainActivity
@@ -56,29 +59,36 @@ class RecommendFragment : Fragment() {
         binding.memberBtn.layoutSelectAiText.text = "인원 수"
         binding.dateBtn.layoutSelectAiText.text = "날짜"
 
+        val navController = findNavController()
+
         binding.regionBtn.layoutSelectAi.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "region")
+            val bundle = bundleOf("message" to "region")
+            navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
         binding.tourBtn.layoutSelectAi.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "type")
+            val bundle = bundleOf("message" to "type")
+            navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
         binding.selectDisableBtn.layoutSelectAi.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "disable")
+            val bundle = bundleOf("message" to "disable")
+            navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
         binding.memberBtn.layoutSelectAi.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "member")
+            val bundle = bundleOf("message" to "member")
+            navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
         binding.dateBtn.layoutSelectAi.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_DETAIL, "date")
+            val bundle = bundleOf("message" to "date")
+            navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
         // AI 추천 화면 으로
         binding.btnRecommendation.setOnClickListener {
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND_SEARCH)
+            navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment)
         }
     }
 
