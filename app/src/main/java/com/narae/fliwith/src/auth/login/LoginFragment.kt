@@ -1,28 +1,33 @@
 package com.narae.fliwith.src.auth.login
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
-import com.narae.fliwith.R
+import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentLoginBinding
+import com.narae.fliwith.src.auth.AuthApi
+import com.narae.fliwith.src.auth.dto.LoginRequest
+import com.narae.fliwith.src.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+private const val TAG = "LoginFragment"
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        /*
-        1. 아이디 비밀번호 입력 후 로그인
-        1-1 로그인 눌렀을 때 비어 있으면 입력해달라고 표시
-        2. 이메일이 유효하지 않으면 에러 표시
-        3. 비밀번호가 유효하지 않으면 에러 표시
-        4. 모두 유효하다면 화면 이동
-         */
     }
 
+    /*
+        1. 아이디 비밀번호 입력 후 로그인
+        2. 로그인 눌렀을 때 비어 있으면 입력해달라고 표시
+        3. 로그인 실패시 에러메시지 표시
+        4. 로그인 성공시 토큰 저장후 메인으로 이동
+        */
     private fun setListeners() {
         binding.btnLogin.setOnClickListener {
             with(binding) {
@@ -38,20 +43,30 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     return@setOnClickListener
                 }
 
-                /*
-                로그인 요청
-                성공 -> 메인으로 넘어가기
-                실패 -> 에러 메시지 보여주기
-                 */
-                // 로그인 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    val loginUser =
+                        LoginRequest(binding.etEmail.text.toString(), binding.etPw.text.toString())
+                    runCatching {
+                        val response = AuthApi.authService.login(loginUser)
 
-                // 성공
-                // 실패
-
+                        // 로그인 성공, 200
+                        if (response.isSuccessful) {
+                            // 유저 토큰정보 저장
+                            ApplicationClass.sharedPreferences.addTokenData(response.body()!!.data)
+                            startActivity(Intent(context, MainActivity::class.java))
+                            requireActivity().finish()
+                        }
+                        // 로그인 실패, 404
+                        else {
+                            requireActivity().runOnUiThread {
+                                binding.layoutPw.helperText = "아이디 또는 비밀번호를 다시 확인해주세요."
+                            }
+                        }
+                    }.onFailure {
+                        Log.d(TAG, "Login: 로그인 실패")
+                    }
+                }
             }
         }
-    }
-
-    private fun checkInput() {
     }
 }

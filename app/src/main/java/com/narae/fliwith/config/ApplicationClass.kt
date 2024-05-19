@@ -21,10 +21,11 @@ class ApplicationClass : Application() {
         // 만들어져있는 SharedPreferences 를 사용해야합니다. 재생성하지 않도록 유념해주세요
         lateinit var sharedPreferences: SharedPreferencesUtil
 
-        // JWT Token Header 키 값
-        const val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
-        const val SHARED_PREFERENCES_NAME = "SSAFY_TEMPLATE_APP"
-        const val COOKIES_KEY_NAME = "cookies"
+        const val SHARED_PREFERENCES_NAME = "FLIWITH"
+        const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        const val GRANT_TYPE = "GRANT_TYPE"
+        const val REFRESH_TOKEN = "REFRESH_TOKEN"
+        const val REFRESH_TOKEN_EXPIRATION_TIME = "REFRESH_TOKEN_EXPIRATION_TIME"
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var retrofit: Retrofit
@@ -45,12 +46,13 @@ class ApplicationClass : Application() {
     private fun initRetrofitInstance() {
         val client: OkHttpClient = OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .writeTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-            .addInterceptor(AddCookiesInterceptor())  //쿠키 전송
-            .addInterceptor(ReceivedCookiesInterceptor()) //쿠키 추출
+//            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+//            .addInterceptor(AddCookiesInterceptor())  //쿠키 전송
+//            .addInterceptor(ReceivedCookiesInterceptor()) //쿠키 추출
             .build()
 
         // retrofit 이라는 전역변수에 API url, 인터셉터, Gson을 넣어주고 빌드해주는 코드

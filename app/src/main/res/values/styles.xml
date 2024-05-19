@@ -7,6 +7,7 @@
         <item name="android:textColorHint">@color/brightGrey</item>
         <item name="errorIconDrawable">@null</item>
         <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="helperTextEnabled">true</item>
         <item name="hintEnabled">false</item>
         <item name="helperTextTextColor">@color/red</item>
         <item name="helperTextTextAppearance">@style/helperTextAppearance</item>

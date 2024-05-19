@@ -21,6 +21,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         setContentView(binding.root)
         setFullScreen()
         delaySplash(1500)
+
+        // 만약 회원정보가 있다면 바로 메인으로 넘기기
+
     }
 
     private fun delaySplash(delayMillis: Long) {
