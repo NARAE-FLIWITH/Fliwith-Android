@@ -59,6 +59,7 @@
                     android:src="@drawable/review_order_select_icon" />
 
                 <TextView
+                    android:id="@+id/review_order_select_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
