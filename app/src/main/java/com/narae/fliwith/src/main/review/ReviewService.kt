@@ -1,4 +1,40 @@
 package com.narae.fliwith.src.main.review
 
-interface ReviewService {
+import com.narae.fliwith.src.main.review.models.Review
+import retrofit2.Response
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.POST
+import retrofit2.http.Path
+
+public interface ReviewService {
+    // 리뷰 목록 조회 (인기순, 최신순)
+    @GET("/review/list?pageNo={pageNo}&order={order}")
+    suspend fun selectAllReviews(@Path("pageNo") pageNo:Int, @Path("order") order:String): Response<MutableList<Review>>
+
+    // 리뷰 상세 조회
+    @GET("/review/{reviewId}")
+    suspend fun selectReview(@Path("reviewId") reviewId:Int): Response<Review>
+
+    // 리뷰 작성
+    @POST("/review")
+    suspend fun insertReview()
+
+    // 리뷰 수정
+    @PATCH("/review/{reviewId}")
+    suspend fun updateReview(@Path("reviewId") reviewId:Int): Response<Review>
+
+    // 리뷰 삭제
+    @DELETE("/review/{reviewId}")
+    suspend fun deleteReview(@Path("reviewId") reviewId:Int): Response<Review>
+
+    // 리뷰 좋아요 등록 & 좋아요 취소
+    @POST("/review/{reviewId}")
+    suspend fun heartReview(@Path("reviewId") reviewId:Int): Response<Boolean>
+
+    // 리뷰 사진 첨부 URL 요청
+    @POST("/review/presigned")
+    suspend fun presignedReview(): Response<MutableList<String>>
+
 }
