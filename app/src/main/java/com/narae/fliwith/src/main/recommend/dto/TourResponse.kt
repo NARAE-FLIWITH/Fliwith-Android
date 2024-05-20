@@ -1,12 +1,13 @@
 package com.narae.fliwith.src.main.recommend.dto
 
 import com.narae.fliwith.src.main.review.models.Review
+import java.io.Serializable
 
 data class TourResponse(
     val statusCode: Int,
     val message: String,
     val data: TourData
-)
+) : Serializable
 
 data class TourData(
     val detailWithTour: DetailWithTour,

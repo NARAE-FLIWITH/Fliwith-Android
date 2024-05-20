@@ -20,6 +20,7 @@ class AuthAuthenticator : Authenticator {
         var refreshToken: String
         var reissueResponse: RetrofitResponse<TokenResponse>
         runBlocking {
+            Log.d(TAG, "authenticate: 엥?")
             refreshToken = sharedPreferences.getRefreshToken()
             reissueResponse = AuthApi.authService.reissue(refreshToken)
         }

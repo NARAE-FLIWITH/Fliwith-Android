@@ -111,12 +111,10 @@ class RecommendFragment : Fragment() {
 
         // 모든 데이터 다 들어 갔으면 그때 AI 추천 화면 으로
         binding.btnRecommendation.setOnClickListener {
-            selectDatas?.let { tourRequest ->
-                val bundle = Bundle().apply {
-                    putSerializable("tourRequest", tourRequest)
-                }
-                navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment, bundle)
+            val bundle = Bundle().apply {
+                putSerializable("tourRequest", viewModel.tourRequest.value)
             }
+            navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment, bundle)
         }
     }
 
@@ -164,7 +162,9 @@ class RecommendFragment : Fragment() {
             Log.d(TAG, "updateButtonVisibility: 전체 선택 완료")
             binding.btnRecommendationNonSelected.visibility = View.GONE
             binding.btnRecommendation.visibility = View.VISIBLE
-            selectDatas = tourRequest
+            tourRequest?.let {
+                viewModel.setTourRequest(tourRequest)
+            }
         } else { // 아직 다 선택 된 게 아니면
             binding.btnRecommendationNonSelected.visibility = View.VISIBLE
             binding.btnRecommendation.visibility = View.GONE

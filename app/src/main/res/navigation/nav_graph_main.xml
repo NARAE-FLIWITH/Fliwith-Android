@@ -96,7 +96,11 @@
         android:id="@+id/recommendSearchFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendSearchFragment"
         android:label="fragment_recommend_search"
-        tools:layout="@layout/fragment_recommend_search" />
+        tools:layout="@layout/fragment_recommend_search" >
+        <action
+            android:id="@+id/action_recommendSearchFragment_to_recommendAIFragment"
+            app:destination="@id/recommendAIFragment" />
+    </fragment>
     <fragment
         android:id="@+id/regionFragment"
         android:name="com.narae.fliwith.src.main.recommend.RegionFragment"
@@ -129,4 +133,9 @@
         android:name="com.narae.fliwith.src.main.recommend.TypeFragment"
         android:label="fragment_type"
         tools:layout="@layout/fragment_type" />
+    <fragment
+        android:id="@+id/recommendAIFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RecommendAIFragment"
+        android:label="fragment_recommend_a_i"
+        tools:layout="@layout/fragment_recommend_a_i" />
 </navigation>

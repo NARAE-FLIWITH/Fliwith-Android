@@ -8,26 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendSearchBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 import com.narae.fliwith.src.main.recommend.dto.TourRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "RecommendSearchFragment_싸피"
-class RecommendSearchFragment : Fragment() {
+class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(FragmentRecommendSearchBinding::inflate) {
+
 
     private var param1: String? = null
     private var param2: String? = null
-
-    private var _binding : FragmentRecommendSearchBinding? = null
-    private val binding
-        get() = _binding!!
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: RecommendViewModel by activityViewModels()
@@ -45,40 +46,20 @@ class RecommendSearchFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentRecommendSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     // 여기서 API 연결 해서 받은 값을 다음 화면 에서 보여 주기
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tourRequest = arguments?.getSerializable("tourRequest") as? TourRequest
-        tourRequest?.let {
-            fetchTourData(tourRequest)
-        }
-
-    }
-
-    private fun fetchTourData(request: TourRequest) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = RecommendApi.recommendService.selectAll(request)
-                if (response.isSuccessful) {
-                    val tourData = response.body()
-                    Log.d(TAG, "Tour Data: $tourData")
+        viewModel.tourRequest.value?.let { request ->
+            viewModel.fetchTourData(request) { success ->
+                if (success) {
+                    navController.navigate(R.id.action_recommendSearchFragment_to_recommendAIFragment)
                 } else {
-                    Log.e(TAG, "Response not successful: ${response.errorBody()}")
+                    Log.d(TAG, "onViewCreated: 데이터를 받아오지 못함")
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "API call failed", e)
             }
         }
+
     }
 
     companion object {

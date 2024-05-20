@@ -77,6 +77,9 @@ dependencies {
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }
 
 fun getProperty(keyName: String) : String {
