@@ -36,7 +36,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 바인딩
         NavigationUI.setupWithNavController(binding.mainBtmNav, navController)
-
     }
 
 }

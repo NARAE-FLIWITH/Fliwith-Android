@@ -26,6 +26,8 @@ class ApplicationClass : Application() {
         const val GRANT_TYPE = "GRANT_TYPE"
         const val REFRESH_TOKEN = "REFRESH_TOKEN"
         const val REFRESH_TOKEN_EXPIRATION_TIME = "REFRESH_TOKEN_EXPIRATION_TIME"
+        const val AUTHORIZATION = "AUTHORIZATION"
+        const val IS_VALID_TOKEN = "IS_VALID_TOKEN"
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var retrofit: Retrofit
@@ -50,9 +52,8 @@ class ApplicationClass : Application() {
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-//            .addInterceptor(AddCookiesInterceptor())  //쿠키 전송
-//            .addInterceptor(ReceivedCookiesInterceptor()) //쿠키 추출
+            .addInterceptor(AddTokenInterceptor()) // JWT 자동 헤더 전송
+            .authenticator(AuthAuthenticator()) // 액세스 토큰 검증
             .build()
 
         // retrofit 이라는 전역변수에 API url, 인터셉터, Gson을 넣어주고 빌드해주는 코드

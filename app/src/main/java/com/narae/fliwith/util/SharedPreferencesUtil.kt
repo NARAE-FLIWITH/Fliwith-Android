@@ -2,8 +2,13 @@ package com.narae.fliwith.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.narae.fliwith.config.ApplicationClass
+import com.narae.fliwith.config.ApplicationClass.Companion.IS_VALID_TOKEN
+import com.narae.fliwith.config.ApplicationClass.Companion.REFRESH_TOKEN_EXPIRATION_TIME
 import com.narae.fliwith.src.auth.dto.TokenData
+
+private const val TAG = "싸피"
 
 class SharedPreferencesUtil(context: Context) {
     private var preferences: SharedPreferences =
@@ -15,7 +20,7 @@ class SharedPreferencesUtil(context: Context) {
         editor.putString(ApplicationClass.REFRESH_TOKEN, data.refreshToken)
         editor.putString(ApplicationClass.GRANT_TYPE, data.grantType)
         editor.putLong(
-            ApplicationClass.REFRESH_TOKEN_EXPIRATION_TIME,
+            REFRESH_TOKEN_EXPIRATION_TIME,
             data.refreshTokenExpirationTime
         )
         editor.apply()
@@ -26,8 +31,18 @@ class SharedPreferencesUtil(context: Context) {
             preferences.getString(ApplicationClass.ACCESS_TOKEN, "")!!,
             preferences.getString(ApplicationClass.GRANT_TYPE, "")!!,
             preferences.getString(ApplicationClass.REFRESH_TOKEN, "")!!,
-            preferences.getLong(ApplicationClass.REFRESH_TOKEN_EXPIRATION_TIME, 0)
+            preferences.getLong(REFRESH_TOKEN_EXPIRATION_TIME, 0)
         )
+    }
+
+    fun removeTokenData() {
+        Log.d(TAG, "removeTokenData")
+        val editor = preferences.edit()
+        editor.remove(ApplicationClass.ACCESS_TOKEN)
+        editor.remove(ApplicationClass.GRANT_TYPE)
+        editor.remove(ApplicationClass.REFRESH_TOKEN)
+        editor.remove(REFRESH_TOKEN_EXPIRATION_TIME)
+        editor.apply()
     }
 
     fun getAccessToken(): String {
@@ -43,6 +58,14 @@ class SharedPreferencesUtil(context: Context) {
     }
 
     fun getRefreshTokenExpirationTime(): Long {
-        return preferences.getLong(ApplicationClass.REFRESH_TOKEN_EXPIRATION_TIME, 0)
+        return preferences.getLong(REFRESH_TOKEN_EXPIRATION_TIME, 0)
+    }
+
+    fun setTokenReissueFailed(flag: Boolean) {
+        preferences.edit().putBoolean(IS_VALID_TOKEN, flag).apply()
+    }
+
+    fun getTokenReissueFailed(): Boolean {
+        return preferences.getBoolean(IS_VALID_TOKEN, false)
     }
 }

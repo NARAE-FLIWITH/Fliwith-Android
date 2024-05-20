@@ -1,5 +1,6 @@
 package com.narae.fliwith.config
 
+import com.narae.fliwith.config.ApplicationClass.Companion.AUTHORIZATION
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -11,9 +12,9 @@ class AddTokenInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
-        val grantType = ApplicationClass.sharedPreferences.getGrantType()
+        val grantType = sharedPreferences.getGrantType()
         val jwtToken = sharedPreferences.getAccessToken()
-        builder.addHeader("Authorization", "$grantType $jwtToken")
+        builder.addHeader(AUTHORIZATION, "$grantType $jwtToken")
         return chain.proceed(builder.build())
     }
 }
