@@ -15,7 +15,7 @@ class HomeStoreAdapter (private val storeDataList: MutableList<Store>) : Recycle
         fun bindInfo(tour: Store) {
             binding.apply {
                 storeImg.setImageResource(R.drawable.store_default_image)
-                storeName.text = "식당1"
+                storeName.text = tour.storeName
                 storeImg.clipToOutline = true
             }
         }

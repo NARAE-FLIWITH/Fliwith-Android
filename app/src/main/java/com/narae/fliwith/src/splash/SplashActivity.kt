@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.narae.fliwith.config.BaseActivity
 import com.narae.fliwith.databinding.ActivitySplashBinding
 import com.narae.fliwith.src.auth.AuthActivity
+import com.narae.fliwith.src.main.MainActivity
 
 
 @SuppressLint("CustomSplashScreen")
@@ -28,7 +29,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     private fun delaySplash(delayMillis: Long) {
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, AuthActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, delayMillis)
     }

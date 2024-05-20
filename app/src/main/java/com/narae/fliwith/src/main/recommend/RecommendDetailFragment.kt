@@ -54,35 +54,37 @@ class RecommendDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var transaction = childFragmentManager.beginTransaction()
 
+        val message = arguments?.getString("message")
+
         // 지역 페이지
-        if(param1=="region") {
+        if(message=="region") {
             binding.pageText.text = "지역 선택"
             transaction.replace(R.id.recommend_detail_fr, RegionFragment())
             transaction.commit()
         }
 
         // 여행지 유형 페이지
-        else if(param1=="type") {
+        else if(message=="type") {
             binding.pageText.text = "여행지 유형 선택"
             transaction.replace(R.id.recommend_detail_fr, TypeFragment())
             transaction.commit()
         }
 
-        else if(param1=="disable") {
+        else if(message=="disable") {
             binding.pageText.text = "장애 유형 선택"
             transaction.replace(R.id.recommend_detail_fr, DisableFragment())
             transaction.commit()
         }
 
         // 인원 수 선택 페이지
-        else if(param1=="member") {
+        else if(message=="member") {
             binding.pageText.text = "인원 수 선택"
             transaction.replace(R.id.recommend_detail_fr, MemberFragment())
             transaction.commit()
         }
 
         // 날짜 선택 페이지
-        else if(param1=="date") {
+        else if(message=="date") {
             binding.pageText.text = "날짜 선택"
             transaction.replace(R.id.recommend_detail_fr, DateFragment())
             transaction.commit()

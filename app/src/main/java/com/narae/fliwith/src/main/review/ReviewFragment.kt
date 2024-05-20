@@ -1,26 +1,47 @@
 package com.narae.fliwith.src.main.review
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
+import com.narae.fliwith.databinding.FragmentReviewBinding
+import com.narae.fliwith.src.main.DESTINATION
+import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.review.models.Review
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ReviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ReviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding : FragmentReviewBinding? = null
+    private val binding
+        get() = _binding!!
+
+    private var reviewList = mutableListOf<Review>()
+
+    private lateinit var reviewAdapter : ReviewAdapter
+
+    private lateinit var mainActivity: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +56,51 @@ class ReviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false)
+        _binding = FragmentReviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        for (i in 1..20) {
+            reviewList.add(Review(null, userName="유유", heartCount=2))
+        }
+
+        reviewAdapter = ReviewAdapter(reviewList)
+        binding.reviewRv.adapter = reviewAdapter
+
+        val navController = findNavController()
+
+        binding.reviewWriteBtn.setOnClickListener {
+            navController.navigate(R.id.action_reviewFragment_to_reviewWriteFragment)
+        }
+
+        reviewAdapter.setItemClickListener(object : ReviewAdapter.ItemClickListener {
+            override fun onClick(view: View, position: Int) {
+                navController.navigate(R.id.action_reviewFragment_to_reviewDetailFragment)
+            }
+        })
+
+        binding.reviewOrderList.setOnClickListener{
+            val popupMenu = PopupMenu(requireContext(), binding.reviewOrderList, 0, 0,  R.style.CustomPopupMenu)
+            val inflater: MenuInflater = popupMenu.menuInflater
+            inflater.inflate(R.menu.menu_review_order_popup, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.new_menu) {
+                    binding.reviewOrderSelectText.text = "최신순"
+                } else if (menuItem.itemId == R.id.popular_menu) {
+                    binding.reviewOrderSelectText.text = "인기순"
+                }
+                false
+            }
+            popupMenu.show()
+        }
+
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ReviewFragment().apply {

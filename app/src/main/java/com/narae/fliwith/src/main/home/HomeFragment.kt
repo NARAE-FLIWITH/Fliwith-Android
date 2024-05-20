@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentHomeBinding
 import com.narae.fliwith.src.main.DESTINATION
@@ -61,19 +62,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         for (i in 1..10) {
-            storeList.add(Store(imageUrl = null))
+            storeList.add(Store(imageUrl = null, "식당1"))
         }
         storeAdapter = HomeStoreAdapter(storeList)
         binding.storeRv.adapter = storeAdapter
 
         for (i in 1..10) {
-            tourList.add(Tour(imageUrl = null))
+            tourList.add(Tour(imageUrl = null, "관광지 이름"))
         }
         tourAdapter = HomeTourAdapter(tourList)
         binding.tourRv.adapter = tourAdapter
 
+        val navController = findNavController()
+
         binding.btnRecommendation.setOnClickListener{
-            mainActivity.changeFragmentView(DESTINATION.RECOMMEND)
+            navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }
 
     }

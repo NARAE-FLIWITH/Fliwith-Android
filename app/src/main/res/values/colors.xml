@@ -34,9 +34,15 @@
     <color name="btnChecked">#FF5EBBEC</color>
     <color name="btnUnchecked">#FFE0E0E0</color>
 
+    <!-- heart color -->
+    <color name="heartSolid">#FFC991EE</color>
+
     <!-- date color -->
     <color name="nonSelected">#B3B3B3</color> <!-- rgba(179, 179, 179, 1) -->
     <color name="weekNonMonth">#1270B0</color> <!-- rgba(18, 112, 176, 1) -->
     <color name="nonMonth">#616161</color> <!-- rgba(97, 97, 97, 1) -->
     <color name="weekNonSelected">#17A1FA</color> <!-- rgba(23, 161, 250, 1) -->
+
+    <!--  review btn color  -->
+    <color name="btnReviewWrite">#AA9EE9</color>
 </resources>
