@@ -14,11 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentRecommendBinding
 import com.narae.fliwith.databinding.LayoutSelectAiBinding
-import com.narae.fliwith.src.main.DISABILITY
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 import com.narae.fliwith.src.main.recommend.dto.TourRequest
-import kotlin.math.log
+import com.narae.fliwith.util.DISABILITY
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -33,6 +32,7 @@ class RecommendFragment : Fragment() {
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: RecommendViewModel by activityViewModels()
+    private var selectDatas: TourRequest? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -111,7 +111,12 @@ class RecommendFragment : Fragment() {
 
         // 모든 데이터 다 들어 갔으면 그때 AI 추천 화면 으로
         binding.btnRecommendation.setOnClickListener {
-            navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment)
+            selectDatas?.let { tourRequest ->
+                val bundle = Bundle().apply {
+                    putSerializable("tourRequest", tourRequest)
+                }
+                navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment, bundle)
+            }
         }
     }
 
@@ -130,7 +135,7 @@ class RecommendFragment : Fragment() {
         if(tourRequest.contentType.isNotEmpty()) {
             viewChange(binding.tourBtn, tourRequest.contentType)
         }
-        if(tourRequest.disability != DISABILITY.NONSELECTED) {
+        if(tourRequest.disability != DISABILITY.NOTSELECTED) {
             var disabilityText = DISABILITY.fromEnum(tourRequest.disability)
             viewChange(binding.selectDisableBtn, disabilityText)
         }
@@ -152,13 +157,14 @@ class RecommendFragment : Fragment() {
         // 모든 값이 선택 되면
         if (tourRequest.area.isNotEmpty() &&
             tourRequest.contentType.isNotEmpty() &&
-            tourRequest.disability != DISABILITY.NONSELECTED &&
+            tourRequest.disability != DISABILITY.NOTSELECTED &&
             tourRequest.peopleNum != 0 &&
             tourRequest.visitedDate.isNotEmpty()) {
 
             Log.d(TAG, "updateButtonVisibility: 전체 선택 완료")
             binding.btnRecommendationNonSelected.visibility = View.GONE
             binding.btnRecommendation.visibility = View.VISIBLE
+            selectDatas = tourRequest
         } else { // 아직 다 선택 된 게 아니면
             binding.btnRecommendationNonSelected.visibility = View.VISIBLE
             binding.btnRecommendation.visibility = View.GONE

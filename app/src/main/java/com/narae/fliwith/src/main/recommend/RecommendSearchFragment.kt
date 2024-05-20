@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentRecommendSearchBinding
-import com.narae.fliwith.src.main.DISABILITY
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 import com.narae.fliwith.src.main.recommend.dto.TourRequest
@@ -59,7 +58,11 @@ class RecommendSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        fetchTourData(tourRequest)
+        val tourRequest = arguments?.getSerializable("tourRequest") as? TourRequest
+        tourRequest?.let {
+            fetchTourData(tourRequest)
+        }
+
     }
 
     private fun fetchTourData(request: TourRequest) {
@@ -68,12 +71,12 @@ class RecommendSearchFragment : Fragment() {
                 val response = RecommendApi.recommendService.selectAll(request)
                 if (response.isSuccessful) {
                     val tourData = response.body()
-                    Log.d("MainActivity", "Tour Data: $tourData")
+                    Log.d(TAG, "Tour Data: $tourData")
                 } else {
-                    Log.e("MainActivity", "Response not successful: ${response.errorBody()}")
+                    Log.e(TAG, "Response not successful: ${response.errorBody()}")
                 }
             } catch (e: Exception) {
-                Log.e("MainActivity", "API call failed", e)
+                Log.e(TAG, "API call failed", e)
             }
         }
     }
