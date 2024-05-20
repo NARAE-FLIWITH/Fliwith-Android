@@ -1,22 +1,16 @@
 package com.narae.fliwith.src.main.review
 
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
-import com.narae.fliwith.src.main.DESTINATION
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.Review
 

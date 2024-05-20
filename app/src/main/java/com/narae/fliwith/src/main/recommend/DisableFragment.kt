@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentDisableBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 
 
 private const val ARG_PARAM1 = "param1"
@@ -59,6 +59,7 @@ class DisableFragment : Fragment() {
         binding.disableNotSelectedBtn.layoutRecommendSelectDetailBtn.text = "선택 안 함 "
 
         binding.disableBlindBtn.layoutRecommendSelectDetailBtn.isSelected = true
+        viewModel.setSelectedDisableButtonText("시각장애")
 
         val buttons = arrayOf(
             binding.disableBlindBtn,

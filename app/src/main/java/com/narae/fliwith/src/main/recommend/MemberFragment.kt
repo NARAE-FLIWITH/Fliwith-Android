@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentMemberBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 
 
 private const val ARG_PARAM1 = "param1"
@@ -59,6 +59,7 @@ class MemberFragment : Fragment() {
         binding.memberFourUpBtn.layoutRecommendSelectDetailBtn.text = "4인 이상"
 
         binding.memberOneBtn.layoutRecommendSelectDetailBtn.isSelected = true
+        viewModel.setSelectedMemberButtonText("1인")
 
         val buttons = arrayOf(
             binding.memberOneBtn,
