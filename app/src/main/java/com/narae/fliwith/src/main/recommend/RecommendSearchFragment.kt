@@ -1,26 +1,42 @@
 package com.narae.fliwith.src.main.recommend
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.narae.fliwith.R
+import androidx.fragment.app.activityViewModels
+import com.narae.fliwith.databinding.FragmentRecommendSearchBinding
+import com.narae.fliwith.src.main.DISABILITY
+import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.dto.TourRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RecommendSearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val TAG = "RecommendSearchFragment_싸피"
 class RecommendSearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding : FragmentRecommendSearchBinding? = null
+    private val binding
+        get() = _binding!!
+
+    private lateinit var mainActivity: MainActivity
+    private val viewModel: RecommendViewModel by activityViewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +51,35 @@ class RecommendSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommend_search, container, false)
+        _binding = FragmentRecommendSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    // 여기서 API 연결 해서 받은 값을 다음 화면 에서 보여 주기
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        fetchTourData(tourRequest)
+    }
+
+    private fun fetchTourData(request: TourRequest) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RecommendApi.recommendService.selectAll(request)
+                if (response.isSuccessful) {
+                    val tourData = response.body()
+                    Log.d("MainActivity", "Tour Data: $tourData")
+                } else {
+                    Log.e("MainActivity", "Response not successful: ${response.errorBody()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MainActivity", "API call failed", e)
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecommendSearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             RecommendSearchFragment().apply {

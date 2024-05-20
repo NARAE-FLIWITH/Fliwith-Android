@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentHomeBinding
-import com.narae.fliwith.src.main.DESTINATION
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.home.models.Store
 import com.narae.fliwith.src.main.home.models.Tour
@@ -76,6 +75,7 @@ class HomeFragment : Fragment() {
         val navController = findNavController()
 
         binding.btnRecommendation.setOnClickListener{
+            mainActivity.viewGone()
             navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }
 

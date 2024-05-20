@@ -88,6 +88,9 @@
         <action
             android:id="@+id/action_recommendDetailFragment_to_disableFragment"
             app:destination="@id/disableFragment" />
+        <action
+            android:id="@+id/action_recommendDetailFragment_to_recommendFragment"
+            app:destination="@id/recommendFragment" />
     </fragment>
     <fragment
         android:id="@+id/recommendSearchFragment"

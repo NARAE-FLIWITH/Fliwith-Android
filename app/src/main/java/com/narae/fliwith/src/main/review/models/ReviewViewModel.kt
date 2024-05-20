@@ -1,4 +1,6 @@
 package com.narae.fliwith.src.main.review.models
 
-class ReviewViewModel {
+import androidx.lifecycle.ViewModel
+
+class ReviewViewModel: ViewModel() {
 }

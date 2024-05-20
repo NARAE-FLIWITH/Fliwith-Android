@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentTypeBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -60,6 +60,7 @@ class TypeFragment : Fragment() {
         binding.typeStoreBtn.layoutRecommendSelectDetailBtn.text = "음식점"
 
         binding.typeAllBtn.layoutRecommendSelectDetailBtn.isSelected = true
+        viewModel.setSelectedTypeButtonText("전체")
 
         val buttons = arrayOf(
             binding.typeAllBtn,
