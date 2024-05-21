@@ -70,6 +70,7 @@
         <action
             android:id="@+id/action_completeFragment_to_loginHomeFragment"
             app:destination="@id/loginHomeFragment"
+            app:launchSingleTop="true"
             app:popUpTo="@id/loginHomeFragment" />
     </fragment>
     <fragment
