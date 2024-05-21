@@ -39,7 +39,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         val expireTime = sharedPreferences.getRefreshTokenExpirationTime()
 
         // 토큰이 만료되었다면 재로그인
-        return if (expireTime == 0L || expireTime <= System.currentTimeMillis()) {
+        return if (expireTime <= System.currentTimeMillis()) {
             Log.d(TAG, "자동 로그인 실패")
             sharedPreferences.removeTokenData()
             AuthActivity::class.java

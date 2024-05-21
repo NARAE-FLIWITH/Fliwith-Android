@@ -4,6 +4,7 @@ import android.util.Log
 import com.narae.fliwith.config.ApplicationClass.Companion.AUTHORIZATION
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.src.auth.AuthApi
+import com.narae.fliwith.src.auth.AuthApi.authService
 import com.narae.fliwith.src.auth.dto.TokenResponse
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -19,21 +20,28 @@ class AuthAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         var refreshToken: String
         var reissueResponse: RetrofitResponse<TokenResponse>
-        runBlocking {
-            refreshToken = sharedPreferences.getRefreshToken()
-            reissueResponse = AuthApi.authService.reissue(refreshToken)
-        }
-        // 리프레쉬 토큰 살아 있음 -> 액세스 토큰 재발급
-        if (reissueResponse.code() == 200) {
-            Log.d(TAG, "authenticate: 액세스 토큰 재발급 성공")
-            val responseData = reissueResponse.body() as TokenResponse
-            sharedPreferences.addTokenData(responseData.data)
-            return newRequestWithToken(responseData.data.accessToken, response.request)
-        }
-        // 리프레쉬 토큰 만료 -> 로그인 화면 보내기
-        else {
+        val expireTime = sharedPreferences.getRefreshTokenExpirationTime()
+
+        // 리프레쉬 토큰이 만료되었다면 재로그인
+        if (expireTime <= System.currentTimeMillis()) {
+            sharedPreferences.removeTokenData()
             sharedPreferences.setTokenReissueFailed(true)
             Log.d(TAG, "authenticate: 리프레쉬 토큰이 만료되어 재로그인이 필요합니다.")
+            return null
+        } else {
+            runBlocking {
+                refreshToken = sharedPreferences.getRefreshToken()
+                reissueResponse = authService.reissue(refreshToken)
+            }
+            // 리프레쉬 토큰 살아 있음 -> 액세스 토큰 재발급
+            if (reissueResponse.isSuccessful) {
+                Log.d(TAG, "authenticate: 액세스 토큰 재발급 성공")
+                val responseData = reissueResponse.body() as TokenResponse
+                sharedPreferences.addTokenData(responseData.data)
+                return newRequestWithToken(responseData.data.accessToken, response.request)
+            } else {
+                Log.d(TAG, "authenticate: 액세스 토큰 재발급 실패")
+            }
         }
         return null
     }
