@@ -1,4 +1,4 @@
-package com.narae.fliwith.config.dto
+package com.narae.fliwith.config.models
 
 data class ResponseDto(
     val message: String,

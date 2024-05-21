@@ -3,9 +3,8 @@ package com.narae.fliwith.config
 import android.util.Log
 import com.narae.fliwith.config.ApplicationClass.Companion.AUTHORIZATION
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
-import com.narae.fliwith.src.auth.AuthApi
 import com.narae.fliwith.src.auth.AuthApi.authService
-import com.narae.fliwith.src.auth.dto.TokenResponse
+import com.narae.fliwith.src.auth.models.TokenResponse
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request

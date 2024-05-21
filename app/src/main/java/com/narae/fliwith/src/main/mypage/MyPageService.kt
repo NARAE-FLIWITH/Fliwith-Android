@@ -1,8 +1,7 @@
 package com.narae.fliwith.src.main.mypage
 
 import com.narae.fliwith.config.ApplicationClass
-import com.narae.fliwith.config.dto.ResponseDto
-import com.narae.fliwith.src.auth.AuthService
+import com.narae.fliwith.config.models.ResponseDto
 import retrofit2.Response
 import retrofit2.http.POST
 

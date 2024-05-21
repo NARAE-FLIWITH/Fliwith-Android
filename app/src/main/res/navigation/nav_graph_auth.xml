@@ -8,7 +8,7 @@
         android:id="@+id/loginHomeFragment"
         android:name="com.narae.fliwith.src.auth.login.LoginHomeFragment"
         android:label="fragment_login_home"
-        tools:layout="@layout/fragment_login_home" >
+        tools:layout="@layout/fragment_login_home">
         <action
             android:id="@+id/action_loginHomeFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
@@ -20,25 +20,26 @@
         android:id="@+id/createAccountFragment"
         android:name="com.narae.fliwith.src.auth.signup.CreateAccountFragment"
         android:label="fragment_create_account"
-        tools:layout="@layout/fragment_create_account" >
+        tools:layout="@layout/fragment_create_account">
         <action
-            android:id="@+id/action_createAccountFragment_to_sendMailFragment"
-            app:destination="@id/sendMailFragment" />
+            android:id="@+id/action_createAccountFragment_to_nicknameFragment"
+            app:destination="@id/nicknameFragment" />
     </fragment>
     <fragment
         android:id="@+id/sendMailFragment"
         android:name="com.narae.fliwith.src.auth.signup.SendMailFragment"
         android:label="fragment_send_mail"
-        tools:layout="@layout/fragment_send_mail" >
+        tools:layout="@layout/fragment_send_mail">
         <action
-            android:id="@+id/action_sendMailFragment_to_nicknameFragment"
-            app:destination="@id/nicknameFragment" />
+            android:id="@+id/action_sendMailFragment_to_completeFragment"
+            app:destination="@id/completeFragment"
+            app:popUpTo="@id/loginHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/nicknameFragment"
         android:name="com.narae.fliwith.src.auth.signup.NicknameFragment"
         android:label="fragment_nickname"
-        tools:layout="@layout/fragment_nickname" >
+        tools:layout="@layout/fragment_nickname">
         <action
             android:id="@+id/action_nicknameFragment_to_selectDisabilityFragment"
             app:destination="@id/selectDisabilityFragment" />
@@ -47,26 +48,34 @@
         android:id="@+id/selectDisabilityFragment"
         android:name="com.narae.fliwith.src.auth.signup.SelectDisabilityFragment"
         android:label="fragment_select_disability"
-        tools:layout="@layout/fragment_select_disability"
-        >
+        tools:layout="@layout/fragment_select_disability">
         <action
-            android:id="@+id/action_selectDisabilityFragment_to_completeFragment"
-            app:destination="@id/completeFragment" />
+            android:id="@+id/action_selectDisabilityFragment_to_sendMailFragment"
+            app:destination="@id/sendMailFragment"
+            app:popUpTo="@id/loginHomeFragment" />
+        <action
+            android:id="@+id/action_selectDisabilityFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.narae.fliwith.src.auth.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login"
-        />
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/completeFragment"
         android:name="com.narae.fliwith.src.auth.signup.CompleteFragment"
         android:label="fragment_complete"
-        tools:layout="@layout/fragment_complete" >
+        tools:layout="@layout/fragment_complete">
         <action
             android:id="@+id/action_completeFragment_to_loginHomeFragment"
-            app:destination="@id/loginHomeFragment" />
+            app:destination="@id/loginHomeFragment"
+            app:popUpTo="@id/loginHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.narae.fliwith.src.auth.signup.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
 
 </navigation>

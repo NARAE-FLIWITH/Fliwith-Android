@@ -6,7 +6,7 @@ import android.util.Log
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.ApplicationClass.Companion.IS_VALID_TOKEN
 import com.narae.fliwith.config.ApplicationClass.Companion.REFRESH_TOKEN_EXPIRATION_TIME
-import com.narae.fliwith.src.auth.dto.TokenData
+import com.narae.fliwith.src.auth.models.TokenData
 
 private const val TAG = "싸피"
 

@@ -33,4 +33,5 @@
     <string name="liked_review">내가 좋아요 한 리뷰</string>
     <string name="write_review">내가 쓴 리뷰</string>
     <string name="complete">완료</string>
+    <string name="logout">로그아웃</string>
 </resources>

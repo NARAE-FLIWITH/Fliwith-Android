@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.auth.dto
+package com.narae.fliwith.src.auth.models
 
 data class TokenResponse(
     val data: TokenData,

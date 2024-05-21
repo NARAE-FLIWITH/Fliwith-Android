@@ -3,6 +3,7 @@ package com.narae.fliwith.config
 import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.kakao.vectormap.KakaoMapSdk
 import com.narae.fliwith.BuildConfig
 import com.narae.fliwith.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
@@ -15,6 +16,8 @@ class ApplicationClass : Application() {
     //ends with '/'
     val API_URL = BuildConfig.SERVER_URL
     val GPT_KEY = BuildConfig.GPT_KEY
+    val KAKAO_APP_KEY = BuildConfig.KAKAO_APP_KEY
+    val KAKAO_MAP_KEY = BuildConfig.KAKAO_APP_KEY
 
     // 코틀린의 전역변수
     companion object {
@@ -29,6 +32,11 @@ class ApplicationClass : Application() {
         const val AUTHORIZATION = "AUTHORIZATION"
         const val IS_VALID_TOKEN = "IS_VALID_TOKEN"
 
+        val POLICY_CONTRACT_URL = BuildConfig.POLICY_CONTRACT_URL
+        val PRIVACY_CONTRACT_URL = BuildConfig.PRIVACY_CONTRACT_URL
+        val SENSITIVE_CONTRACT_URL = BuildConfig.SENSITIVE_CONTRACT_URL
+
+
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var retrofit: Retrofit
     }
@@ -41,13 +49,15 @@ class ApplicationClass : Application() {
 
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
+
+        KakaoMapSdk.init(this, KAKAO_APP_KEY);
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
     // 연결 타임아웃시간은 5초로 지정이 되어있고, HttpLoggingInterceptor를 붙여서 어떤 요청이 나가고 들어오는지를 보여줍니다.
     private fun initRetrofitInstance() {
         val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .readTimeout(10000, TimeUnit.MILLISECONDS)
             .writeTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.

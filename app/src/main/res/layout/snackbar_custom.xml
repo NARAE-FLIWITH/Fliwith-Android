@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fab_search"
+    android:backgroundTint="#FFC1BAE5"
+    android:gravity="center"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="7dp">
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="앱을 종료하려면 뒤로 가기를 한 번 더 눌러주세요"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</LinearLayout>
