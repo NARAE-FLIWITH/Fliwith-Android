@@ -28,7 +28,7 @@ interface AuthService {
 
     suspend fun logout()
 
-    @POST("user/reissue")
+    @GET("user/reissue")
     suspend fun reissue(@Header("RefreshToken") refreshToken: String): Response<TokenResponse>
 }
 
