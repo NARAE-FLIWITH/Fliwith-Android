@@ -1,7 +1,7 @@
 package com.narae.fliwith.util
 
 enum class DISABILITY {
-    HEARING, VISUAL, PHYSICAL, NONDISABLED, NONE, NOTSELECTED;
+    HEARING, VISUAL, PHYSICAL, NONDISABLED, NONE;
 
     companion object {
         fun fromString(value: String): DISABILITY {
@@ -10,8 +10,7 @@ enum class DISABILITY {
                 "청각장애" -> DISABILITY.HEARING
                 "지체장애" -> DISABILITY.PHYSICAL
                 "비장애" -> DISABILITY.NONDISABLED
-                "선택 안 함" -> DISABILITY.NONE
-                else -> DISABILITY.NOTSELECTED // 기본 값을 설정
+                else -> DISABILITY.NONE
             }
         }
 
@@ -22,7 +21,6 @@ enum class DISABILITY {
                 DISABILITY.PHYSICAL -> "지체장애"
                 DISABILITY.NONDISABLED -> "비장애"
                 DISABILITY.NONE -> "선택 안 함"
-                else -> "선택 X" // 기본 값
             }
         }
     }
