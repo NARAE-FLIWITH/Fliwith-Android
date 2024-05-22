@@ -37,15 +37,12 @@ class AddTokenInterceptor : Interceptor {
             // 리프레쉬 토큰 살아있을 때 -> 리프레쉬 토큰 담아서 요청 보내고 재발급
             else {
                 response.close()
-                val request = chain.request().newBuilder().header(AUTHORIZATION, "Bearer $refreshToken").build()
+                val request =
+                    chain.request().newBuilder().header(AUTHORIZATION, "Bearer $refreshToken")
+                        .build()
                 response = chain.proceed(request)
             }
-
-            return response
         }
-
-
-        Log.d("header", "intercept: ${response.headers}")
         return response
     }
 }
