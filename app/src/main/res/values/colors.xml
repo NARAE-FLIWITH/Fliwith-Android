@@ -29,6 +29,13 @@
     <color name="nonDisabled">#FF78BEEC</color>
     <color name="none">#FFD2D2D2</color>
 
+    <color name="visual_background">#33FFB6B6</color>
+    <color name="hearing_background">#33FEDD67</color>
+    <color name="physical_background">#33ABDAA2</color>
+    <color name="disabled_background">#33C1BAE5</color>
+    <color name="nonDisabled_background">#3378BEEC</color>
+    <color name="none_background">#33D2D2D2</color>
+
     <color name="btnEnabled">#FFC1BAE5</color>
     <color name="btnDisabled">#FFbdbdbd</color>
     <color name="btnChecked">#FF5EBBEC</color>
