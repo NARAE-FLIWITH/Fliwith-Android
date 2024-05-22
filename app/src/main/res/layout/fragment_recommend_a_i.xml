@@ -105,6 +105,7 @@
 
             <LinearLayout
                 android:id="@+id/ai_layout_viewpager"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -114,14 +115,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    app:tabGravity="fill"
                     app:tabIndicatorColor="@color/lightBlue"
                     app:tabIndicatorGravity="bottom"
                     app:tabIndicatorHeight="2dp"
+                    style="@style/Widget.MaterialComponents.TabLayout"
+                    app:tabGravity="fill"
                     app:tabMaxWidth="0dp"
-                    app:tabMode="fixed"
                     app:tabSelectedTextAppearance="@style/btnText"
-                    app:tabSelectedTextColor="@color/lightBlue" />
+                    app:tabSelectedTextColor="@color/lightBlue"
+                    app:tabTextAppearance="@style/btnText" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/ai_viewpager"
