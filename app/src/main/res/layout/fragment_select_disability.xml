@@ -90,13 +90,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <TextView
                 android:id="@+id/tv_select_disability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="장애 유형을 선택해 주세요."
