@@ -58,7 +58,7 @@ class ReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         for (i in 1..20) {
-            reviewList.add(Review(null, userName="유유", heartCount=2))
+            reviewList.add(Review(null,null, userName="유유", heartCount=2))
         }
 
         reviewAdapter = ReviewAdapter(reviewList)
