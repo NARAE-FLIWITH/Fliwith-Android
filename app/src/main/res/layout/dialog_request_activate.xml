@@ -30,7 +30,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_cancel"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/btn_outlined"
@@ -47,7 +47,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_go"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:background="@drawable/btn_outlined"
             android:backgroundTint="@color/lavender"

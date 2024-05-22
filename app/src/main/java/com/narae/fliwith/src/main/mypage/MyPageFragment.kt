@@ -47,7 +47,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             VISUAL -> R.color.visual
             PHYSICAL -> R.color.physical
             NONDISABLED -> R.color.nonDisabled
-            NONE -> R.color.none
+            else -> R.color.none
         }
 
         val backgroundColor = when (profile.disability) {
@@ -55,7 +55,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             VISUAL -> R.drawable.mypage_background_visual
             PHYSICAL -> R.drawable.mypage_background_physical
             NONDISABLED -> R.drawable.mypage_background_nondisabled
-            NONE -> R.drawable.mypage_background_none
+            else -> R.drawable.mypage_background_none
         }
 
         val category = when (profile.disability) {
@@ -63,7 +63,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             VISUAL -> "시각장애"
             PHYSICAL -> "지체장애"
             NONDISABLED -> "비장애"
-            NONE -> "선택 안 함"
+            else -> "선택 안 함"
         }
 
         // 이름, 장애유형 설정
