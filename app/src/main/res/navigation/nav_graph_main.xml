@@ -133,7 +133,11 @@
         android:id="@+id/reviewWriteFragment"
         android:name="com.narae.fliwith.src.main.review.ReviewWriteFragment"
         android:label="fragment_review_write"
-        tools:layout="@layout/fragment_review_write" />
+        tools:layout="@layout/fragment_review_write" >
+        <action
+            android:id="@+id/action_reviewWriteFragment_to_reviewSpotNameFragment"
+            app:destination="@id/reviewSpotNameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/typeFragment"
         android:name="com.narae.fliwith.src.main.recommend.TypeFragment"
@@ -144,4 +148,13 @@
         android:name="com.narae.fliwith.src.main.recommend.RecommendAIFragment"
         android:label="fragment_recommend_a_i"
         tools:layout="@layout/fragment_recommend_a_i" />
+    <fragment
+        android:id="@+id/reviewSpotNameFragment"
+        android:name="com.narae.fliwith.src.main.review.ReviewSpotNameFragment"
+        android:label="fragment_review_spot_name"
+        tools:layout="@layout/fragment_review_spot_name" >
+        <action
+            android:id="@+id/action_reviewSpotNameFragment_to_reviewWriteFragment"
+            app:destination="@id/reviewWriteFragment" />
+    </fragment>
 </navigation>

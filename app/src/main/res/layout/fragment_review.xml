@@ -95,10 +95,10 @@
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/btn_solid_review_write"
-        android:paddingRight="40dp"
-        android:paddingLeft="40dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -106,13 +106,14 @@
         <LinearLayout
             android:id="@+id/review_write_btn"
             android:orientation="horizontal"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/review_write_icon"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/review_write_icon" />
 
@@ -123,7 +124,7 @@
                 android:font="@font/pretendard_medium"
                 android:fontWeight="600"
                 android:text="리뷰 쓰기"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
 

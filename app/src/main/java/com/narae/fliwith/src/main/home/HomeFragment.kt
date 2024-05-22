@@ -75,7 +75,6 @@ class HomeFragment : Fragment() {
         val navController = findNavController()
 
         binding.btnRecommendation.setOnClickListener{
-            mainActivity.viewGone()
             navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }
 

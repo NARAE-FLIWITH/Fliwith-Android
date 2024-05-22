@@ -12,7 +12,6 @@ import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity

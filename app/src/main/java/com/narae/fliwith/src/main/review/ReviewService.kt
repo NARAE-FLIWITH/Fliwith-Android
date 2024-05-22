@@ -5,7 +5,9 @@ import com.narae.fliwith.config.models.ResponseDto
 import com.narae.fliwith.src.main.recommend.RecommendService
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
+import com.narae.fliwith.src.main.review.models.ReviewPresignedResponse
 import com.narae.fliwith.src.main.review.models.ReviewResponse
+import com.narae.fliwith.src.main.review.models.ReviewSpotNameResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -25,7 +27,7 @@ public interface ReviewService {
 
     // 리뷰 작성
     @POST("/review")
-    suspend fun insertReview()
+    suspend fun insertReview(): Response<ResponseDto>
 
     // 리뷰 수정
     @PATCH("/review/{reviewId}")
@@ -41,7 +43,11 @@ public interface ReviewService {
 
     // 리뷰 사진 첨부 URL 요청
     @POST("/review/presigned")
-    suspend fun presignedReview(): Response<MutableList<String>>
+    suspend fun presignedReview(): Response<ReviewPresignedResponse>
+
+    // 관광지 이름 키워드로 검색
+    @GET("/review")
+    suspend fun spotName(@Query("spotName") spotName: String) : Response<ReviewSpotNameResponse>
 
 }
 

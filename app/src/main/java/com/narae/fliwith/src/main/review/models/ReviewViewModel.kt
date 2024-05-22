@@ -79,13 +79,11 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 좋아요 & 좋아요 취소
-
     fun fetchLikeReview(reviewId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
                 val response = ReviewApi.reviewService.likeReview(reviewId)
                 if (response.isSuccessful) {
-
                     callback(true)
                 } else {
                     Log.e(TAG, "Review Delete Response not successful: ${response.errorBody()}")
@@ -99,7 +97,64 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 작성
+    fun fetchInsert(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try{
+                val response = ReviewApi.reviewService.insertReview()
+                if (response.isSuccessful) {
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            }catch (e : Exception) {
+                Log.e(TAG, "Review insert API call failed", e)
+                callback(false)
+            }
+        }
+    }
 
+    // 리뷰 사진 첨부 URL 요청
+    fun fetchPresignedReview(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try{
+                val response = ReviewApi.reviewService.presignedReview()
+                if (response.isSuccessful) {
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            }catch (e : Exception) {
+                Log.e(TAG, "Review insert API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
+    private val _reviewSpotNameResponse = MutableLiveData<ReviewSpotNameResponse?>()
+    val reviewSpotNameResponse: LiveData<ReviewSpotNameResponse?>
+        get() = _reviewSpotNameResponse
+
+    // 관광지 이름(키워드)으로 검색
+    fun fetchSpotName(name: String, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try{
+                val response = ReviewApi.reviewService.spotName(name)
+                if (response.isSuccessful) {
+                    val reviewSpotNameDataList = response.body()
+                    _reviewSpotNameResponse.value = reviewSpotNameDataList
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            }catch (e : Exception) {
+                Log.e(TAG, "Review insert API call failed", e)
+                callback(false)
+            }
+        }
+    }
 
     // review 수정
 
