@@ -1,6 +1,7 @@
 package com.narae.fliwith.src.main.review
 
 import com.narae.fliwith.config.ApplicationClass
+import com.narae.fliwith.config.models.ResponseDto
 import com.narae.fliwith.src.main.recommend.RecommendService
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
@@ -32,7 +33,7 @@ public interface ReviewService {
 
     // 리뷰 삭제
     @DELETE("/review/{reviewId}")
-    suspend fun deleteReview(@Path("reviewId") reviewId:Int): Response<Review>
+    suspend fun deleteReview(@Path("reviewId") reviewId:Int): Response<ResponseDto>
 
     // 리뷰 좋아요 등록 & 좋아요 취소
     @POST("/review/{reviewId}")

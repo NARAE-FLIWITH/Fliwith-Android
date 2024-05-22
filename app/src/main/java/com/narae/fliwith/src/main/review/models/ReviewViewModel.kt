@@ -60,4 +60,24 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
+    // review 수정
+
+    // review 삭제
+    fun fetchDeleteReview(reviewId : Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = ReviewApi.reviewService.deleteReview(reviewId)
+                if (response.isSuccessful) {
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review Delete Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Review API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
 }

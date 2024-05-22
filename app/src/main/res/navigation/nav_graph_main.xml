@@ -113,7 +113,9 @@
         tools:layout="@layout/fragment_review" >
         <action
             android:id="@+id/action_reviewFragment_to_reviewDetailFragment"
-            app:destination="@id/reviewDetailFragment" />
+            app:destination="@id/reviewDetailFragment"
+            app:popUpTo="@id/menu_main_btm_nav_review"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_reviewFragment_to_reviewWriteFragment"
             app:destination="@id/reviewWriteFragment" />
@@ -122,7 +124,11 @@
         android:id="@+id/reviewDetailFragment"
         android:name="com.narae.fliwith.src.main.review.ReviewDetailFragment"
         android:label="fragment_review_detail"
-        tools:layout="@layout/fragment_review_detail" />
+        tools:layout="@layout/fragment_review_detail" >
+        <action
+            android:id="@+id/action_reviewDetailFragment_to_menu_main_btm_nav_review"
+            app:destination="@id/menu_main_btm_nav_review" />
+    </fragment>
     <fragment
         android:id="@+id/reviewWriteFragment"
         android:name="com.narae.fliwith.src.main.review.ReviewWriteFragment"

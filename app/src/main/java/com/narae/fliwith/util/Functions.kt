@@ -1,8 +1,11 @@
 package com.narae.fliwith.util
 
 import android.content.Context
+import android.media.Image
 import android.os.SystemClock
 import android.view.View
+import android.widget.ImageView
+import com.narae.fliwith.R
 import kotlin.math.roundToInt
 
 
@@ -41,5 +44,15 @@ class OnSingleClickListener(
 
         lastClickedTime = onClickedTime
         onClickListener.invoke(view)
+    }
+}
+
+fun userProfileImageConvert(type:String, view: ImageView) {
+    when (type) {
+        "VISUAL" -> view.setImageResource(R.drawable.visual_profile_icon)
+        "HEARING" -> view.setImageResource(R.drawable.hearing_profile_icon)
+        "PHYSICAL" -> view.setImageResource(R.drawable.physical_profile_icon)
+        "NONDISABLED" -> view.setImageResource(R.drawable.none_disabled_profile_icon)
+        else -> view.setImageResource(R.drawable.none_profile_icon)
     }
 }
