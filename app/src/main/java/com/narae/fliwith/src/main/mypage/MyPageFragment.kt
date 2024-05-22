@@ -1,6 +1,9 @@
 package com.narae.fliwith.src.main.mypage
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.config.BaseFragment
+import com.narae.fliwith.databinding.DialogProfileGuideBinding
 import com.narae.fliwith.databinding.FragmentMyPageBinding
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService
@@ -92,5 +96,18 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 }
             }
         }
+
+        binding.layoutMypageBox.setOnClickListener {
+            val dialogView = DialogProfileGuideBinding.inflate(layoutInflater)
+
+            val dialog = AlertDialog.Builder(requireContext()).setView(dialogView.root).show()
+            dialogView.apply {
+                btnClose.setOnClickListener {
+                    dialog.dismiss()
+                }
+            }
+            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        }
+
     }
 }
