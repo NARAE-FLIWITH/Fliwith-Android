@@ -30,7 +30,7 @@ class ReviewViewModel : ViewModel() {
                     callback(false)
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Review API call failed", e)
+                Log.e(TAG, "Review Response API call failed", e)
                 callback(false)
             }
         }
@@ -54,13 +54,11 @@ class ReviewViewModel : ViewModel() {
                     callback(false)
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Review API call failed", e)
+                Log.e(TAG, "Review detail API call failed", e)
                 callback(false)
             }
         }
     }
-
-    // review 수정
 
     // review 삭제
     fun fetchDeleteReview(reviewId : Int, callback: (Boolean) -> Unit) {
@@ -74,10 +72,35 @@ class ReviewViewModel : ViewModel() {
                     callback(false)
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Review API call failed", e)
+                Log.e(TAG, "Review delete API call failed", e)
                 callback(false)
             }
         }
     }
+
+    // review 좋아요 & 좋아요 취소
+
+    fun fetchLikeReview(reviewId: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = ReviewApi.reviewService.likeReview(reviewId)
+                if (response.isSuccessful) {
+
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review Delete Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            }catch (e : Exception) {
+                Log.e(TAG, "Review like API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
+    // review 작성
+
+
+    // review 수정
 
 }

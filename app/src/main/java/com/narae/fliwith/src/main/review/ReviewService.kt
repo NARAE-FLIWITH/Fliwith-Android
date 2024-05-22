@@ -37,7 +37,7 @@ public interface ReviewService {
 
     // 리뷰 좋아요 등록 & 좋아요 취소
     @POST("/review/{reviewId}")
-    suspend fun heartReview(@Path("reviewId") reviewId:Int): Response<Boolean>
+    suspend fun likeReview(@Path("reviewId") reviewId:Int): Response<Boolean>
 
     // 리뷰 사진 첨부 URL 요청
     @POST("/review/presigned")
