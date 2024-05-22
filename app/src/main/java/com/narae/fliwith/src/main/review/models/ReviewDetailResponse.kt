@@ -2,10 +2,8 @@ package com.narae.fliwith.src.main.review.models
 
 import java.io.Serializable
 
-data class ReviewResponse(
+data class ReviewDetailResponse(
     val statusCode: Int,
     val message: String,
-    val data: ReviewData
+    val data: ReviewDetailData
 ) : Serializable
-
-

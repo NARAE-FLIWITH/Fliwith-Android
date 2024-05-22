@@ -16,6 +16,7 @@ class ReviewViewModel : ViewModel() {
     val reviewData: LiveData<ReviewResponse?>
         get() = _reviewData
 
+    // review 목록 전체 조회
     fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
@@ -34,4 +35,10 @@ class ReviewViewModel : ViewModel() {
             }
         }
     }
+
+    // review 상세 조회
+    fun fetchSelectReview(reviewId: Int, callback: (Boolean) -> Unit) {
+
+    }
+
 }

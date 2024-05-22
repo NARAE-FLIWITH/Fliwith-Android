@@ -34,9 +34,7 @@ class ReviewFragment : Fragment() {
         get() = _binding!!
 
     private var reviewList = immutableListOf<Review>()
-
     private lateinit var reviewAdapter: ReviewAdapter
-
     private lateinit var mainActivity: MainActivity
 
     private val viewModel: ReviewViewModel by activityViewModels()
@@ -69,7 +67,6 @@ class ReviewFragment : Fragment() {
         reviewAdapter = ReviewAdapter(reviewList)
         binding.reviewRv.apply {
             adapter = reviewAdapter
-            layoutManager = LinearLayoutManager(requireContext())
         }
 
         // 최신순 기본
@@ -89,7 +86,9 @@ class ReviewFragment : Fragment() {
 
         reviewAdapter.setItemClickListener(object : ReviewAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int) {
-                navController.navigate(R.id.action_reviewFragment_to_reviewDetailFragment)
+                val bundle = Bundle()
+                bundle.putInt("reviewId", reviewList[position].reviewId)
+                navController.navigate(R.id.action_reviewFragment_to_reviewDetailFragment, bundle)
             }
         })
 

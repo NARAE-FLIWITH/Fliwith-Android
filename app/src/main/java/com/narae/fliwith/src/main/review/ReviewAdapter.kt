@@ -9,16 +9,17 @@ import com.narae.fliwith.R
 import com.narae.fliwith.databinding.ItemReviewBinding
 import com.narae.fliwith.src.main.review.models.Review
 
-class ReviewAdapter(private var reviewDataList: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewHolder>(){
+class ReviewAdapter(private var reviewDataList: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
 
     inner class ReviewHolder(private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindInfo(review: Review) {
             binding.apply {
+//                reviewDefaultImage.setImageResource(R.drawable.store_default_image)
                 Glide.with(binding.root.context)
                     .load(review.image)
                     .into(reviewDefaultImage)
 
-                // HEARING, VISUAL, PHYSICAL, NON DISABLED, NONE, NOT SELECTED
+                // HEARING, VISUAL, PHYSICAL, NONDISABLED, NONE, NOTSELECTED
                 // 장애 별로 프로필 색상 변경
                 when (review.disability) {
                     "VISUAL" -> reviewProfileImage.setImageResource(R.drawable.visual_profile_icon)
