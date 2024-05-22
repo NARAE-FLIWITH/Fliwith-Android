@@ -71,6 +71,7 @@
                 android:id="@+id/et_email"
                 style="@style/textInputEditText"
                 android:inputType="textEmailAddress"
+                android:maxLines="1"
                 android:hint="@string/email"
                 android:text="@{user.email}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -98,6 +99,7 @@
                 android:id="@+id/et_pw"
                 style="@style/textInputEditText"
                 android:hint="@string/password"
+                android:maxLines="1"
                 android:inputType="textPassword"
                 android:text="@{user.password}" />
         </com.google.android.material.textfield.TextInputLayout>
