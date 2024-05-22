@@ -3,6 +3,7 @@ package com.narae.fliwith.src.main.review
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.src.main.recommend.RecommendService
 import com.narae.fliwith.src.main.review.models.Review
+import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
 import com.narae.fliwith.src.main.review.models.ReviewResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
@@ -19,7 +20,7 @@ public interface ReviewService {
 
     // 리뷰 상세 조회
     @GET("/review/{reviewId}")
-    suspend fun selectReview(@Path("reviewId") reviewId:Int): Response<Review>
+    suspend fun selectReview(@Path("reviewId") reviewId:Int): Response<ReviewDetailResponse>
 
     // 리뷰 작성
     @POST("/review")

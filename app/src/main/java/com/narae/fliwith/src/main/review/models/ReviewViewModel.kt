@@ -12,9 +12,9 @@ private const val TAG = "ReviewViewModel_싸피"
 
 class ReviewViewModel : ViewModel() {
 
-    private val _reviewData = MutableLiveData<ReviewResponse?>()
-    val reviewData: LiveData<ReviewResponse?>
-        get() = _reviewData
+    private val _reviewDataResponse = MutableLiveData<ReviewResponse?>()
+    val reviewDataResponse: LiveData<ReviewResponse?>
+        get() = _reviewDataResponse
 
     // review 목록 전체 조회
     fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean) -> Unit) {
@@ -23,7 +23,7 @@ class ReviewViewModel : ViewModel() {
                 val response = ReviewApi.reviewService.selectAllReviews(pageNo, order)
                 if (response.isSuccessful) {
                     val reviewDataList = response.body()
-                    _reviewData.value = reviewDataList
+                    _reviewDataResponse.value = reviewDataList
                     callback(true)
                 } else {
                     Log.e(TAG, "Review Response not successful: ${response.errorBody()}")
@@ -36,9 +36,28 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
+    private val _reviewDetailData = MutableLiveData<ReviewDetailResponse?>()
+    val reviewDetailData: LiveData<ReviewDetailResponse?>
+        get() = _reviewDetailData
+
     // review 상세 조회
     fun fetchSelectReview(reviewId: Int, callback: (Boolean) -> Unit) {
-
+        viewModelScope.launch {
+            try {
+                val response = ReviewApi.reviewService.selectReview(reviewId)
+                if (response.isSuccessful) {
+                    val reviewData = response.body()
+                    _reviewDetailData.value = reviewData
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review Detail Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Review API call failed", e)
+                callback(false)
+            }
+        }
     }
 
 }

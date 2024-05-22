@@ -126,7 +126,7 @@ class ReviewFragment : Fragment() {
     }
 
     private fun observeReviewData() {
-        viewModel.reviewData.observe(viewLifecycleOwner, Observer { reviewResponse ->
+        viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
             reviewResponse?.data?.reviews?.let { reviews ->
                 reviewList = reviews
                 reviewAdapter.updateReviews(reviews)
