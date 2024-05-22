@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.narae.fliwith.R
@@ -65,8 +66,10 @@ class RecommendAIFragment : BaseFragment<FragmentRecommendAIBinding>(FragmentRec
         binding.aiTvAddress.text = responseData?.detailCommon?.addr1
         Log.d(TAG, "fetchView firstimage1 : ${responseData?.detailCommon?.firstimage}")
         Log.d(TAG, "fetchView firstimage2 : ${responseData?.detailCommon?.firstimage2}")
-//        Glide.with(requireContext())
-//            .load(responseData?.detailCommon?.firstimage)
-//            .into(binding.aiImgThumbnail)
+        if(responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
+            Glide.with(requireContext())
+                .load(responseData?.detailCommon?.firstimage)
+                .into(binding.aiImgThumbnail)
+        }
     }
 }
