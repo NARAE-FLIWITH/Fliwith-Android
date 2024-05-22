@@ -1,17 +1,21 @@
 package com.narae.fliwith.src.main.review
 
+import com.narae.fliwith.config.ApplicationClass
+import com.narae.fliwith.src.main.recommend.RecommendService
 import com.narae.fliwith.src.main.review.models.Review
+import com.narae.fliwith.src.main.review.models.ReviewResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 public interface ReviewService {
     // 리뷰 목록 조회 (인기순, 최신순)
-    @GET("/review/list?pageNo={pageNo}&order={order}")
-    suspend fun selectAllReviews(@Path("pageNo") pageNo:Int, @Path("order") order:String): Response<MutableList<Review>>
+    @GET("/review/list")
+    suspend fun selectAllReviews(@Query("pageNo") pageNo:Int, @Query("order") order:String): Response<ReviewResponse>
 
     // 리뷰 상세 조회
     @GET("/review/{reviewId}")
@@ -37,4 +41,10 @@ public interface ReviewService {
     @POST("/review/presigned")
     suspend fun presignedReview(): Response<MutableList<String>>
 
+}
+
+object ReviewApi {
+    val reviewService by lazy {
+        ApplicationClass.retrofit.create(ReviewService::class.java)
+    }
 }

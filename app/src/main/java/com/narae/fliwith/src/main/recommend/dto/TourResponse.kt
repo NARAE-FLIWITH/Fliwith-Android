@@ -13,7 +13,7 @@ data class TourData(
     val detailWithTour: DetailWithTour,
     val detailIntro: DetailIntro,
     val detailCommon: DetailCommon,
-    val reviews: List<Review> // 리뷰가 없으므로 Any 타입의 리스트로 처리
+    val reviews: List<Review>
 )
 
 data class DetailWithTour(
