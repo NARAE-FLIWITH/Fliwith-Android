@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingRight="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingRight="10dp">
 
     <RelativeLayout
         android:id="@+id/store_rl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/store_img"
-            android:tintMode="src_atop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/store_default_image"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:background="@drawable/image_radius"
+            android:scaleType="centerCrop"
+            android:src="@drawable/store_default_image"
+            android:tintMode="src_atop"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </ImageView>
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <TextView
             android:id="@+id/store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="식당1"
-            android:textStyle="bold"
-            android:textSize="14dp"
-            android:fontWeight="700"
+            android:layout_centerInParent="true"
             android:font="@font/pretendard_medium"
+            android:fontWeight="700"
+            android:letterSpacing="0.06"
+            android:text="식당1"
             android:textColor="@color/white"
-            android:layout_centerInParent="true">
-        </TextView>
+            android:textSize="14sp"
+            android:textStyle="bold"></TextView>
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

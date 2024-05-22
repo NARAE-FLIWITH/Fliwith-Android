@@ -8,19 +8,25 @@ import com.narae.fliwith.R
 import com.narae.fliwith.databinding.TourItemBinding
 import com.narae.fliwith.src.main.home.models.Tour
 
-class HomeTourAdapter (private val tourDataList: MutableList<Tour>) : RecyclerView.Adapter<HomeTourAdapter.TourHolder>(){
+class HomeTourAdapter(private val tourDataList: MutableList<Tour>) :
+    RecyclerView.Adapter<HomeTourAdapter.TourHolder>() {
 
     private lateinit var binding: TourItemBinding
+
     inner class TourHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bindInfo(tour: Tour) {
             binding.apply {
-                tourImg.setImageResource(R.drawable.tour_default_image)
-                tourGo.text =">"
+                if (tour.imageUrl == -1) {
+                    tourImg.setImageResource(R.drawable.tour_default_image)
+                } else {
+                    tourImg.setImageResource(tour.imageUrl)
+                }
                 tourName.text = tour.tourName
                 tourImg.clipToOutline = true
             }
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTourAdapter.TourHolder {
         val inflater = LayoutInflater.from(parent.context)
         binding = TourItemBinding.inflate(inflater, parent, false)

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/pretendard_medium"
-        android:text="앱을 종료하려면 뒤로 가기를 한 번 더 눌러주세요"
+        android:text="메세지"
         android:textColor="@color/white"
         android:textSize="14sp" />
 

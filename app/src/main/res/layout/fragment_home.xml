@@ -1,90 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@color/white"
-    android:background="@color/white"
-    android:padding="25dp"
-    tools:context=".src.main.home.HomeFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="5dp"
+        tools:background="@color/white"
+        tools:context=".src.main.home.HomeFragment">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_gravity="center"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/logo_lavender" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_recommendation"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:textSize="18sp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/btn_solid"
-            android:backgroundTint="@color/lavender"
-            android:text="나에게 딱 맞는 여행지 찾아보기"
-
-            android:textAppearance="@style/btnText"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="요즘 인기 많은 관광지 🌊"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:fontWeight="500"
-            android:layout_marginBottom="20dp"
-            android:font="@font/pretendard_medium">
-        </TextView>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="52dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp"
+                android:src="@drawable/logo_lavender" />
 
-        <!-- 관광지 이미지 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tour_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="192dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/btn_solid"
+                android:backgroundTint="@color/lavender"
+                android:text="나에게 딱 맞는 여행지 찾아보기"
+                android:textAppearance="@style/btnText"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="지금 가볼만한 식당은? 🍚"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:fontWeight="500"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:font="@font/pretendard_medium">
-        </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:letterSpacing="0.03"
+                android:paddingHorizontal="4dp"
+                android:text="요즘 인기 많은 관광지 🌊"
+                android:textSize="20dp"></TextView>
 
-        <!-- 식당 이미지 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/store_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            <!-- 관광지 이미지 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tour_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="192dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:letterSpacing="0.03"
+                android:paddingHorizontal="4dp"
+                android:text="지금 가볼만한 식당은? 🍚"
+                android:textSize="20dp"></TextView>
 
+            <!-- 식당 이미지 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/store_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -12,9 +12,11 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -33,14 +35,22 @@ import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogRequestActivateBinding
 import com.narae.fliwith.databinding.DialogRequestPermissionsBinding
 import com.narae.fliwith.databinding.FragmentMapBinding
+import com.narae.fliwith.src.main.map.MapApi.mapService
+import com.narae.fliwith.src.main.map.models.SpotWithLocation
 import com.narae.fliwith.util.setOnSingleClickListener
+import com.narae.fliwith.util.showCustomSnackBar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-
-private const val TAG = "싸피"
+private const val TAG = "MapFragment"
 
 class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate) {
 
     private lateinit var mapView: MapView
+    private lateinit var homeLocation: LatLng
+    private val defaultLocation = LatLng.from(37.547850180, 127.074454848)
+    private lateinit var centerPosition: LatLng
     lateinit var homeLabelStyles: LabelStyles
     lateinit var labelStyles: LabelStyles
     lateinit var map: KakaoMap
@@ -53,6 +63,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
         override fun onMapError(p0: Exception?) {
         }
+
     }
 
     private val kakaoMapReadyCallback = object : KakaoMapReadyCallback() {
@@ -65,8 +76,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             labelStyles =
                 map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
             map.cameraMaxLevel = 19
-            map.cameraMinLevel = 14
+            map.cameraMinLevel = 12
+            centerPosition = map.cameraPosition?.position ?: defaultLocation
             setInitialLocation()
+
+            map.setOnCameraMoveEndListener { _, cameraPosition, _ ->
+                centerPosition = cameraPosition.position
+            }
         }
 
         @SuppressLint("MissingPermission")
@@ -76,23 +92,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 val location = if (it.isSuccessful && it.result != null) {
                     LatLng.from(it.result.latitude, it.result.longitude)
                 } else {
-                    LatLng.from(37.547850180, 127.074454848)
+                    defaultLocation
                 }
 
                 map.moveCamera(CameraUpdateFactory.newCenterPosition(location))
-                setHomeMarker(location.latitude, location.longitude)
+                homeLocation = LatLng.from(location.latitude, location.longitude)
+                setHomeLabel()
             }
         }
 
         // 지도 시작 시 확대/축소 줌 레벨 설정
         override fun getZoomLevel(): Int {
-            return 18
+            return 13
         }
 
-        private fun setHomeMarker(lat: Double, lng: Double) {
-            val options = LabelOptions.from(LatLng.from(lat, lng)).setStyles(homeLabelStyles)
-            val layer: LabelLayer = map.labelManager?.getLayer()!!
-            layer.addLabel(options)
+        override fun getPosition(): LatLng {
+            return super.getPosition()
         }
     }
 
@@ -105,9 +120,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setListeners() {
+        // 검색 버튼 클릭 시
         binding.layoutFab.setOnSingleClickListener {
-
-            if ((requireContext().getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
+            if (!(requireContext().getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                     LocationManager.FUSED_PROVIDER
                 )
             ) {
@@ -120,12 +135,64 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 return@setOnSingleClickListener
             }
 
+            mLoadingDialog.show()
+            searchSpots()
+        }
+    }
+
+    private fun searchSpots() {
+        lifecycleScope.launch {
+            val response = withContext(Dispatchers.IO) {
+                mapService.searchByLocation(
+                    centerPosition.latitude,
+                    centerPosition.longitude,
+                    12
+                )
+            }
+
+            if (response.isSuccessful) {
+                val options = LabelOptions.from(centerPosition).setStyles(homeLabelStyles)
+               map.labelManager?.getLayer()!!.addLabel(options)
+
+                // 기존 모든 라벨 지우기
+                val layer: LabelLayer = map.labelManager?.getLayer()!!
+                layer.removeAll()
+                // 홈 라벨 찍어주기
+                setHomeLabel()
+                val spots = response.body()?.spotList
+
+                // 조회 결과가 비어 있으면
+                if(spots?.isEmpty() != false){
+                    showCustomSnackBar(requireContext(), binding.root, "주변에 관광지가 없어요 😭")
+                }
+                // 있으면
+                else {
+                    spots.forEach {
+                        setLabel(it)
+                    }
+                    showCustomSnackBar(requireContext(), binding.root, "주변 관광지를 찾았어요")
+                }
+                mLoadingDialog.dismiss()
+            } else {
+                Log.d(TAG, "searchSpots Error:  ${response.errorBody()?.string()}")
+            }
+        }
+    }
+
+    private fun setLabel(spot: SpotWithLocation) {
+        val options =
+            LabelOptions.from(LatLng.from(spot.latitude, spot.longitude)).setStyles(labelStyles)
+        val layer: LabelLayer = map.labelManager?.getLayer()!!
+        layer.addLabel(options)
+
+        // 맵 라벨 클릭시 상세 페이지 보여주기
+        map.setOnLabelClickListener { kakaoMap, labelLayer, label ->
 
         }
     }
 
-    private fun setMarker(lat: Double, lng: Double) {
-        val options = LabelOptions.from(LatLng.from(lat, lng)).setStyles(labelStyles)
+    private fun setHomeLabel() {
+        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles)
         val layer: LabelLayer = map.labelManager?.getLayer()!!
         layer.addLabel(options)
     }
@@ -136,14 +203,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             permission.ACCESS_FINE_LOCATION
         )
 
-        permissions.filter { permission ->
+        val result = permissions.filter { permission ->
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 permission
             ) == PackageManager.PERMISSION_DENIED
         }
 
-        return permissions.isEmpty()
+        return result.isEmpty()
     }
 
 
@@ -176,6 +243,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             object : PermissionListener {
                 override fun onPermissionGranted() {
                     mapView.start(lifecycleCallback, kakaoMapReadyCallback)
+
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {

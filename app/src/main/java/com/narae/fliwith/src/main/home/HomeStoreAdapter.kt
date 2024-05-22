@@ -8,19 +8,29 @@ import com.narae.fliwith.R
 import com.narae.fliwith.databinding.StoreItemBinding
 import com.narae.fliwith.src.main.home.models.Store
 
-class HomeStoreAdapter (private val storeDataList: MutableList<Store>) : RecyclerView.Adapter<HomeStoreAdapter.StoreHolder>(){
+class HomeStoreAdapter(private val storeDataList: MutableList<Store>) :
+    RecyclerView.Adapter<HomeStoreAdapter.StoreHolder>() {
 
     private lateinit var binding: StoreItemBinding
+
     inner class StoreHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindInfo(tour: Store) {
+        fun bindInfo(store: Store) {
             binding.apply {
-                storeImg.setImageResource(R.drawable.store_default_image)
-                storeName.text = tour.storeName
+                if (store.imageUrl == -1) {
+                    storeImg.setImageResource(R.drawable.store_default_image)
+                } else {
+                    storeImg.setImageResource(store.imageUrl)
+                }
+                storeName.text = store.storeName
                 storeImg.clipToOutline = true
             }
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeStoreAdapter.StoreHolder {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HomeStoreAdapter.StoreHolder {
         val inflater = LayoutInflater.from(parent.context)
         binding = StoreItemBinding.inflate(inflater, parent, false)
         return StoreHolder(binding.root)
