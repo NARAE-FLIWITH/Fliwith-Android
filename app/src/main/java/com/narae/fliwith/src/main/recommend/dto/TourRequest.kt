@@ -1,6 +1,6 @@
 package com.narae.fliwith.src.main.recommend.dto
-
-import com.narae.fliwith.src.main.DISABILITY
+import com.narae.fliwith.util.DISABILITY
+import java.io.Serializable
 
 data class TourRequest(
     val area: String,
@@ -8,4 +8,4 @@ data class TourRequest(
     val disability: DISABILITY,
     val peopleNum: Int,
     val visitedDate: String
-)
+) : Serializable

@@ -84,8 +84,13 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
+
     // Normal
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+
+    // glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 }
 
 fun getProperty(keyName: String) : String {

@@ -56,10 +56,10 @@ class DisableFragment : Fragment() {
         binding.disableDeafBtn.layoutRecommendSelectDetailBtn.text = "청각장애"
         binding.disablePhysicalBtn.layoutRecommendSelectDetailBtn.text = "지체장애"
         binding.disableNotDisabilityBtn.layoutRecommendSelectDetailBtn.text = "비장애"
-        binding.disableNotSelectedBtn.layoutRecommendSelectDetailBtn.text = "선택 안 함 "
+        binding.disableNotSelectedBtn.layoutRecommendSelectDetailBtn.text = "선택 안 함"
 
         binding.disableBlindBtn.layoutRecommendSelectDetailBtn.isSelected = true
-        viewModel.setSelectedDisableButtonText("시각장애")
+        viewModel.setSelectedDisableButtonText("선택 안 함")
 
         val buttons = arrayOf(
             binding.disableBlindBtn,

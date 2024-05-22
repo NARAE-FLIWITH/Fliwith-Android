@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.src.auth.AuthActivity
+import com.narae.fliwith.src.main.recommend.ViewPagerAdapter
 import com.narae.fliwith.util.LoadingDialog
 
 // Fragment의 기본을 작성, 뷰 바인딩 활용
