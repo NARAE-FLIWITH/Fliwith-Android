@@ -6,6 +6,7 @@ import com.narae.fliwith.src.main.recommend.RecommendService
 import com.narae.fliwith.src.main.recommend.dto.TourRequest
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
+import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedResponse
 import com.narae.fliwith.src.main.review.models.ReviewResponse
@@ -31,7 +32,7 @@ public interface ReviewService {
 
     // 리뷰 작성
     @POST("review")
-    suspend fun insertReview(): Response<ResponseDto>
+    suspend fun insertReview(@Body request: ReviewInsertRequest): Response<ResponseDto>
 
     // 리뷰 수정
     @PATCH("review/{reviewId}")

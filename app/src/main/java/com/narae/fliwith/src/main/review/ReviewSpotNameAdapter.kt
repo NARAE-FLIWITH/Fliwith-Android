@@ -14,6 +14,8 @@ class ReviewSpotNameAdapter(context: Context, private var spotNameDataList: List
         fun bindInfo(spotName: ReviewSpotName) {
             binding.apply {
 
+                binding.spotName.text = spotName.name
+
                 itemView.setOnClickListener {
                     itemClickListener.onClick(it, layoutPosition)
                 }

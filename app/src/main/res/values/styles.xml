@@ -22,6 +22,15 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="textInputEditTextSearch" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">34dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:background">@drawable/review_radius_spot_name_search</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="btnText" parent="TextAppearance.AppCompat">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>

@@ -107,18 +107,27 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
+    // review Request
+    private val _reviewInsertRequest = MutableLiveData<ReviewInsertRequest>()
+    val reviewInsertRequest: LiveData<ReviewInsertRequest> get() = _reviewInsertRequest
+
+    fun setReviewInsertRequest(request: ReviewInsertRequest) {
+        _reviewInsertRequest.value = request
+    }
+
     // review 작성
-    fun fetchInsert(callback: (Boolean) -> Unit) {
+    fun fetchInsert(request: ReviewInsertRequest?, callback: (Boolean) -> Unit) {
+        request ?: return callback(false) // null 처리
         viewModelScope.launch {
-            try{
-                val response = ReviewApi.reviewService.insertReview()
+            try {
+                val response = ReviewApi.reviewService.insertReview(request)
                 if (response.isSuccessful) {
                     callback(true)
                 } else {
                     Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
                     callback(false)
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.e(TAG, "Review insert API call failed", e)
                 callback(false)
             }
@@ -181,6 +190,33 @@ class ReviewViewModel : ViewModel() {
                 callback(false)
             }
         }
+    }
+
+    // 선택한 spot name
+    private val _reviewSpotName = MutableLiveData<String?>()
+    val reviewSpotName: LiveData<String?>
+        get() = _reviewSpotName
+
+    fun setSpotName(spotName: String) {
+        _reviewSpotName.value = spotName
+    }
+
+    // 선택한 spot name 의 contentId
+    private val _reviewSpotContentId = MutableLiveData<Int?>()
+    val reviewSpotContentId: LiveData<Int?>
+        get() = _reviewSpotContentId
+
+    fun setSpotContentId(contentId: Int) {
+        _reviewSpotContentId.value = contentId
+    }
+
+    // content 내용
+    private val _reviewWriteContent = MutableLiveData<String?>()
+    val reviewWriteContent: LiveData<String?>
+        get() = _reviewWriteContent
+
+    fun setReviewWriteContent(content: String) {
+        _reviewWriteContent.value = content
     }
 
     // review 수정

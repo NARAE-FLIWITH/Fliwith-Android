@@ -52,6 +52,6 @@
 
     <!--  review btn color  -->
     <color name="btnReviewWrite">#AA9EE9</color>
-    
     <color name="reviewBackground">#F3FBFF</color>
+    <color name="reviewSearchBackground">#40CCB9E4</color>
 </resources>

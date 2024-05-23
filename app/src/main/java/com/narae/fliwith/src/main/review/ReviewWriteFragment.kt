@@ -3,6 +3,8 @@ package com.narae.fliwith.src.main.review
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentReviewWriteBinding
 import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 
@@ -89,16 +92,60 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
         }
 
         // 지역 작성 버튼을 누르면
-        binding.reviewWriteEt.setOnClickListener {
+        binding.reviewWriteEtLayout.setOnClickListener {
             // 검색창 화면 으로 이동
             navController.navigate(R.id.action_reviewWriteFragment_to_reviewSpotNameFragment)
         }
 
-        // 작성
-        binding.reviewWriteBtn.setOnClickListener {
-            // 작성 하고 리뷰 화면 으로 다시 이동
-        }
+        // 내가 선택한 spotName
+        binding.reviewWriteEt.setText(viewModel.reviewSpotName.value)
 
+        // EditText에 TextWatcher 설정
+        binding.reviewWriteComment.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setReviewWriteContent(s.toString())
+                binding.reviewWriteCommentTv.text = "${viewModel.reviewWriteContent.value?.length}자 / 최소 20자"
+            }
+        })
+
+        // ReviewWriteContent 변경 관찰
+        viewModel.reviewWriteContent.observe(viewLifecycleOwner) { content ->
+            if (content != null && content.length >= 20 &&
+                viewModel.reviewSpotName.value != null && viewModel.uploadedImageUrl.value != null) {
+                binding.reviewWriteBtn.isEnabled = true
+                // 작성
+                binding.reviewWriteBtn.setOnClickListener {
+                    Log.d(TAG, "onViewCreated: ${viewModel.uploadedImageUrl.value }")
+                    // 작성 하고 리뷰 화면 으로 다시 이동
+                    val request = ReviewInsertRequest(
+                        viewModel.reviewSpotContentId.value!!,
+                        content!!,
+                        listOf(viewModel.uploadedImageUrl.value!!))
+                    postReviewData(request)
+                }
+            }else {
+                binding.reviewWriteBtn.isEnabled = false
+            }
+        }
+        
+
+    }
+    
+    fun postReviewData(request : ReviewInsertRequest) {
+        viewModel.setReviewInsertRequest(request)
+        viewModel.fetchInsert(viewModel.reviewInsertRequest.value) { success ->
+            if (success) {
+                // 작성하고 리뷰 화면으로 다시 이동
+                navController.navigate(R.id.action_reviewWriteFragment_to_menu_main_btm_nav_review)
+            } else {
+                // 에러 처리
+                Log.d(TAG, "postReviewData: 리뷰 작성 못해따!")
+            }
+        }
     }
 
     fun showPopUp(view: View) {
@@ -143,7 +190,6 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     fun photoPicker() {
         // 이미지만
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-
     }
 
 }

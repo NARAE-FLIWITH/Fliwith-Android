@@ -137,6 +137,9 @@
         <action
             android:id="@+id/action_reviewWriteFragment_to_reviewSpotNameFragment"
             app:destination="@id/reviewSpotNameFragment" />
+        <action
+            android:id="@+id/action_reviewWriteFragment_to_menu_main_btm_nav_review"
+            app:destination="@id/menu_main_btm_nav_review" />
     </fragment>
     <fragment
         android:id="@+id/typeFragment"
