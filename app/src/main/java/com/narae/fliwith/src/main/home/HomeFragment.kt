@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onViewCreated(view, savedInstanceState)
 
         for (i in 1..10) {
-            storeList.add(Store(storeName =  "식당1"))
+            storeList.add(Store(storeName = "식당1"))
         }
 
         storeList = mutableListOf(
@@ -43,9 +43,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         tourList = mutableListOf(
             Tour(R.drawable.tour1, "고불총림 백양사"),
-            Tour(R.drawable.tour2,"고령군 가야 꽃길"),
-            Tour(R.drawable.tour3,"경복궁"),
-            Tour(R.drawable.tour4,"영암 바람의 언덕")
+            Tour(R.drawable.tour2, "고령군 가야 꽃길"),
+            Tour(R.drawable.tour3, "경복궁"),
+            Tour(R.drawable.tour4, "영암 바람의 언덕")
         )
         tourAdapter = HomeTourAdapter(tourList)
         binding.tourRv.adapter = tourAdapter
