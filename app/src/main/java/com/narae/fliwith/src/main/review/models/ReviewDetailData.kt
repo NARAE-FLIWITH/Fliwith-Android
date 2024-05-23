@@ -8,5 +8,6 @@ data class ReviewDetailData(
     val spotName: String,
     val content: String,
     val images: List<String>,
-    val mine: Boolean
+    val mine: Boolean,
+    val like: Boolean
 )

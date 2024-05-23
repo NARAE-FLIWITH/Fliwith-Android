@@ -128,6 +128,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
         // 내가 선택한 spotName
         binding.reviewWriteEt.setText(viewModel.reviewSpotName.value)
+        Log.d(TAG, "onViewCreated review write fragment : ${viewModel.reviewSpotName.value}")
 
         // EditText에 TextWatcher 설정
         binding.reviewWriteComment.addTextChangedListener(object : TextWatcher {

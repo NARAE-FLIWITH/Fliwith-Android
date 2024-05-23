@@ -63,6 +63,8 @@ class ReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.clearData()
+
         reviewAdapter = ReviewAdapter(requireContext(), reviewList)
         binding.reviewRv.apply {
             adapter = reviewAdapter
