@@ -31,14 +31,16 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: ReviewViewModel by activityViewModels()
+    private var reviewId:Int=-1
 
-    // 변경된 pickMedia 함수
+    // pickMedia 함수
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             Log.d(TAG, "photoPicker: 사진 선택 했다.")
-            binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
             Glide.with(requireContext()).load(uri).into(binding.reviewWriteImageFrame)
             Log.d(TAG, "이미지 uri: $uri")
+            if(reviewId==-1) binding.reviewWriteImageFrameSmall.visibility = View.GONE
+            else binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
 
             val imageExtension = getFileExtension(requireContext(), uri)
             val mimeType = viewModel.getMimeType(requireContext(), uri)
@@ -88,7 +90,25 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.reviewWriteImageFrameSmall.visibility = View.GONE
+        // 받아온 reviewId
+        reviewId = arguments?.getInt("reviewId") ?: -1
+
+        // 수정
+        if(reviewId!=-1) {
+            // 수정 기본 데이터 유지 시켜 주기
+            // 장소
+            Log.d(TAG, "onViewCreated review update data check : ${viewModel.reviewSpotName.value}, ${viewModel.uploadedImageUrl}, ${viewModel.reviewWriteContent.value}")
+            binding.reviewWriteEt.setText(viewModel.reviewSpotName.value)
+            // 이미지
+            binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
+            Glide.with(requireContext())
+                .load(viewModel.uploadedImageUrl.value)
+                .into(binding.reviewWriteImageFrame)
+            // 후기
+            binding.reviewWriteComment.setText(viewModel.reviewWriteContent.value)
+        }else {
+            binding.reviewWriteImageFrameSmall.visibility = View.GONE
+        }
 
         // 1 번만 나오고 안나와
         binding.reviewWriteImageFrame.setOnClickListener {
@@ -135,6 +155,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                         content!!,
                         listOf(viewModel.uploadedImageUrl.value!!))
                     postReviewData(request)
+                    viewModel.clearData()
                 }
             }else {
                 binding.reviewWriteBtn.isEnabled = false
@@ -146,15 +167,28 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     
     fun postReviewData(request : ReviewInsertRequest) {
         viewModel.setReviewInsertRequest(request)
-        viewModel.fetchInsert(viewModel.reviewInsertRequest.value) { success ->
-            if (success) {
-                // 작성하고 리뷰 화면으로 다시 이동
-                navController.navigate(R.id.action_reviewWriteFragment_to_menu_main_btm_nav_review)
-            } else {
-                // 에러 처리
-                Log.d(TAG, "postReviewData: 리뷰 작성 못해따!")
+        if(reviewId==-1) {
+            viewModel.fetchInsert(viewModel.reviewInsertRequest.value) { success ->
+                if (success) {
+                    // 작성하고 리뷰 화면으로 다시 이동
+                    navController.navigate(R.id.action_reviewWriteFragment_to_menu_main_btm_nav_review)
+                } else {
+                    // 에러 처리
+                    Log.d(TAG, "postReviewData: 리뷰 작성 못해따!")
+                }
+            }
+        }else {
+            viewModel.fetchUpdate(reviewId, viewModel.reviewInsertRequest.value) { success ->
+                if (success) {
+                    // 작성하고 리뷰 화면으로 다시 이동
+                    navController.popBackStack()
+                } else {
+                    // 에러 처리
+                    Log.d(TAG, "postReviewData: 리뷰 수정 못해따!")
+                }
             }
         }
+
     }
 
     fun showPopUp(view: View) {
@@ -200,5 +234,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
         // 이미지만
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
+
+
 
 }

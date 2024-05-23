@@ -36,7 +36,7 @@ public interface ReviewService {
 
     // 리뷰 수정
     @PATCH("review/{reviewId}")
-    suspend fun updateReview(@Path("reviewId") reviewId:Int): Response<Review>
+    suspend fun updateReview(@Path("reviewId") reviewId:Int, @Body request: ReviewInsertRequest): Response<Review>
 
     // 리뷰 삭제
     @DELETE("review/{reviewId}")

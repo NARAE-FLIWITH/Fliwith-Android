@@ -11,12 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendAIBinding
 import com.narae.fliwith.databinding.FragmentReviewDetailBinding
 import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.review.models.ReviewDetailData
+import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import com.narae.fliwith.util.userProfileImageConvert
 import java.time.LocalDateTime
@@ -33,6 +36,7 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
     private var reviewId:Int=-1
 
     private val viewModel: ReviewViewModel by activityViewModels()
+    private lateinit var response: ReviewDetailData
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,7 +63,7 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
     }
 
     private fun fetchData() {
-        val response = viewModel.reviewDetailData.value?.data
+        response = viewModel.reviewDetailData.value?.data!!
 
         binding.reviewDetailUserName.text = response?.nickname
 
@@ -87,6 +91,12 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
             binding.reviewDetailMenuIcon.visibility = View.GONE
         }
 
+        // 데이터 미리 넣어 두기
+        viewModel.setSpotName(binding.reviewDetailPlace.text.toString())
+        viewModel.setReviewWriteContent(binding.reviewDetailContent.text.toString())
+        viewModel.setImageUrl(response.images[0])
+        Log.d(TAG, "fetchData: ${binding.reviewDetailPlace.text}, ${binding.reviewDetailContent.text}, ${response.images[0]}")
+
     }
 
     private fun popUpMenu() {
@@ -97,7 +107,9 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
             when (menuItem.itemId) {
                 R.id.update -> {
                     // 수정
-
+                    val bundle = Bundle()
+                    bundle.putInt("reviewId", reviewId)
+                    navController.navigate(R.id.action_reviewDetailFragment_to_reviewWriteFragment, bundle)
                 }
                 R.id.delete -> {
                     // 삭제

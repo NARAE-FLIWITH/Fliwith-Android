@@ -49,7 +49,7 @@ FragmentReviewSpotNameBinding::inflate) {
                 viewModel.setSpotName(reviewSpotNameList[position].name)
                 viewModel.setSpotContentId(reviewSpotNameList[position].contentId)
                 Log.d(TAG, "onClick search icon review spot : ${reviewSpotNameList[position].name}, ${reviewSpotNameList[position].contentId}")
-                navController.navigate(R.id.action_reviewSpotNameFragment_to_reviewWriteFragment)
+                navController.popBackStack()
             }
         })
 

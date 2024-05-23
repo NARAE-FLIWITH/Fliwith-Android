@@ -273,11 +273,36 @@ class ReviewViewModel : ViewModel() {
     private val _reviewWriteContent = MutableLiveData<String?>()
     val reviewWriteContent: LiveData<String?>
         get() = _reviewWriteContent
-
     fun setReviewWriteContent(content: String) {
         _reviewWriteContent.value = content
     }
 
     // review 수정
+    fun fetchUpdate(reviewId: Int, request: ReviewInsertRequest?, callback: (Boolean) -> Unit) {
+        request ?: return callback(false) // null 처리
+        viewModelScope.launch {
+            try {
+                val response = ReviewApi.reviewService.updateReview(reviewId, request)
+                if (response.isSuccessful) {
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Review insert API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
+    // 리뷰 작성 후 데이터 reset
+    fun clearData() {
+        _reviewInsertRequest.value = ReviewInsertRequest(-1, "", listOf())
+        _reviewSpotContentId.value = -1
+        _reviewWriteContent.value = ""
+        _reviewSpotName.value = ""
+        _uploadedImageUrl.value = ""
+    }
 
 }
