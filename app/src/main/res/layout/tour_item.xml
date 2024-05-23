@@ -41,9 +41,7 @@
                 android:textSize="16dp"
                 android:layout_alignParentStart="true"
                 android:gravity="start"
-                android:fontWeight="700"
-                android:textStyle="bold"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/white" />
 
 <!--            <ImageView-->
