@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
@@ -17,6 +19,7 @@ import com.narae.fliwith.databinding.FragmentMyPageBinding
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService
 import com.narae.fliwith.src.main.mypage.models.Profile
+import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import com.narae.fliwith.util.DISABILITY.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +28,8 @@ import kotlinx.coroutines.withContext
 private const val TAG = "MyPageFragment"
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
+    private val reviewViewModel by activityViewModels<ReviewViewModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
@@ -95,6 +100,24 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                     Log.d(TAG, "myPage: 로그아웃 실패 ${response.errorBody()?.string()}")
                 }
             }
+        }
+
+        // 내가 좋아요 한 리뷰
+        binding.layoutLikeReview.setOnClickListener {
+            reviewViewModel.fetchLikeReviews(0)
+            val bundle = bundleOf().apply {
+                putString("starting", "ilike")
+            }
+            navController.navigate(R.id.action_menu_main_btm_nav_my_page_to_ILikeFragment, bundle)
+        }
+
+        // 내가 쓴 리뷰
+        binding.layoutWriteReview.setOnClickListener {
+            reviewViewModel.fetchWriteReviews(0)
+            val bundle = bundleOf().apply {
+                putString("starting", "iwrite")
+            }
+            navController.navigate(R.id.action_menu_main_btm_nav_my_page_to_IWriteFragment, bundle)
         }
 
         binding.layoutMypageBox.setOnClickListener {

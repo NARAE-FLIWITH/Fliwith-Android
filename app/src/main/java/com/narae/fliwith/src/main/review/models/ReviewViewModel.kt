@@ -1,23 +1,15 @@
 package com.narae.fliwith.src.main.review.models
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.narae.fliwith.src.main.recommend.dto.TourRequest
-import com.narae.fliwith.src.main.review.ReviewApi
+import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService
+import com.narae.fliwith.src.main.review.ReviewApi.reviewService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.Response
-import java.io.File
-import java.io.IOException
+import kotlinx.coroutines.withContext
 
 private const val TAG = "ReviewViewModel_싸피"
 
@@ -27,11 +19,43 @@ class ReviewViewModel : ViewModel() {
     val reviewDataResponse: LiveData<ReviewResponse?>
         get() = _reviewDataResponse
 
+    // 내가 좋아요 한 리뷰 조회
+    fun fetchLikeReviews(pageNo: Int) {
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO) {
+                myPageService.getLikeReviews(pageNo)
+            }
+
+            if (response.isSuccessful) {
+                _reviewDataResponse.value = response.body()
+            } else {
+                Log.d(TAG, "fetchLikeReviews Error: ${response.errorBody()?.string()}")
+            }
+        }
+    }
+
+    // 내가 쓴 리뷰 조회
+    fun fetchWriteReviews(pageNo: Int) {
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO) {
+                myPageService.getWriteReviews(pageNo)
+            }
+
+            if (response.isSuccessful) {
+                _reviewDataResponse.value = response.body()
+            } else {
+                Log.d(TAG, "fetchWriteReviews Error: ${response.errorBody()?.string()}")
+            }
+        }
+    }
+
     // review 목록 전체 조회
     fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.selectAllReviews(pageNo, order)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.selectAllReviews(pageNo, order)
+                }
                 if (response.isSuccessful) {
                     val reviewDataList = response.body()
                     _reviewDataResponse.value = reviewDataList
@@ -55,7 +79,9 @@ class ReviewViewModel : ViewModel() {
     fun fetchSelectReview(reviewId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.selectReview(reviewId)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.selectReview(reviewId)
+                }
                 if (response.isSuccessful) {
                     val reviewData = response.body()
                     _reviewDetailData.value = reviewData
@@ -72,10 +98,12 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 삭제
-    fun fetchDeleteReview(reviewId : Int, callback: (Boolean) -> Unit) {
+    fun fetchDeleteReview(reviewId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.deleteReview(reviewId)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.deleteReview(reviewId)
+                }
                 if (response.isSuccessful) {
                     callback(true)
                 } else {
@@ -93,14 +121,16 @@ class ReviewViewModel : ViewModel() {
     fun fetchLikeReview(reviewId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.likeReview(reviewId)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.likeReview(reviewId)
+                }
                 if (response.isSuccessful) {
                     callback(true)
                 } else {
                     Log.e(TAG, "Review Delete Response not successful: ${response.errorBody()}")
                     callback(false)
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.e(TAG, "Review like API call failed", e)
                 callback(false)
             }
@@ -120,7 +150,9 @@ class ReviewViewModel : ViewModel() {
         request ?: return callback(false) // null 처리
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.insertReview(request)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.insertReview(request)
+                }
                 if (response.isSuccessful) {
                     callback(true)
                 } else {
@@ -141,10 +173,15 @@ class ReviewViewModel : ViewModel() {
         _uploadedImageUrl.value = url
     }
 
-    fun fetchPresignedReview(request: ReviewPresignedRequest, callback: (Boolean, PresignedData?) -> Unit) {
+    fun fetchPresignedReview(
+        request: ReviewPresignedRequest,
+        callback: (Boolean, PresignedData?) -> Unit
+    ) {
         viewModelScope.launch {
             try {
-                val response = ReviewApi.reviewService.presignedReview(request)
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.presignedReview(request)
+                }
                 if (response.isSuccessful) {
                     val presignedData = response.body()?.data
                     if (presignedData != null) {
@@ -175,8 +212,10 @@ class ReviewViewModel : ViewModel() {
     // 관광지 이름(키워드)으로 검색
     fun fetchSpotName(name: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
-            try{
-                val response = ReviewApi.reviewService.spotName(name)
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.spotName(name)
+                }
                 if (response.isSuccessful) {
                     val reviewSpotNameDataList = response.body()
                     _reviewSpotNameResponse.value = reviewSpotNameDataList
@@ -185,7 +224,7 @@ class ReviewViewModel : ViewModel() {
                     Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
                     callback(false)
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.e(TAG, "Review insert API call failed", e)
                 callback(false)
             }

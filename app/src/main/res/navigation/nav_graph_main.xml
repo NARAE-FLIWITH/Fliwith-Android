@@ -41,7 +41,14 @@
         android:id="@+id/menu_main_btm_nav_my_page"
         android:name="com.narae.fliwith.src.main.mypage.MyPageFragment"
         android:label="fragment_my_page"
-        tools:layout="@layout/fragment_my_page" />
+        tools:layout="@layout/fragment_my_page" >
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_ILikeFragment"
+            app:destination="@id/ILikeFragment" />
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_IWriteFragment"
+            app:destination="@id/IWriteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recommendFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendFragment"
@@ -127,5 +134,21 @@
         <action
             android:id="@+id/action_reviewSpotNameFragment_to_reviewWriteFragment"
             app:destination="@id/reviewWriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ILikeFragment"
+        android:name="com.narae.fliwith.src.main.review.ILikeFragment"
+        android:label="ILikeFragment" >
+        <action
+            android:id="@+id/action_ILikeFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IWriteFragment"
+        android:name="com.narae.fliwith.src.main.review.IWriteFragment"
+        android:label="IWriteFragment" >
+        <action
+            android:id="@+id/action_IWriteFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
     </fragment>
 </navigation>

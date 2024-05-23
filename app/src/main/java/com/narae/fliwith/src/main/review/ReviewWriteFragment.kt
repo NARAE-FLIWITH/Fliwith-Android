@@ -26,45 +26,49 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "ReviewWriteFragment_싸피"
+
 class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
-    FragmentReviewWriteBinding::inflate) {
+    FragmentReviewWriteBinding::inflate
+) {
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: ReviewViewModel by activityViewModels()
 
     // 변경된 pickMedia 함수
-    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        // 사진 선택 이후 돌아왔을 때 콜백
-        if (uri != null) {
-            // 선택된 사진이 있을 경우
-            Log.d(TAG, "photoPicker: 사진 선택 했다.")
-            binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
-            Glide.with(requireContext()).load(uri).into(binding.reviewWriteImageFrame)
-            Log.d(TAG, "이미지 uri: $uri")
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // 사진 선택 이후 돌아왔을 때 콜백
+            if (uri != null) {
+                // 선택된 사진이 있을 경우
+                Log.d(TAG, "photoPicker: 사진 선택 했다.")
+                binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
+                Glide.with(requireContext()).load(uri).placeholder(R.drawable.placeholder)
+                    .error(R.drawable.no_image).into(binding.reviewWriteImageFrame)
+                Log.d(TAG, "이미지 uri: $uri")
 
-            // 선택된 사진의 확장자 가져오기
-            val imageExtension = getFileExtension(requireContext(), uri)
-            Log.d(TAG, "선택된 확장자: $imageExtension")
+                // 선택된 사진의 확장자 가져오기
+                val imageExtension = getFileExtension(requireContext(), uri)
+                Log.d(TAG, "선택된 확장자: $imageExtension")
 
-            // presigned URL 요청
-            viewModel.fetchPresignedReview(ReviewPresignedRequest(imageExtension)) { success, presignedData ->
-                if (success && presignedData != null) {
-                    // 성공적으로 presigned URL을 받은 경우
-                    // 업로드된 이미지의 URL을 ViewModel에 저장
-                    // 리뷰 작성시 imageUrl 그대로 사용
-                    Log.d(TAG, "presignedData: ${presignedData.imageUrl}")
-                    viewModel.setImageUrl(presignedData.imageUrl)
-                } else {
-                    // presigned URL 요청 실패 또는 응답이 null인 경우
-                    // 오류 처리
-                    Log.d(TAG, "review write fragment : 갤러리 에서 사진 가져 오기 실패임 실패")
+                // presigned URL 요청
+                viewModel.fetchPresignedReview(ReviewPresignedRequest(imageExtension)) { success, presignedData ->
+                    if (success && presignedData != null) {
+                        // 성공적으로 presigned URL을 받은 경우
+                        // 업로드된 이미지의 URL을 ViewModel에 저장
+                        // 리뷰 작성시 imageUrl 그대로 사용
+                        Log.d(TAG, "presignedData: ${presignedData.imageUrl}")
+                        viewModel.setImageUrl(presignedData.imageUrl)
+                    } else {
+                        // presigned URL 요청 실패 또는 응답이 null인 경우
+                        // 오류 처리
+                        Log.d(TAG, "review write fragment : 갤러리 에서 사진 가져 오기 실패임 실패")
+                    }
                 }
+            } else {
+                // 선택된 사진이 없을 경우
+                binding.reviewWriteImageFrameSmall.visibility = View.GONE
             }
-        } else {
-            // 선택된 사진이 없을 경우
-            binding.reviewWriteImageFrameSmall.visibility = View.GONE
         }
-    }
 
     private fun getFileExtension(context: Context, uri: Uri): String {
         val mimeType = context.contentResolver.getType(uri)
@@ -108,34 +112,37 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
             override fun afterTextChanged(s: Editable?) {
                 viewModel.setReviewWriteContent(s.toString())
-                binding.reviewWriteCommentTv.text = "${viewModel.reviewWriteContent.value?.length}자 / 최소 20자"
+                binding.reviewWriteCommentTv.text =
+                    "${viewModel.reviewWriteContent.value?.length}자 / 최소 20자"
             }
         })
 
         // ReviewWriteContent 변경 관찰
         viewModel.reviewWriteContent.observe(viewLifecycleOwner) { content ->
             if (content != null && content.length >= 20 &&
-                viewModel.reviewSpotName.value != null && viewModel.uploadedImageUrl.value != null) {
+                viewModel.reviewSpotName.value != null && viewModel.uploadedImageUrl.value != null
+            ) {
                 binding.reviewWriteBtn.isEnabled = true
                 // 작성
                 binding.reviewWriteBtn.setOnClickListener {
-                    Log.d(TAG, "onViewCreated: ${viewModel.uploadedImageUrl.value }")
+                    Log.d(TAG, "onViewCreated: ${viewModel.uploadedImageUrl.value}")
                     // 작성 하고 리뷰 화면 으로 다시 이동
                     val request = ReviewInsertRequest(
                         viewModel.reviewSpotContentId.value!!,
                         content!!,
-                        listOf(viewModel.uploadedImageUrl.value!!))
+                        listOf(viewModel.uploadedImageUrl.value!!)
+                    )
                     postReviewData(request)
                 }
-            }else {
+            } else {
                 binding.reviewWriteBtn.isEnabled = false
             }
         }
-        
+
 
     }
-    
-    fun postReviewData(request : ReviewInsertRequest) {
+
+    fun postReviewData(request: ReviewInsertRequest) {
         viewModel.setReviewInsertRequest(request)
         viewModel.fetchInsert(viewModel.reviewInsertRequest.value) { success ->
             if (success) {
@@ -160,7 +167,10 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                     field.isAccessible = true
                     val menuPopupHelper = field.get(popupMenu)
                     val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
-                    val setForceIcons = classPopupHelper.getMethod("setForceShowIcon", Boolean::class.javaPrimitiveType)
+                    val setForceIcons = classPopupHelper.getMethod(
+                        "setForceShowIcon",
+                        Boolean::class.javaPrimitiveType
+                    )
                     setForceIcons.invoke(menuPopupHelper, true)
                     break
                 }
@@ -175,9 +185,11 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                     // 갤러리 선택
                     photoPicker()
                 }
+
                 R.id.camera_menu -> {
                     // 사진 찍기
                 }
+
                 R.id.file_menu -> {
                     // 파일 탐색
                 }

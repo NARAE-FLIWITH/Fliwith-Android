@@ -27,10 +27,12 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "ReviewDetailFragment_싸피"
-class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentReviewDetailBinding::inflate) {
+
+class ReviewDetailFragment :
+    BaseFragment<FragmentReviewDetailBinding>(FragmentReviewDetailBinding::inflate) {
 
     private lateinit var mainActivity: MainActivity
-    private var reviewId:Int=-1
+    private var reviewId: Int = -1
 
     private val viewModel: ReviewViewModel by activityViewModels()
 
@@ -75,22 +77,25 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
 
         Glide.with(requireContext())
             .load(response?.images?.get(0))
+            .error(R.drawable.no_image)
+            .placeholder(R.drawable.placeholder)
             .into(binding.reviewDefaultImage)
 
         // 수정, 삭제
-        if(response?.mine==true) { // 내 게시물
+        if (response?.mine == true) { // 내 게시물
             binding.reviewDetailMenuIcon.visibility = View.VISIBLE
             binding.reviewDetailMenuIcon.setOnClickListener {
                 popUpMenu()
             }
-        }else {
+        } else {
             binding.reviewDetailMenuIcon.visibility = View.GONE
         }
 
     }
 
     private fun popUpMenu() {
-        val popupMenu = PopupMenu(requireContext(), binding.reviewDetailMenuIcon, 0, 0, R.style.CustomPopupMenu)
+        val popupMenu =
+            PopupMenu(requireContext(), binding.reviewDetailMenuIcon, 0, 0, R.style.CustomPopupMenu)
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.menu_review_detail_popup, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -99,13 +104,13 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(FragmentR
                     // 수정
 
                 }
+
                 R.id.delete -> {
                     // 삭제
-                    viewModel.fetchDeleteReview(reviewId) {success ->
-                        if(success) {
+                    viewModel.fetchDeleteReview(reviewId) { success ->
+                        if (success) {
                             navController.navigate(R.id.action_reviewDetailFragment_to_menu_main_btm_nav_review)
-                        }
-                        else {
+                        } else {
                             Log.e(TAG, "Failed to fetch review delete")
                         }
                     }
