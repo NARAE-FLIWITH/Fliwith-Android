@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.ItemViewPagerReviewBinding
-import com.narae.fliwith.src.main.recommend.dto.ViewPagerReview
+import com.narae.fliwith.src.main.recommend.models.ViewPagerReview
 
 class ViewPagerReviewAdapter (private val viewPagerReviewDataList: MutableList<ViewPagerReview>) : RecyclerView.Adapter<ViewPagerReviewAdapter.ViewPagerReviewHolder>(){
 

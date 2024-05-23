@@ -15,12 +15,16 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnAttachStateChangeListener
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.vectormap.KakaoMap
+import com.kakao.vectormap.KakaoMap.OnVisibleChangeListener
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
@@ -36,7 +40,9 @@ import com.narae.fliwith.databinding.DialogRequestActivateBinding
 import com.narae.fliwith.databinding.DialogRequestPermissionsBinding
 import com.narae.fliwith.databinding.FragmentMapBinding
 import com.narae.fliwith.src.main.map.MapApi.mapService
+import com.narae.fliwith.src.main.map.models.SpotRequest
 import com.narae.fliwith.src.main.map.models.SpotWithLocation
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 import com.narae.fliwith.util.setOnSingleClickListener
 import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
@@ -54,15 +60,20 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     lateinit var homeLabelStyles: LabelStyles
     lateinit var labelStyles: LabelStyles
     lateinit var map: KakaoMap
+    private var spots: List<SpotWithLocation> = mutableListOf()
+
+    private val recommendViewModel by activityViewModels<RecommendViewModel>()
 
     private val lifecycleCallback = object : MapLifeCycleCallback() {
         // 지도 API 가 정상적으로 종료될 때 호출됨
         override fun onMapDestroy() {
+            Log.d("가나", "onMapDestroy: ")
         }
 
         // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
         override fun onMapError(p0: Exception?) {
         }
+
 
     }
 
@@ -77,12 +88,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
             map.cameraMaxLevel = 19
             map.cameraMinLevel = 12
-            centerPosition = map.cameraPosition?.position ?: defaultLocation
-            setInitialLocation()
+
+            if (::centerPosition.isInitialized) {
+                restoreMap()
+            } else {
+                setInitialLocation()
+            }
 
             map.setOnCameraMoveEndListener { _, cameraPosition, _ ->
                 centerPosition = cameraPosition.position
             }
+
+            // 이거 해보기
+            map.setOnVisibleChangeListener { kakaoMap, p1 ->
+                Log.d("가나다", "visible: ${p1}")
+            }
+
         }
 
         @SuppressLint("MissingPermission")
@@ -111,12 +132,21 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         }
     }
 
+    private fun restoreMap() {
+        map.moveCamera(CameraUpdateFactory.newCenterPosition(centerPosition))
+        spots.forEach {
+            setLabel(it)
+        }
+        setHomeLabel()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.mapView
         checkPermissions()
         checkLocationActivated()
         setListeners()
+
     }
 
     private fun setListeners() {
@@ -146,23 +176,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 mapService.searchByLocation(
                     centerPosition.latitude,
                     centerPosition.longitude,
-                    12
                 )
             }
 
             if (response.isSuccessful) {
                 val options = LabelOptions.from(centerPosition).setStyles(homeLabelStyles)
-               map.labelManager?.getLayer()!!.addLabel(options)
+                map.labelManager?.getLayer()!!.addLabel(options)
 
                 // 기존 모든 라벨 지우기
                 val layer: LabelLayer = map.labelManager?.getLayer()!!
                 layer.removeAll()
                 // 홈 라벨 찍어주기
                 setHomeLabel()
-                val spots = response.body()?.spotList
+                spots = response.body()?.spotList!!
 
                 // 조회 결과가 비어 있으면
-                if(spots?.isEmpty() != false){
+                if (spots.isEmpty() != false) {
                     showCustomSnackBar(requireContext(), binding.root, "주변에 관광지가 없어요 😭")
                 }
                 // 있으면
@@ -186,8 +215,19 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         layer.addLabel(options)
 
         // 맵 라벨 클릭시 상세 페이지 보여주기
-        map.setOnLabelClickListener { kakaoMap, labelLayer, label ->
+        map.setOnLabelClickListener { _, _, _ ->
+            mLoadingDialog.show()
+            val request = SpotRequest(spot.contentTypeId.toString(), spot.contentId.toString())
+            recommendViewModel.fetchTourDetailData(request) { success ->
+                if (success) {
+                    Log.d("가나다", "이동전 : ${centerPosition}")
 
+                    navController.navigate(R.id.action_menu_main_btm_nav_map_to_recommendAIFragment)
+                } else {
+                    Log.d(TAG, "상세 데이터 로딩 오류")
+                }
+                mLoadingDialog.dismiss()
+            }
         }
     }
 

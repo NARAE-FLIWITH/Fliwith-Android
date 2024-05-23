@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentViewPagerReviewBinding
-import com.narae.fliwith.src.main.recommend.dto.ViewPagerReview
+import com.narae.fliwith.src.main.recommend.models.ViewPagerReview
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"

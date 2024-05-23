@@ -15,8 +15,8 @@ import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentRecommendBinding
 import com.narae.fliwith.databinding.LayoutSelectAiBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
-import com.narae.fliwith.src.main.recommend.dto.TourRequest
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.models.TourRequest
 import com.narae.fliwith.util.DISABILITY
 
 private const val ARG_PARAM1 = "param1"

@@ -1,14 +1,19 @@
-package com.narae.fliwith.src.main.recommend.dto
+package com.narae.fliwith.src.main.recommend.models
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.narae.fliwith.src.main.map.MapApi
+import com.narae.fliwith.src.main.map.MapService
+import com.narae.fliwith.src.main.map.models.SpotRequest
 import com.narae.fliwith.src.main.recommend.RecommendApi
+import com.narae.fliwith.util.DISABILITY
 import kotlinx.coroutines.launch
 
 private const val TAG = "RecommendViewModel_싸피"
+
 class RecommendViewModel : ViewModel() {
     private val _selectedRegionButtonText = MutableLiveData<String>()
     private val _selectedTypeButtonText = MutableLiveData<String>()
@@ -64,6 +69,44 @@ class RecommendViewModel : ViewModel() {
                 Log.e(TAG, "API call failed", e)
                 callback(false)
             }
+        }
+    }
+
+    fun fetchTourDetailData(request: SpotRequest, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response =
+                    MapApi.mapService.getSpotDetail(request.contentTypeId, request.contentId)
+                if (response.isSuccessful) {
+                    val tourData = response.body()
+                    _tourData.value = tourData
+                    _tourRequest.value = TourRequest(
+                        "",
+                        contentTypeToCategory(request.contentTypeId),
+                        DISABILITY.NONE,
+                        1,
+                        "1"
+                    )
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Response not successful: ${response.errorBody()}")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
+    private fun contentTypeToCategory(contentType: String): String {
+        return when (contentType) {
+            "12" -> "관광지"
+            "14" -> "문화시설"
+            "32" -> "숙박"
+            "38" -> "쇼핑"
+            "39" -> "음식점"
+            else -> "관광지"
         }
     }
 

@@ -4,16 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendAIBinding
-import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"

@@ -2,7 +2,6 @@ package com.narae.fliwith.src.main.recommend
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.databinding.FragmentDateBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

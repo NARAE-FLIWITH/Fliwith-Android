@@ -1,7 +1,6 @@
 package com.narae.fliwith.src.main.map
 
-import com.narae.fliwith.src.main.map.models.SpotWithLocation
+import androidx.lifecycle.ViewModel
 
-class MapViewModel {
-    var spot: SpotWithLocation? = null
+class MapViewModel : ViewModel(){
 }

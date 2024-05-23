@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.main.recommend.dto
+package com.narae.fliwith.src.main.recommend.models
 import com.narae.fliwith.util.DISABILITY
 import java.io.Serializable
 

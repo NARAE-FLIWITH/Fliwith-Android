@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.main.recommend.dto
+package com.narae.fliwith.src.main.recommend.models
 
 import com.narae.fliwith.src.main.review.models.Review
 import java.io.Serializable

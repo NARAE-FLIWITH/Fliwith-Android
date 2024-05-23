@@ -29,17 +29,8 @@
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" >
         <action
-            android:id="@+id/action_mapFragment_to_mapDetailFragment"
-            app:destination="@id/mapDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mapDetailFragment"
-        android:name="com.narae.fliwith.src.main.map.MapDetailFragment"
-        android:label="fragment_map_detail"
-        tools:layout="@layout/fragment_map_detail" >
-        <action
-            android:id="@+id/action_mapDetailFragment_to_overviewFragment"
-            app:destination="@id/overviewFragment" />
+            android:id="@+id/action_menu_main_btm_nav_map_to_recommendAIFragment"
+            app:destination="@id/recommendAIFragment" />
     </fragment>
     <fragment
         android:id="@+id/memberFragment"
@@ -51,11 +42,6 @@
         android:name="com.narae.fliwith.src.main.mypage.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page" />
-    <fragment
-        android:id="@+id/overviewFragment"
-        android:name="com.narae.fliwith.src.main.map.OverviewFragment"
-        android:label="fragment_overview"
-        tools:layout="@layout/fragment_overview" />
     <fragment
         android:id="@+id/recommendFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendFragment"

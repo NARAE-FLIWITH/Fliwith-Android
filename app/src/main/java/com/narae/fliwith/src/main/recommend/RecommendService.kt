@@ -1,8 +1,8 @@
 package com.narae.fliwith.src.main.recommend
 
 import com.narae.fliwith.config.ApplicationClass
-import com.narae.fliwith.src.main.recommend.dto.TourRequest
-import com.narae.fliwith.src.main.recommend.dto.TourResponse
+import com.narae.fliwith.src.main.recommend.models.TourRequest
+import com.narae.fliwith.src.main.recommend.models.TourResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

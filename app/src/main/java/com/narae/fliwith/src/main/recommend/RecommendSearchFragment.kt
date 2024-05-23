@@ -3,22 +3,13 @@ package com.narae.fliwith.src.main.recommend
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendSearchBinding
 import com.narae.fliwith.src.main.MainActivity
-import com.narae.fliwith.src.main.recommend.dto.RecommendViewModel
-import com.narae.fliwith.src.main.recommend.dto.TourRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
