@@ -10,6 +10,7 @@ import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendSearchBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.util.showCustomSnackBar
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -46,6 +47,8 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
                 if (success) {
                     navController.navigate(R.id.action_recommendSearchFragment_to_recommendAIFragment)
                 } else {
+                    navController.popBackStack()
+                    showCustomSnackBar(requireContext(), binding.root, "잠시 후 다시 시도해 주세요")
                     Log.d(TAG, "onViewCreated: 데이터를 받아오지 못함")
                 }
             }

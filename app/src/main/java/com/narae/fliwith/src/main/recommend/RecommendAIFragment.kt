@@ -86,7 +86,8 @@ class RecommendAIFragment :
         Log.d(TAG, "fetchView firstimage2 : ${responseData?.detailCommon?.firstimage2}")
         if (responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
             Glide.with(requireContext())
-                .load(responseData?.detailCommon?.firstimage)
+                .load(responseData.detailCommon.firstimage)
+                .placeholder(R.drawable.tour_detail_default_image)
                 .into(binding.aiImgThumbnail)
         }
     }
