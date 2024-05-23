@@ -19,14 +19,9 @@ import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import okhttp3.internal.immutableListOf
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 private const val TAG = "ReviewFragment_싸피"
-class ReviewFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
+class ReviewFragment : Fragment() {
 
     private var _binding: FragmentReviewBinding? = null
     private val binding
@@ -46,8 +41,6 @@ class ReviewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -92,7 +85,8 @@ class ReviewFragment : Fragment() {
         })
 
         binding.reviewOrderList.setOnClickListener {
-            val popupMenu = PopupMenu(requireContext(), binding.reviewOrderList, 0, 0, R.style.CustomPopupMenu)
+            val popupMenu =
+                PopupMenu(requireContext(), binding.reviewOrderList, 0, 0, R.style.CustomPopupMenu)
             val inflater: MenuInflater = popupMenu.menuInflater
             inflater.inflate(R.menu.menu_review_order_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -107,6 +101,7 @@ class ReviewFragment : Fragment() {
                             }
                         }
                     }
+
                     R.id.popular_menu -> {
                         binding.reviewOrderSelectText.text = "인기순"
                         viewModel.fetchSelectAllReviews(0, "like") { success ->
@@ -137,16 +132,5 @@ class ReviewFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ReviewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

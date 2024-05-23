@@ -11,15 +11,18 @@ import com.narae.fliwith.databinding.ItemReviewBinding
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.util.userProfileImageConvert
 
-class ReviewAdapter(context: Context, private var reviewDataList: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
+class ReviewAdapter(context: Context, private var reviewDataList: List<Review>) :
+    RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
 
-    inner class ReviewHolder(private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ReviewHolder(private val binding: ItemReviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindInfo(review: Review) {
             binding.apply {
 //                reviewDefaultImage.setImageResource(R.drawable.store_default_image)
                 Glide.with(binding.root)
                     .load(review.image)
-                    .placeholder(R.drawable.review_default_image)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.no_image)
                     .into(reviewDefaultImage)
 
                 // HEARING, VISUAL, PHYSICAL, NONDISABLED, NONE, NOTSELECTED

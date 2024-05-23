@@ -87,7 +87,8 @@ class RecommendAIFragment :
         if (responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
             Glide.with(requireContext())
                 .load(responseData.detailCommon.firstimage)
-                .placeholder(R.drawable.tour_detail_default_image)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.no_image)
                 .into(binding.aiImgThumbnail)
         }
     }

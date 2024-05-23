@@ -95,10 +95,8 @@
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/btn_solid_review_write"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -114,6 +112,7 @@
                 android:id="@+id/review_write_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/review_write_icon" />
 

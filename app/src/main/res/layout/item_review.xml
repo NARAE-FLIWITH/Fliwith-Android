@@ -19,7 +19,7 @@
             android:background="@drawable/image_radius_top"
             android:id="@+id/review_default_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:src="@drawable/review_default_image" />
 
