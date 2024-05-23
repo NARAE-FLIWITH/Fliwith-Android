@@ -130,6 +130,23 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 좋아요 & 좋아요 취소
+
+    private val _reviewLikeStatus = MutableLiveData<Boolean?>()
+    val reviewLikeStatus: LiveData<Boolean?>
+        get() = _reviewLikeStatus
+
+    fun setReviewLikeStatue(like: Boolean) {
+        _reviewLikeStatus.value = like
+    }
+
+    private val _reviewLikeCount = MutableLiveData<Int?>()
+    val reviewLikeCount: LiveData<Int?>
+        get() = _reviewLikeCount
+
+    fun setReviewLikeCount(count: Int) {
+        _reviewLikeCount.value = count
+    }
+
     fun fetchLikeReview(reviewId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
@@ -139,7 +156,7 @@ class ReviewViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     callback(true)
                 } else {
-                    Log.e(TAG, "Review Delete Response not successful: ${response.errorBody()}")
+                    Log.e(TAG, "Review like Response not successful: ${response.errorBody()}")
                     callback(false)
                 }
             } catch (e: Exception) {

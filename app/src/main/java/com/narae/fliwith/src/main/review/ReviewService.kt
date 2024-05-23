@@ -5,6 +5,7 @@ import com.narae.fliwith.config.models.ResponseDto
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
 import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
+import com.narae.fliwith.src.main.review.models.ReviewLikeResponse
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedResponse
 import com.narae.fliwith.src.main.review.models.ReviewResponse
@@ -44,7 +45,7 @@ public interface ReviewService {
 
     // 리뷰 좋아요 등록 & 좋아요 취소
     @POST("review/{reviewId}")
-    suspend fun likeReview(@Path("reviewId") reviewId:Int): Response<Boolean>
+    suspend fun likeReview(@Path("reviewId") reviewId:Int): Response<ReviewLikeResponse>
 
     // 리뷰 사진 첨부 URL 요청
     @POST("review/presigned")

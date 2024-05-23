@@ -51,6 +51,15 @@ class ReviewDetailFragment :
         // 받아온 reviewId
         reviewId = arguments?.getInt("reviewId") ?: -1
 
+        viewModel.reviewLikeStatus.observe(viewLifecycleOwner) { isLiked ->
+            updateLike(isLiked!!)
+        }
+
+        // 좋아요 개수 관찰
+        viewModel.reviewLikeCount.observe(viewLifecycleOwner) { count ->
+            updateLikeCount(count!!)
+        }
+
         // fetchSelectReview 호출 및 콜백에서 fetchData 호출
         viewModel.fetchSelectReview(reviewId) { success ->
             if (success) {
@@ -62,6 +71,63 @@ class ReviewDetailFragment :
 
         // 일단 지우고
         binding.reviewDetailMenuIcon.visibility = View.GONE
+    }
+
+    private fun updateLike(isLiked: Boolean) {
+        if (isLiked) { // 좋아요 누른 상태 라면
+            // 좋아요 버튼 누르면
+            binding.reviewHeartImage.setOnClickListener {
+                // 좋아요 취소 상태로
+                binding.reviewHeartImageDisable.visibility = View.VISIBLE
+                binding.reviewHeartImage.visibility = View.GONE
+
+                viewModel.setReviewLikeStatue(false)
+                val count = viewModel.reviewLikeCount.value ?: 0
+                viewModel.setReviewLikeCount(count - 1)
+                postLikeStatus()
+            }
+        } else { // 좋아요 누른 상태가 아니면
+            // 비어 있는 좋아요 버튼 누르면
+            binding.reviewHeartImageDisable.setOnClickListener {
+                // 좋아요 상태로
+                binding.reviewHeartImageDisable.visibility = View.GONE
+                binding.reviewHeartImage.visibility = View.VISIBLE
+
+                viewModel.setReviewLikeStatue(true)
+                val count = viewModel.reviewLikeCount.value ?: 0
+                viewModel.setReviewLikeCount(count + 1)
+                postLikeStatus()
+            }
+        }
+    }
+
+    private fun updateLikeCount(count: Int) {
+        // 좋아요 개수를 UI에 업데이트
+        binding.reviewHeartCount.text = count.toString()
+    }
+
+
+    private fun postLikeStatus() {
+        viewModel.fetchLikeReview(reviewId) {success ->
+            if(success) {
+                Log.d(TAG, "postLikeStatus: 좋아요 누르기 성공")
+            }
+            else{
+                Log.e(TAG, "Failed to post review like")
+            }
+        }
+    }
+
+    private fun likeStatus(like: Boolean) {
+        if(like) { // true 이미 좋아요 누른 상태
+            viewModel.setReviewLikeStatue(true)
+            binding.reviewHeartImage.visibility = View.VISIBLE
+            binding.reviewHeartImageDisable.visibility = View.GONE
+        }else {
+            viewModel.setReviewLikeStatue(false)
+            binding.reviewHeartImage.visibility = View.GONE
+            binding.reviewHeartImageDisable.visibility = View.VISIBLE
+        }
     }
 
     private fun fetchData() {
@@ -76,8 +142,11 @@ class ReviewDetailFragment :
         val timeCal = response?.createdAt?.let { timeCalculate(it) } ?: 0
         binding.reviewDetailTime.text = "$timeCal 시간전"
         binding.reviewHeartCount.text = response?.likes.toString()
+        viewModel.setReviewLikeCount(response?.likes.toString().toInt())
         binding.reviewDetailPlace.text = response?.spotName
         binding.reviewDetailContent.text = response?.content
+
+        likeStatus(response.like)
 
         Glide.with(requireContext())
             .load(response?.images?.get(0))
