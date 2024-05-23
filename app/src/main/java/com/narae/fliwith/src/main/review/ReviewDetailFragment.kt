@@ -142,9 +142,10 @@ class ReviewDetailFragment :
         val timeCal = response?.createdAt?.let { timeCalculate(it) } ?: 0
         binding.reviewDetailTime.text = "$timeCal 시간전"
         binding.reviewHeartCount.text = response?.likes.toString()
-        viewModel.setReviewLikeCount(response?.likes.toString().toInt())
+
         binding.reviewDetailPlace.text = response?.spotName
         binding.reviewDetailContent.text = response?.content
+
 
         likeStatus(response.like)
 
@@ -165,9 +166,13 @@ class ReviewDetailFragment :
         }
 
         // 데이터 미리 넣어 두기
+        viewModel.setReviewLikeCount(response?.likes.toString().toInt())
         viewModel.setSpotName(binding.reviewDetailPlace.text.toString())
         viewModel.setReviewWriteContent(binding.reviewDetailContent.text.toString())
         viewModel.setImageUrl(response.images[0])
+        viewModel.setSpotContentId(response?.contentId!!)
+        Log.d(TAG, "fetchData: contentId ${response?.contentId!!}")
+
         Log.d(TAG, "fetchData: ${binding.reviewDetailPlace.text}, ${binding.reviewDetailContent.text}, ${response.images[0]}")
 
     }

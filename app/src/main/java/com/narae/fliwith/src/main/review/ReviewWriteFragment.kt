@@ -106,6 +106,8 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                 .into(binding.reviewWriteImageFrame)
             // 후기
             binding.reviewWriteComment.setText(viewModel.reviewWriteContent.value)
+            // contendId
+            Log.d(TAG, "onViewCreated: 여기는 수정이다. ${viewModel.reviewSpotContentId.value}")
         }else {
             binding.reviewWriteImageFrameSmall.visibility = View.GONE
         }

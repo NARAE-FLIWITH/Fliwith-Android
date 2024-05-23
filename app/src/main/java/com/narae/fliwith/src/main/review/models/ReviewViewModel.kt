@@ -370,8 +370,6 @@ class ReviewViewModel : ViewModel() {
 
     // 리뷰 작성 후 데이터 reset
     fun clearData() {
-        _reviewInsertRequest.value = ReviewInsertRequest(-1, "", listOf())
-        _reviewSpotContentId.value = -1
         _reviewWriteContent.value = ""
         _reviewSpotName.value = ""
         _uploadedImageUrl.value = ""

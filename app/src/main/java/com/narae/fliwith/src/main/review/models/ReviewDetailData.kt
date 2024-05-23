@@ -9,5 +9,6 @@ data class ReviewDetailData(
     val content: String,
     val images: List<String>,
     val mine: Boolean,
-    val like: Boolean
+    val like: Boolean,
+    val contentId: Int
 )
