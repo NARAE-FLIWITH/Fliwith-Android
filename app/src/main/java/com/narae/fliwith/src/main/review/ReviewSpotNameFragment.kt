@@ -32,7 +32,8 @@ FragmentReviewSpotNameBinding::inflate) {
         }
         Log.d(TAG, "reviewSpotNameList : $reviewSpotNameList")
 
-        // 돌려 받은 값 중에 하나 선택 하면 이전 화면 으로 이동 
+        // 돌려 받은 값 중에 하나 선택 하면 이전 화면 으로 이동
+
 
     }
 

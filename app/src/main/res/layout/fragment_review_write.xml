@@ -69,7 +69,8 @@
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:fontWeight="600"
-                    android:text="부산 무장애 숲길" />
+                    android:enabled="false"
+                    />
 
             </LinearLayout>
 
@@ -101,11 +102,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
                 <ImageView
                     android:id="@+id/review_write_image_frame"
                     android:layout_width="120dp"
                     android:layout_height="93dp"
                     android:layout_gravity="center"
+                    android:scaleType="centerCrop"
                     android:layout_marginRight="5dp"
                     android:src="@drawable/review_write_image_frame" />
 

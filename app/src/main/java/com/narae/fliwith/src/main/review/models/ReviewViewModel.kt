@@ -1,12 +1,23 @@
 package com.narae.fliwith.src.main.review.models
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.narae.fliwith.src.main.recommend.dto.TourRequest
 import com.narae.fliwith.src.main.review.ReviewApi
 import kotlinx.coroutines.launch
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.Response
+import java.io.File
+import java.io.IOException
 
 private const val TAG = "ReviewViewModel_싸피"
 
@@ -114,20 +125,36 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
-    // 리뷰 사진 첨부 URL 요청
-    fun fetchPresignedReview(callback: (Boolean) -> Unit) {
+    // 선택한 imageUrl
+    private val _uploadedImageUrl = MutableLiveData<String>()
+    val uploadedImageUrl: LiveData<String> get() = _uploadedImageUrl
+    fun setImageUrl(url: String) {
+        _uploadedImageUrl.value = url
+    }
+
+    fun fetchPresignedReview(request: ReviewPresignedRequest, callback: (Boolean, PresignedData?) -> Unit) {
         viewModelScope.launch {
-            try{
-                val response = ReviewApi.reviewService.presignedReview()
+            try {
+                val response = ReviewApi.reviewService.presignedReview(request)
                 if (response.isSuccessful) {
-                    callback(true)
+                    val presignedData = response.body()?.data
+                    if (presignedData != null) {
+                        // presigned URL을 성공적으로 받은 경우
+                        Log.d(TAG, "fetchPresignedReview: $presignedData")
+                        callback(true, presignedData)
+                    } else {
+                        // presigned URL이 null인 경우
+                        callback(false, null)
+                    }
                 } else {
-                    Log.e(TAG, "Review insert Response not successful: ${response.errorBody()}")
-                    callback(false)
+                    // presigned URL 요청이 실패한 경우
+                    Log.e(TAG, "Presigned URL request failed: ${response.errorBody()}")
+                    callback(false, null)
                 }
-            }catch (e : Exception) {
-                Log.e(TAG, "Review insert API call failed", e)
-                callback(false)
+            } catch (e: Exception) {
+                // 네트워크 오류 등 예외 발생한 경우
+                Log.e(TAG, "Presigned URL request failed", e)
+                callback(false, null)
             }
         }
     }
