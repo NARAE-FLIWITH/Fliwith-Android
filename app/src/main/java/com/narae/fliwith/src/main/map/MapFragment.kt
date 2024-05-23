@@ -325,11 +325,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
     override fun onResume() {
         super.onResume()
-        mapView.resume()
+        if (::mapView.isInitialized)
+            mapView.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.pause()
+        if (::mapView.isInitialized)
+            mapView.pause()
     }
 }
