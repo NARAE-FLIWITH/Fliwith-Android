@@ -34,34 +34,43 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
     // 변경된 pickMedia 함수
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        // 사진 선택 이후 돌아왔을 때 콜백
         if (uri != null) {
-            // 선택된 사진이 있을 경우
             Log.d(TAG, "photoPicker: 사진 선택 했다.")
             binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
             Glide.with(requireContext()).load(uri).into(binding.reviewWriteImageFrame)
             Log.d(TAG, "이미지 uri: $uri")
 
-            // 선택된 사진의 확장자 가져오기
             val imageExtension = getFileExtension(requireContext(), uri)
+            val mimeType = viewModel.getMimeType(requireContext(), uri)
             Log.d(TAG, "선택된 확장자: $imageExtension")
+            Log.d(TAG, "MIME 타입: $mimeType")
 
-            // presigned URL 요청
-            viewModel.fetchPresignedReview(ReviewPresignedRequest(imageExtension)) { success, presignedData ->
-                if (success && presignedData != null) {
-                    // 성공적으로 presigned URL을 받은 경우
-                    // 업로드된 이미지의 URL을 ViewModel에 저장
-                    // 리뷰 작성시 imageUrl 그대로 사용
-                    Log.d(TAG, "presignedData: ${presignedData.imageUrl}")
-                    viewModel.setImageUrl(presignedData.imageUrl)
-                } else {
-                    // presigned URL 요청 실패 또는 응답이 null인 경우
-                    // 오류 처리
-                    Log.d(TAG, "review write fragment : 갤러리 에서 사진 가져 오기 실패임 실패")
+            if (mimeType != null) {
+                viewModel.fetchPresignedReview(ReviewPresignedRequest(imageExtension)) { success, presignedData ->
+                    if (success && presignedData != null) {
+                        Log.d(TAG, "presignedData: ${presignedData.imageUrl}")
+                        viewModel.setImageUrl(presignedData.imageUrl)
+
+                        val file = viewModel.uriToFile(requireContext(), uri)
+                        if (file != null) {
+                            viewModel.uploadImageAWS(presignedData.presignedUrl, file, mimeType) { uploadSuccess ->
+                                if (uploadSuccess) {
+                                    Log.d(TAG, "Image uploaded successfully.")
+                                } else {
+                                    Log.d(TAG, "Failed to upload image.")
+                                }
+                            }
+                        } else {
+                            Log.e(TAG, "Failed to convert URI to File")
+                        }
+                    } else {
+                        Log.d(TAG, "review write fragment : 갤러리 에서 사진 가져 오기 실패임 실패")
+                    }
                 }
+            } else {
+                Log.e(TAG, "Failed to determine MIME type")
             }
         } else {
-            // 선택된 사진이 없을 경우
             binding.reviewWriteImageFrameSmall.visibility = View.GONE
         }
     }

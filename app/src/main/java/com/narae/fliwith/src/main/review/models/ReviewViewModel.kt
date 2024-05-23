@@ -1,23 +1,27 @@
 package com.narae.fliwith.src.main.review.models
 
+import android.app.Application
+import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.webkit.MimeTypeMap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.narae.fliwith.src.main.recommend.dto.TourRequest
+import com.narae.fliwith.src.main.recommend.models.TourResponse
 import com.narae.fliwith.src.main.review.ReviewApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Call
-import okhttp3.Callback
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.Response
+import retrofit2.HttpException
 import java.io.File
-import java.io.IOException
+import java.io.FileOutputStream
+import java.io.InputStream
 
 private const val TAG = "ReviewViewModel_싸피"
 
@@ -141,6 +145,14 @@ class ReviewViewModel : ViewModel() {
         _uploadedImageUrl.value = url
     }
 
+    // presigend Response
+    private val _presignedData = MutableLiveData<PresignedData?>()
+    val presignedData: MutableLiveData<PresignedData?> get() = _presignedData
+
+    fun setPresignedData(data: PresignedData) {
+        _presignedData.value = data
+    }
+
     fun fetchPresignedReview(request: ReviewPresignedRequest, callback: (Boolean, PresignedData?) -> Unit) {
         viewModelScope.launch {
             try {
@@ -149,6 +161,7 @@ class ReviewViewModel : ViewModel() {
                     val presignedData = response.body()?.data
                     if (presignedData != null) {
                         // presigned URL을 성공적으로 받은 경우
+                        setPresignedData(presignedData)
                         Log.d(TAG, "fetchPresignedReview: $presignedData")
                         callback(true, presignedData)
                     } else {
@@ -166,6 +179,52 @@ class ReviewViewModel : ViewModel() {
                 callback(false, null)
             }
         }
+    }
+
+    fun uploadImageAWS(presignedUrl: String, file: File, mimeType: String, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val client = OkHttpClient()
+                    val requestBody = file.asRequestBody(mimeType.toMediaTypeOrNull())
+                    val request = Request.Builder()
+                        .url(presignedUrl)
+                        .put(requestBody)
+                        .build()
+
+                    val response = client.newCall(request).execute()
+                    if (response.isSuccessful) {
+                        callback(true)
+                    } else {
+                        callback(false)
+                        Log.e(TAG, "Image upload failed: ${response.message}")
+                    }
+                } catch (e: HttpException) {
+                    callback(false)
+                    Log.e(TAG, "Image upload failed", e)
+                } catch (e: Exception) {
+                    callback(false)
+                    Log.e(TAG, "Unexpected error", e)
+                }
+            }
+        }
+    }
+
+    fun getMimeType(context: Context, uri: Uri): String? {
+        val contentResolver = context.contentResolver
+        return contentResolver.getType(uri) ?: MimeTypeMap.getFileExtensionFromUrl(uri.toString())?.let {
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(it)
+        }
+    }
+
+    fun uriToFile(context: Context, uri: Uri): File? {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val file = File(context.cacheDir, "image_file.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+        return file
     }
 
     private val _reviewSpotNameResponse = MutableLiveData<ReviewSpotNameResponse?>()
