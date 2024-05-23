@@ -52,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         val navController = findNavController()
 
-        binding.btnRecommendation.setOnClickListener {
+        binding.btnRecommendation.setOnClickListener{
             mainActivity.viewGone()
             navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }

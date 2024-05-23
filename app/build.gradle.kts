@@ -91,6 +91,9 @@ dependencies {
     // glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+    // photo picker
+    implementation("androidx.activity:activity-ktx:1.6.0")
+
 }
 
 fun getProperty(keyName: String) : String {

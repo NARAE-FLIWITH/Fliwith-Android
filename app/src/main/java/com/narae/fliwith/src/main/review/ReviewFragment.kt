@@ -12,7 +12,6 @@ import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
@@ -64,7 +63,7 @@ class ReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        reviewAdapter = ReviewAdapter(reviewList)
+        reviewAdapter = ReviewAdapter(requireContext(), reviewList)
         binding.reviewRv.apply {
             adapter = reviewAdapter
         }
@@ -126,7 +125,7 @@ class ReviewFragment : Fragment() {
     }
 
     private fun observeReviewData() {
-        viewModel.reviewData.observe(viewLifecycleOwner, Observer { reviewResponse ->
+        viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
             reviewResponse?.data?.reviews?.let { reviews ->
                 reviewList = reviews
                 reviewAdapter.updateReviews(reviews)
