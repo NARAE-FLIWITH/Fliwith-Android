@@ -51,6 +51,10 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
             }
         }
 
+        binding.btnBack.setOnClickListener {
+            navController.popBackStack()
+        }
+
     }
 
     companion object {

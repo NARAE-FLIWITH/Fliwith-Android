@@ -8,6 +8,7 @@
     tools:context=".src.main.recommend.RecommendFragment">
 
     <ImageView
+        android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -47,10 +48,9 @@
                 android:layout_height="wrap_content"
                 android:text="어떤 여행지를 원하시나요?"
                 android:textStyle="bold"
-                android:textSize="24dp"
-                android:fontWeight="700"
+                android:textSize="24sp"
                 android:gravity="center"
-                android:font="@font/pretendard_medium"
+                android:fontFamily="@font/pretendard_bold"
                 android:textColor="@color/white" />
 
             <TextView
@@ -59,9 +59,8 @@
                 android:text="아래 선택지를 골라 AI 여행지 추천을 받아보세요!"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textSize="14dp"
-                android:fontWeight="500"
-                android:font="@font/pretendard_medium"
+                android:textSize="14sp"
+                android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/white" />
 
         </LinearLayout>

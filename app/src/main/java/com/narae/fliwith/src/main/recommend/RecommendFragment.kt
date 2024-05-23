@@ -32,7 +32,6 @@ class RecommendFragment : Fragment() {
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: RecommendViewModel by activityViewModels()
-    private var selectDatas: TourRequest? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,7 +49,7 @@ class RecommendFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRecommendBinding.inflate(inflater, container, false)
         return binding.root
@@ -92,17 +91,6 @@ class RecommendFragment : Fragment() {
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
-        // 모든 데이터 다 들어 갔으면
-        var tourRequest = TourRequest(
-            area = viewModel.selectedRegionButtonText.value ?: "",
-            contentType = viewModel.selectedTypeButtonText.value ?: "",
-            disability = DISABILITY.fromString(viewModel.selectedDisableButtonText.value ?: ""),
-            peopleNum = viewModel.getPeopleNum(viewModel.selectedMemberButtonText.value ?: ""),
-            visitedDate = viewModel.selectDate.value ?: ""
-        )
-
-        Log.d(TAG, "onViewCreated: $tourRequest")
-
         viewModel.selectedRegionButtonText.observe(viewLifecycleOwner) { updateButtonVisibility() }
         viewModel.selectedTypeButtonText.observe(viewLifecycleOwner) { updateButtonVisibility() }
         viewModel.selectedDisableButtonText.observe(viewLifecycleOwner) { updateButtonVisibility() }
@@ -115,6 +103,10 @@ class RecommendFragment : Fragment() {
                 putSerializable("tourRequest", viewModel.tourRequest.value)
             }
             navController.navigate(R.id.action_recommendFragment_to_recommendSearchFragment, bundle)
+        }
+
+        binding.btnBack.setOnClickListener {
+            navController.popBackStack()
         }
     }
 
@@ -162,7 +154,7 @@ class RecommendFragment : Fragment() {
             Log.d(TAG, "updateButtonVisibility: 전체 선택 완료")
             binding.btnRecommendationNonSelected.visibility = View.GONE
             binding.btnRecommendation.visibility = View.VISIBLE
-            tourRequest?.let {
+            tourRequest.let {
                 viewModel.setTourRequest(tourRequest)
             }
         } else { // 아직 다 선택 된 게 아니면
@@ -180,6 +172,11 @@ class RecommendFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.removeSelectedInfo()
     }
 
     companion object {

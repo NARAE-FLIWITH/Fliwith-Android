@@ -58,26 +58,7 @@
         android:id="@+id/recommendDetailFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendDetailFragment"
         android:label="fragment_recommend_detail"
-        tools:layout="@layout/fragment_recommend_detail" >
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_typeFragment"
-            app:destination="@id/typeFragment" />
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_regionFragment"
-            app:destination="@id/regionFragment" />
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_memberFragment"
-            app:destination="@id/memberFragment" />
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_dateFragment"
-            app:destination="@id/dateFragment" />
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_disableFragment"
-            app:destination="@id/disableFragment" />
-        <action
-            android:id="@+id/action_recommendDetailFragment_to_recommendFragment"
-            app:destination="@id/recommendFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_recommend_detail" />
     <fragment
         android:id="@+id/recommendSearchFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendSearchFragment"
@@ -85,7 +66,8 @@
         tools:layout="@layout/fragment_recommend_search" >
         <action
             android:id="@+id/action_recommendSearchFragment_to_recommendAIFragment"
-            app:destination="@id/recommendAIFragment" />
+            app:destination="@id/recommendAIFragment"
+            app:popUpTo="@id/menu_main_btm_nav_home" />
     </fragment>
     <fragment
         android:id="@+id/regionFragment"

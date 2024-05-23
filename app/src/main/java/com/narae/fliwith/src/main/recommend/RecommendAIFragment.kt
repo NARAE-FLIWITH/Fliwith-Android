@@ -3,10 +3,14 @@ package com.narae.fliwith.src.main.recommend
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendAIBinding
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
@@ -15,7 +19,9 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "RecommendAIFragment_싸피"
-class RecommendAIFragment : BaseFragment<FragmentRecommendAIBinding>(FragmentRecommendAIBinding::inflate) {
+
+class RecommendAIFragment :
+    BaseFragment<FragmentRecommendAIBinding>(FragmentRecommendAIBinding::inflate) {
 
     private val viewModel: RecommendViewModel by activityViewModels()
 
@@ -24,7 +30,23 @@ class RecommendAIFragment : BaseFragment<FragmentRecommendAIBinding>(FragmentRec
 
         fetchView()
         initViewPager()
+        setListeners()
+        setFromMap()
+    }
 
+    private fun setFromMap() {
+        if (arguments?.getBoolean("fromMap") == true) {
+            binding.appBar.visibility = View.INVISIBLE
+            binding.btnBack.setColorFilter(ContextCompat.getColor(requireContext(), R.color.black))
+            val layoutParams = (binding.layoutInfo.layoutParams) as LinearLayout.LayoutParams
+            layoutParams.topMargin = 0
+        }
+    }
+
+    private fun setListeners() {
+        binding.btnBack.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     private fun initViewPager() {
@@ -62,7 +84,7 @@ class RecommendAIFragment : BaseFragment<FragmentRecommendAIBinding>(FragmentRec
         binding.aiTvAddress.text = responseData?.detailCommon?.addr1
         Log.d(TAG, "fetchView firstimage1 : ${responseData?.detailCommon?.firstimage}")
         Log.d(TAG, "fetchView firstimage2 : ${responseData?.detailCommon?.firstimage2}")
-        if(responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
+        if (responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
             Glide.with(requireContext())
                 .load(responseData?.detailCommon?.firstimage)
                 .into(binding.aiImgThumbnail)

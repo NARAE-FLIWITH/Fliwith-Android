@@ -53,6 +53,14 @@ class RecommendViewModel : ViewModel() {
         _selectedDisableButtonText.value = text
     }
 
+    fun removeSelectedInfo(){
+        _selectedRegionButtonText.value = ""
+        _selectedTypeButtonText.value = ""
+        _selectedDisableButtonText.value = "선택안할래용"
+        _selectedMemberButtonText.value = "0"
+        _selectedDate.value = ""
+    }
+
     fun fetchTourData(request: TourRequest, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {

@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentRegionBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
@@ -19,7 +22,7 @@ class RegionFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding : FragmentRegionBinding? = null
+    private var _binding: FragmentRegionBinding? = null
     private val binding
         get() = _binding!!
 
@@ -51,9 +54,6 @@ class RegionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.Seoul.isSelected = true
-        viewModel.setSelectedRegionButtonText("서울")
-
         val buttons = arrayOf(
             binding.Seoul,
             binding.Gyeonggi,
@@ -74,20 +74,36 @@ class RegionFragment : Fragment() {
 
         for (button in buttons) {
             button.setOnClickListener {
-                // 클릭된 버튼을 선택하고, 다른 버튼들을 비활성화
-                button.isSelected = true
                 // 클릭된 버튼의 text를 selectedButtonText에 저장
-                viewModel.setSelectedRegionButtonText(button.text.toString())
                 for (btn in buttons) {
+                    // 클릭된 버튼을 선택하고, 다른 버튼들을 비활성화
                     if (btn != button) {
                         btn.isSelected = false
                         btn.isEnabled = true
                     } else {
+                        btn.isSelected = true
                         btn.isEnabled = false
                     }
                 }
             }
+
+            // 이전에 선택했던 항목을 선택 상태로 보여주기 위함
+            val selected = viewModel.selectedRegionButtonText.value
+            if (selected == button.text) {
+                button.isSelected = true
+                button.isEnabled = false
+            }
         }
+
+        view.rootView.findViewById<AppCompatButton>(R.id.send_recommend_detail_btn)
+            .setOnClickListener {
+                // 클릭된 버튼의 text를 selectedButtonText에 저장
+                for (btn in buttons) {
+                    if (btn.isSelected)
+                        viewModel.setSelectedRegionButtonText(btn.text.toString())
+                }
+                findNavController().popBackStack()
+            }
     }
 
     override fun onDestroyView() {

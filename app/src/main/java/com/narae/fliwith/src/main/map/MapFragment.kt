@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -98,12 +99,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             map.setOnCameraMoveEndListener { _, cameraPosition, _ ->
                 centerPosition = cameraPosition.position
             }
-
-            // 이거 해보기
-            map.setOnVisibleChangeListener { kakaoMap, p1 ->
-                Log.d("가나다", "visible: ${p1}")
-            }
-
         }
 
         @SuppressLint("MissingPermission")
@@ -220,10 +215,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             val request = SpotRequest(spot.contentTypeId.toString(), spot.contentId.toString())
             recommendViewModel.fetchTourDetailData(request) { success ->
                 if (success) {
-                    Log.d("가나다", "이동전 : ${centerPosition}")
 
-                    navController.navigate(R.id.action_menu_main_btm_nav_map_to_recommendAIFragment)
+                    val bundle = bundleOf().apply {
+                        putBoolean("fromMap", true)
+                    }
+                    navController.navigate(
+                        R.id.action_menu_main_btm_nav_map_to_recommendAIFragment,
+                        bundle
+                    )
                 } else {
+                    showCustomSnackBar(requireContext(), binding.root, "잠시 후 다시 시도해 주세요")
                     Log.d(TAG, "상세 데이터 로딩 오류")
                 }
                 mLoadingDialog.dismiss()

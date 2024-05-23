@@ -16,11 +16,12 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "RecommendDetailFragment_싸피"
+
 class RecommendDetailFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding : FragmentRecommendDetailBinding? = null
+    private var _binding: FragmentRecommendDetailBinding? = null
     private val binding
         get() = _binding!!
 
@@ -56,34 +57,32 @@ class RecommendDetailFragment : Fragment() {
         val message = arguments?.getString("message")
 
         // 지역 페이지
-        if(message=="region") {
+        if (message == "region") {
             binding.pageText.text = "지역 선택"
             transaction.replace(R.id.recommend_detail_fr, RegionFragment())
             transaction.commit()
         }
 
         // 여행지 유형 페이지
-        else if(message=="type") {
+        else if (message == "type") {
             binding.pageText.text = "여행지 유형 선택"
             transaction.replace(R.id.recommend_detail_fr, TypeFragment())
             transaction.commit()
-        }
-
-        else if(message=="disable") {
+        } else if (message == "disable") {
             binding.pageText.text = "장애 유형 선택"
             transaction.replace(R.id.recommend_detail_fr, DisableFragment())
             transaction.commit()
         }
 
         // 인원 수 선택 페이지
-        else if(message=="member") {
+        else if (message == "member") {
             binding.pageText.text = "인원 수 선택"
             transaction.replace(R.id.recommend_detail_fr, MemberFragment())
             transaction.commit()
         }
 
         // 날짜 선택 페이지
-        else if(message=="date") {
+        else if (message == "date") {
             binding.pageText.text = "날짜 선택"
             transaction.replace(R.id.recommend_detail_fr, DateFragment())
             transaction.commit()
@@ -92,9 +91,12 @@ class RecommendDetailFragment : Fragment() {
         val navController = findNavController()
 
         binding.sendRecommendDetailBtn.setOnClickListener {
-            navController.navigate(R.id.action_recommendDetailFragment_to_recommendFragment)
+            navController.popBackStack()
         }
 
+        binding.btnBack.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     companion object {
