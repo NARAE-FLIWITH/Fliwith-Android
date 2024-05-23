@@ -57,4 +57,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.viewVisible()
+    }
 }
