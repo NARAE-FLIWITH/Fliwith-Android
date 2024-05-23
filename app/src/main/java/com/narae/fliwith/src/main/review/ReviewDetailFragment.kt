@@ -121,7 +121,7 @@ class ReviewDetailFragment :
                     // 삭제
                     viewModel.fetchDeleteReview(reviewId) { success ->
                         if (success) {
-                            navController.navigate(R.id.action_reviewDetailFragment_to_menu_main_btm_nav_review)
+                            navController.popBackStack()
                         } else {
                             Log.e(TAG, "Failed to fetch review delete")
                         }

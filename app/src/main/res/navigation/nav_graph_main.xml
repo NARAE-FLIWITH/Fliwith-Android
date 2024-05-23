@@ -89,8 +89,7 @@
         <action
             android:id="@+id/action_reviewFragment_to_reviewDetailFragment"
             app:destination="@id/reviewDetailFragment"
-            app:popUpTo="@id/menu_main_btm_nav_review"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_reviewFragment_to_reviewWriteFragment"
             app:destination="@id/reviewWriteFragment" />
@@ -100,9 +99,6 @@
         android:name="com.narae.fliwith.src.main.review.ReviewDetailFragment"
         android:label="fragment_review_detail"
         tools:layout="@layout/fragment_review_detail" >
-        <action
-            android:id="@+id/action_reviewDetailFragment_to_menu_main_btm_nav_review"
-            app:destination="@id/menu_main_btm_nav_review" />
         <action
             android:id="@+id/action_reviewDetailFragment_to_reviewWriteFragment"
             app:destination="@id/reviewWriteFragment" />
@@ -117,7 +113,9 @@
             app:destination="@id/reviewSpotNameFragment" />
         <action
             android:id="@+id/action_reviewWriteFragment_to_menu_main_btm_nav_review"
-            app:destination="@id/menu_main_btm_nav_review" />
+            app:destination="@id/menu_main_btm_nav_review"
+            app:popUpTo="@id/menu_main_btm_nav_review"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/typeFragment"
@@ -133,11 +131,7 @@
         android:id="@+id/reviewSpotNameFragment"
         android:name="com.narae.fliwith.src.main.review.ReviewSpotNameFragment"
         android:label="fragment_review_spot_name"
-        tools:layout="@layout/fragment_review_spot_name" >
-        <action
-            android:id="@+id/action_reviewSpotNameFragment_to_reviewWriteFragment"
-            app:destination="@id/reviewWriteFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_review_spot_name" />
     <fragment
         android:id="@+id/ILikeFragment"
         android:name="com.narae.fliwith.src.main.review.ILikeFragment"

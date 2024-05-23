@@ -91,6 +91,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/review_write_btn"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
@@ -102,7 +103,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/review_write_btn"
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
