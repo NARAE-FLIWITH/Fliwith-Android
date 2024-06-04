@@ -29,7 +29,7 @@ class ViewPagerIntroductionFragment : BaseFragment<FragmentViewPagerIntroduction
         Log.d(TAG, "fetchView tourData : ${viewModel.tourData.value}")
         var responseData = viewModel.tourData.value?.data
 
-//        binding.introductionAddressTv.text = responseData?.detailCommon?.addr1
+        binding.introductionAddressTv.text = responseData?.detailCommon?.addr1
 //        binding.introductionNumberTv.text = responseData?.detailCommon?.tel
 //        binding.introductionUrlTv.text = responseData?.detailCommon?.homepage
     }
