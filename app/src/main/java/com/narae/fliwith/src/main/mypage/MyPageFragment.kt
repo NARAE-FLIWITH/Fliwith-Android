@@ -17,6 +17,7 @@ import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogProfileGuideBinding
 import com.narae.fliwith.databinding.FragmentMyPageBinding
 import com.narae.fliwith.src.auth.AuthActivity
+import com.narae.fliwith.src.main.LoginViewModel
 import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService
 import com.narae.fliwith.src.main.mypage.models.Profile
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
@@ -29,6 +30,7 @@ private const val TAG = "MyPageFragment"
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
     private val reviewViewModel by activityViewModels<ReviewViewModel>()
+    private val loginViewModel by activityViewModels<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,12 +92,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             lifecycleScope.launch {
                 val response = withContext(Dispatchers.IO) { myPageService.logout() }
                 if (response.isSuccessful) {
-                    sharedPreferences.removeTokenData()
+                    loginViewModel.logout()
                     val intent = Intent(requireContext(), AuthActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                     startActivity(intent)
-                    requireActivity().finish()
                 } else {
                     Log.d(TAG, "myPage: 로그아웃 실패 ${response.errorBody()?.string()}")
                 }

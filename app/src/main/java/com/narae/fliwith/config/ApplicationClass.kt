@@ -29,8 +29,8 @@ class ApplicationClass : Application() {
         const val GRANT_TYPE = "GRANT_TYPE"
         const val REFRESH_TOKEN = "REFRESH_TOKEN"
         const val REFRESH_TOKEN_EXPIRATION_TIME = "REFRESH_TOKEN_EXPIRATION_TIME"
+        const val CREATED_AT = "CREATED_AT"
         const val AUTHORIZATION = "Authorization"
-        const val IS_VALID_TOKEN = "IS_VALID_TOKEN"
 
         val POLICY_CONTRACT_URL = BuildConfig.POLICY_CONTRACT_URL
         val PRIVACY_CONTRACT_URL = BuildConfig.PRIVACY_CONTRACT_URL
@@ -62,7 +62,7 @@ class ApplicationClass : Application() {
             .connectTimeout(10000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor(AddTokenInterceptor()) // JWT 자동 헤더 전송
+            .addNetworkInterceptor(AddTokenInterceptor(this)) // JWT 자동 헤더 전송
             .build()
 
         // retrofit 이라는 전역변수에 API url, 인터셉터, Gson을 넣어주고 빌드해주는 코드
