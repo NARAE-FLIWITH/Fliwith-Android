@@ -39,23 +39,6 @@ abstract class BaseFragment<B : ViewBinding>(
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (sharedPreferences.getTokenReissueFailed()) {
-            reLogin()
-        }
-    }
-
-    private fun reLogin() {
-        sharedPreferences.removeTokenData()
-        val intent = Intent(requireContext(), AuthActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        sharedPreferences.setTokenReissueFailed(false)
-        requireActivity().startActivity(intent)
-        requireActivity().finish()
-    }
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

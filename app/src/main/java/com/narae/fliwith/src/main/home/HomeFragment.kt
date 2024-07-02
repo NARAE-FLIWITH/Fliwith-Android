@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.ApplicationClass
+import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentHomeBinding
+import com.narae.fliwith.src.auth.models.TokenData
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.home.models.Store
 import com.narae.fliwith.src.main.home.models.Tour
@@ -52,7 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         val navController = findNavController()
 
-        binding.btnRecommendation.setOnClickListener{
+        binding.btnRecommendation.setOnClickListener {
             mainActivity.viewGone()
             navController.navigate(R.id.action_homeFragment_to_recommendFragment)
         }

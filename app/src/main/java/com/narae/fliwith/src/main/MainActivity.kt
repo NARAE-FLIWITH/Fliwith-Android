@@ -1,5 +1,6 @@
 package com.narae.fliwith.src.main
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -8,6 +9,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +18,7 @@ import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseActivity
 import com.narae.fliwith.databinding.ActivityMainBinding
 import com.narae.fliwith.databinding.SnackbarCustomBinding
+import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.util.convertDPtoPX
 import com.narae.fliwith.util.showCustomSnackBar
 
@@ -49,6 +53,7 @@ enum class DISABILITY {
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private var lastBackPressedTime = 0L
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     // 더블탭 뒤로 가기
     private val onBackPressedCallback: OnBackPressedCallback =
@@ -78,13 +83,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 바인딩
         NavigationUI.setupWithNavController(binding.mainBtmNav, navController)
+
+        observeLogout()
     }
 
-    public fun viewGone() {
+    private fun observeLogout(){
+        loginViewModel.loginStatus.observe(this){
+            if(!it){
+                val intent = Intent(this, AuthActivity::class.java)
+                intent.flags =  Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
+    fun viewGone() {
         binding.mainBtmNav.visibility = View.GONE
     }
 
-    public fun viewVisible() {
+    fun viewVisible() {
         binding.mainBtmNav.visibility = View.VISIBLE
     }
 }

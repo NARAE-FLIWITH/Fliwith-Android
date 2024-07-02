@@ -36,10 +36,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     }
 
     private fun getDestination(): Class<out Activity> {
-        val expireTime = sharedPreferences.getRefreshTokenExpirationTime()
+        val tokenData = sharedPreferences.getTokenData()
 
-        // 토큰이 만료되었다면 재로그인
-        return if (expireTime <= System.currentTimeMillis()) {
+        // 리프레쉬 토큰이 만료되었거나 없으면 로그인
+        return if (tokenData.refreshTokenExpirationTime <= System.currentTimeMillis()) {
             Log.d(TAG, "자동 로그인 실패")
             sharedPreferences.removeTokenData()
             AuthActivity::class.java

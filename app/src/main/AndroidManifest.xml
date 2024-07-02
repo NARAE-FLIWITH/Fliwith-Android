@@ -15,6 +15,7 @@
 
     <application
         android:name=".config.ApplicationClass"
+        android:enableOnBackInvokedCallback="true"
         android:allowBackup="false"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
