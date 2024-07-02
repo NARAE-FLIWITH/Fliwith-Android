@@ -92,14 +92,25 @@ class CreateAccountFragment :
 
             updateButtonState()
         }
-    }
 
+        binding.etRepeat.addTextChangedListener {
+            if (binding.etPw.text.toString() != it.toString()) {
+                binding.layoutRepeat.error = "비밀번호가 일치하지 않습니다."
+            } else {
+                binding.layoutRepeat.error = ""
+            }
+
+            updateButtonState()
+        }
+    }
 
     private fun updateButtonState() {
         binding.btnNext.isEnabled = !(binding.etEmail.text.isNullOrBlank()
                 or binding.etPw.text.isNullOrBlank()
+                or binding.etRepeat.text.isNullOrBlank()
                 or !binding.layoutEmail.error.isNullOrEmpty()
-                or !binding.layoutPw.error.isNullOrEmpty())
+                or !binding.layoutPw.error.isNullOrEmpty()
+                or !binding.layoutRepeat.error.isNullOrEmpty()
+                )
     }
-
 }

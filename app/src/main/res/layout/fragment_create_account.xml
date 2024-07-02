@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2" />
+            app:layout_constraintGuide_percent="0.12" />
 
         <ImageView
             android:id="@+id/img_logo"
@@ -51,7 +51,7 @@
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:paddingHorizontal="12dp"
@@ -105,15 +105,45 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="비밀번호 확인"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_pw"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_repeat"
+            style="@style/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_repeat"
+                style="@style/textInputEditText"
+                android:hint="@string/password"
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:text="@{user.password}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:id="@+id/tv_constraint_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
+            android:layout_marginTop="15dp"
             android:text="@string/constraint_pw"
             android:textAlignment="textStart"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/layout_pw"
+            app:layout_constraintTop_toBottomOf="@+id/layout_repeat"
             tools:layout_editor_absoluteX="16dp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -121,12 +151,13 @@
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/selector_btn_round"
             android:enabled="false"
             android:text="@string/next"
             android:textAppearance="@style/btnText"
-            app:layout_constraintTop_toBottomOf="@+id/tv_constraint_pw"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_marginBottom="30dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
