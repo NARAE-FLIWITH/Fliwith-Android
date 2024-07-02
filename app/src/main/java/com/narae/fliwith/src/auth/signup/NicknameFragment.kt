@@ -1,7 +1,9 @@
 package com.narae.fliwith.src.auth.signup
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +23,18 @@ import kotlinx.coroutines.withContext
 class NicknameFragment : BaseFragment<FragmentNicknameBinding>(FragmentNicknameBinding::inflate) {
 
     private val viewModel by activityViewModels<AuthViewModel>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.removeNickname()
+                navController.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()

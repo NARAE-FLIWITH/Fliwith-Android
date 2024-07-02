@@ -1,8 +1,10 @@
 package com.narae.fliwith.src.auth.signup
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +32,18 @@ private const val TAG = "CreateAccountFragment"
 class CreateAccountFragment :
     BaseFragment<FragmentCreateAccountBinding>(FragmentCreateAccountBinding::inflate) {
     private val viewModel by activityViewModels<AuthViewModel>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.removeEmail()
+                viewModel.removePassword()
+                navController.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
