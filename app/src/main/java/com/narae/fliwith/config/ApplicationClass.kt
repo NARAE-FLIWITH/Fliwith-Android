@@ -13,12 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
-    //ends with '/'
-    val API_URL = BuildConfig.SERVER_URL
-    val GPT_KEY = BuildConfig.GPT_KEY
-    val KAKAO_APP_KEY = BuildConfig.KAKAO_APP_KEY
-    val KAKAO_MAP_KEY = BuildConfig.KAKAO_APP_KEY
-
     // 코틀린의 전역변수
     companion object {
         // 만들어져있는 SharedPreferences 를 사용해야합니다. 재생성하지 않도록 유념해주세요
@@ -35,6 +29,12 @@ class ApplicationClass : Application() {
         val POLICY_CONTRACT_URL = BuildConfig.POLICY_CONTRACT_URL
         val PRIVACY_CONTRACT_URL = BuildConfig.PRIVACY_CONTRACT_URL
         val SENSITIVE_CONTRACT_URL = BuildConfig.SENSITIVE_CONTRACT_URL
+
+        //ends with '/'
+        val API_URL = BuildConfig.SERVER_URL
+        val GPT_KEY = BuildConfig.GPT_KEY
+        val KAKAO_APP_KEY = BuildConfig.KAKAO_APP_KEY
+        val KAKAO_MAP_KEY = BuildConfig.KAKAO_APP_KEY
 
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
@@ -78,4 +78,5 @@ class ApplicationClass : Application() {
     val gson: Gson = GsonBuilder()
         .setLenient()
         .create()
+
 }
