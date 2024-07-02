@@ -35,6 +35,7 @@ import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.LabelTextStyle
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogRequestActivateBinding
@@ -84,9 +85,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         override fun onMapReady(p0: KakaoMap) {
             map = p0
             homeLabelStyles =
-                map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.home_marker)))!!
-            labelStyles =
-                map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
+                map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.home_marker)
+                    .setTextStyles(LabelTextStyle.from(22, R.color.grey))))!!
+            labelStyles = map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
             map.cameraMaxLevel = 19
             map.cameraMinLevel = 12
 
@@ -112,6 +113,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 }
 
                 map.moveCamera(CameraUpdateFactory.newCenterPosition(location))
+                homeLocation = LatLng.from(location.latitude, location.longitude)
                 homeLocation = LatLng.from(location.latitude, location.longitude)
                 setHomeLabel()
             }
@@ -175,9 +177,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             }
 
             if (response.isSuccessful) {
-                val options = LabelOptions.from(centerPosition).setStyles(homeLabelStyles)
-                map.labelManager?.getLayer()!!.addLabel(options)
-
                 // 기존 모든 라벨 지우기
                 val layer: LabelLayer = map.labelManager?.getLayer()!!
                 layer.removeAll()
@@ -233,7 +232,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setHomeLabel() {
-        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles)
+        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles).setTexts("현위치")
         val layer: LabelLayer = map.labelManager?.getLayer()!!
         layer.addLabel(options)
     }
