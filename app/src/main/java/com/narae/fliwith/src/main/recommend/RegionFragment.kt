@@ -64,6 +64,8 @@ class RegionFragment : Fragment() {
             binding.Jeonnam,
             binding.Jeonbuk,
             binding.Chungnam,
+            binding.Gyeongnam,
+            binding.Ulsan,
             binding.Chungbuk,
             binding.Gwangju,
             binding.Gyeongbuk,
