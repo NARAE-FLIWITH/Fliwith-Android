@@ -14,6 +14,7 @@ import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendAIBinding
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.util.changeColorStatusBar
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -32,6 +33,17 @@ class RecommendAIFragment :
         initViewPager()
         setListeners()
         setFromMap()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.lavender, true)
     }
 
     private fun setFromMap() {
@@ -92,4 +104,5 @@ class RecommendAIFragment :
                 .into(binding.aiImgThumbnail)
         }
     }
+
 }
