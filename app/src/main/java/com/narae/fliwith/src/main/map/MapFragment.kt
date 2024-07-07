@@ -142,16 +142,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.mapView
 
-        val window = requireActivity().window
-        val context = requireContext()
-
-        // 상태 바 숨기기
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            window.statusBarColor = ContextCompat.getColor(context, android.R.color.transparent)
-        }
-
         checkPermissions()
         checkLocationActivated()
         setListeners()
