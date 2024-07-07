@@ -1,75 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.main.recommend.RecommendDetailFragment">
-    
+
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/page_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintTop_toTopOf="parent"> <!-- 세로 중앙 정렬 -->
 
-        <LinearLayout
-            android:id="@+id/page_layout"
-            android:orientation="horizontal"
-            android:padding="15dp"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="14dp"
+            android:layout_height="23dp"
+            android:gravity="center"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:id="@+id/page_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"> <!-- 세로 중앙 정렬 -->
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:font="@font/pretendard_medium"
+            android:fontWeight="600"
+            android:gravity="center"
+            android:text="지역 선택"
+            android:textSize="20dp"
+            android:textStyle="bold" /> <!-- 가로 중앙 정렬 -->
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:gravity="center"
-                android:layout_width="14dp"
-                android:layout_height="23dp"
-                android:src="@drawable/arrow" />
+        <TextView
+            android:layout_width="34dp"
+            android:layout_height="34dp"></TextView>
 
-            <TextView
-                android:id="@+id/page_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="지역 선택"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:fontWeight="600"
-                android:font="@font/pretendard_medium"
-                android:layout_gravity="center"/> <!-- 가로 중앙 정렬 -->
-
-            <TextView
-                android:layout_width="34dp"
-                android:layout_height="34dp">
-            </TextView>
-
-        </LinearLayout>
-
-        <!--  page text 에 따라 갈아 끼우는 fragment  -->
-        <FrameLayout
-            android:id="@+id/recommend_detail_fr"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </FrameLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/send_recommend_detail_btn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="18sp"
-            android:layout_margin="30dp"
-            android:background="@drawable/btn_solid_violet"
-            android:backgroundTint="@color/violet"
-            android:text="확인"
-            android:textAppearance="@style/btnText"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
-        
     </LinearLayout>
 
-    
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/recommend_detail_fr"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/send_recommend_detail_btn"
+        app:layout_constraintTop_toBottomOf="@+id/page_layout"></androidx.fragment.app.FragmentContainerView>
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/send_recommend_detail_btn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/btn_solid_violet"
+        android:backgroundTint="@color/violet"
+        android:text="확인"
+        android:textAppearance="@style/btnText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
