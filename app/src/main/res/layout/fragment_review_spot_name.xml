@@ -8,10 +8,11 @@
 
     <ImageView
         android:id="@+id/review_wrtie_close_icon"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
+        android:padding="5dp"
         android:src="@drawable/close_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:maxLines="1"
+            android:singleLine="true"
             android:autofillHints="여행지 입력"
             android:drawableRight="@drawable/review_spot_search_icon"
             android:hint="" />
