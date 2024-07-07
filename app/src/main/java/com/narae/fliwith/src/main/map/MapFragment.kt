@@ -10,12 +10,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -44,6 +46,7 @@ import com.narae.fliwith.src.main.map.MapApi.mapService
 import com.narae.fliwith.src.main.map.models.SpotRequest
 import com.narae.fliwith.src.main.map.models.SpotWithLocation
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.util.changeColorStatusBar
 import com.narae.fliwith.util.setOnSingleClickListener
 import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
@@ -138,6 +141,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.mapView
+
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 숨기기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = window
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.statusBarColor = ContextCompat.getColor(context, android.R.color.transparent)
+        }
+
         checkPermissions()
         checkLocationActivated()
         setListeners()
@@ -334,4 +348,5 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         if (::mapView.isInitialized)
             mapView.pause()
     }
+
 }
