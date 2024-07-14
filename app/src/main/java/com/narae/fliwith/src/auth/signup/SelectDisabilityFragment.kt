@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val TAG = "SelectDisabilityFragment"
+private const val TAG = "SelectDisabilityFragment"
 
 class SelectDisabilityFragment :
     BaseFragment<FragmentSelectDisabilityBinding>(FragmentSelectDisabilityBinding::inflate) {
@@ -121,9 +121,9 @@ class SelectDisabilityFragment :
 
             lateinit var selected: DISABILITY
             if (binding.btnDisabled.isChecked) {
-                selected = if (binding.btnVisual.isSelected)
+                selected = if (binding.btnVisual.isChecked)
                     VISUAL
-                else if (binding.btnHearing.isSelected)
+                else if (binding.btnHearing.isChecked)
                     HEARING
                 else
                     PHYSICAL
@@ -150,7 +150,6 @@ class SelectDisabilityFragment :
     }
 
     private fun checkButtonState() {
-        Log.d(TAG, "checkButtonState: ")
         binding.btnNext.isEnabled = (binding.btnNoneDisabled.isChecked ||
                 binding.btnNotSelected.isChecked ||
                 (binding.groupCategory.checkedRadioButtonId != -1)) &&
