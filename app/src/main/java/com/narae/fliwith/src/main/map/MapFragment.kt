@@ -114,7 +114,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
                 map.moveCamera(CameraUpdateFactory.newCenterPosition(location))
                 homeLocation = LatLng.from(location.latitude, location.longitude)
-                homeLocation = LatLng.from(location.latitude, location.longitude)
                 setHomeLabel()
             }
         }
@@ -232,7 +231,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setHomeLabel() {
-        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles).setTexts("현위치")
+        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles).setTexts("현위치").apply { isClickable = false }
         val layer: LabelLayer = map.labelManager?.getLayer()!!
         layer.addLabel(options)
     }
