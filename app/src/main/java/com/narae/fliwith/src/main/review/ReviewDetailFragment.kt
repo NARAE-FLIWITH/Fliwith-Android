@@ -71,6 +71,10 @@ class ReviewDetailFragment :
 
         // 일단 지우고
         binding.reviewDetailMenuIcon.visibility = View.GONE
+
+        binding.reviewDetailBackIcon.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     private fun updateLike(isLiked: Boolean) {

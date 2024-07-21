@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/review_detail_back_icon"
+            android:id="@+id/review_write_back_icon"
             android:layout_width="14dp"
             android:layout_height="23dp"
             android:layout_marginStart="15dp"

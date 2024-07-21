@@ -7,9 +7,9 @@
     tools:context=".src.main.review.ReviewSpotNameFragment">
 
     <ImageView
-        android:id="@+id/review_wrtie_close_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:id="@+id/review_spot_close_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:padding="5dp"
@@ -26,7 +26,7 @@
         android:orientation="vertical"
         android:padding="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_wrtie_close_icon">
+        app:layout_constraintTop_toBottomOf="@+id/review_spot_close_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/review_write_search_spot_et"

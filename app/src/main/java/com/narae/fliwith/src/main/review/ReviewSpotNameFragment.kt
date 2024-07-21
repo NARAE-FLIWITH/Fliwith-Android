@@ -57,6 +57,10 @@ FragmentReviewSpotNameBinding::inflate) {
             }
         })
 
+        binding.reviewSpotCloseIcon.setOnClickListener {
+            navController.popBackStack()
+        }
+
     }
 
     private fun fetchView() {

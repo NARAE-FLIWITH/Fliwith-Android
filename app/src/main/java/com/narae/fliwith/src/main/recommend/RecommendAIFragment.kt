@@ -94,6 +94,7 @@ class RecommendAIFragment :
         binding.aiTvName.text = responseData?.detailCommon?.title
         binding.aiTvUsetime.text = "연중무휴"
         binding.aiTvAddress.text = responseData?.detailCommon?.addr1
+
         Log.d(TAG, "fetchView firstimage1 : ${responseData?.detailCommon?.firstimage}")
         Log.d(TAG, "fetchView firstimage2 : ${responseData?.detailCommon?.firstimage2}")
         if (responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
