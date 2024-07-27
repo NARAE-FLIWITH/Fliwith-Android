@@ -30,8 +30,15 @@ class ViewPagerIntroductionFragment : BaseFragment<FragmentViewPagerIntroduction
         var responseData = viewModel.tourData.value?.data
 
         binding.introductionAddressTv.text = responseData?.detailCommon?.addr1
-//        binding.introductionNumberTv.text = responseData?.detailCommon?.tel
-//        binding.introductionUrlTv.text = responseData?.detailCommon?.homepage
+        binding.introductionNumberTv.text = responseData?.detailCommon?.tel
+
+        val homepage = responseData?.detailCommon?.homepage
+        val urlRegex = """href\s*=\s*"(http[s]?://[^"]+)"""".toRegex()
+        val extractedUrl = homepage?.let { urlRegex.find(it)?.groups?.get(1)?.value } ?: ""
+
+        binding.introductionUrlTv.text = extractedUrl
+
+
     }
 
 }

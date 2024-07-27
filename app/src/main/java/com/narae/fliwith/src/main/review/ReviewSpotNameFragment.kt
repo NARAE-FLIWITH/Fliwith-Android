@@ -2,8 +2,10 @@ package com.narae.fliwith.src.main.review
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
@@ -26,7 +28,9 @@ FragmentReviewSpotNameBinding::inflate) {
         binding.reviewWriteSearchSpotEt.setOnTouchListener { v, event ->
             val drawableRight = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.reviewWriteSearchSpotEt.right - binding.reviewWriteSearchSpotEt.compoundDrawables[drawableRight].bounds.width())) {
+                val iconWidth = binding.reviewWriteSearchSpotEt.compoundDrawables[drawableRight]?.bounds?.width() ?: 0
+                val extraTapArea = 30 // 추가 터치 영역 (픽셀)
+                if (event.rawX >= (binding.reviewWriteSearchSpotEt.right - iconWidth - extraTapArea)) {
                     // 아이콘 클릭 시 fetchView 호출
                     fetchView()
                     return@setOnTouchListener true
@@ -52,6 +56,10 @@ FragmentReviewSpotNameBinding::inflate) {
                 navController.popBackStack()
             }
         })
+
+        binding.reviewSpotCloseIcon.setOnClickListener {
+            navController.popBackStack()
+        }
 
     }
 

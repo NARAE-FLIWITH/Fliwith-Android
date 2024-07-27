@@ -71,7 +71,6 @@
                 android:id="@+id/et_email"
                 style="@style/textInputEditText"
                 android:inputType="textEmailAddress"
-                android:maxLines="1"
                 android:hint="@string/email"
                 android:text="@{user.email}" />
         </com.google.android.material.textfield.TextInputLayout>

@@ -83,6 +83,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 바인딩
         NavigationUI.setupWithNavController(binding.mainBtmNav, navController)
+        binding.mainBtmNav.setOnItemSelectedListener {item ->
+            NavigationUI.onNavDestinationSelected(item, navController)
+            return@setOnItemSelectedListener true
+        }
 
         observeLogout()
     }

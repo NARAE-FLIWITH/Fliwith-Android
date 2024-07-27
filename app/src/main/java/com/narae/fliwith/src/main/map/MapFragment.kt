@@ -10,14 +10,17 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -41,10 +44,12 @@ import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogRequestActivateBinding
 import com.narae.fliwith.databinding.DialogRequestPermissionsBinding
 import com.narae.fliwith.databinding.FragmentMapBinding
+import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.map.MapApi.mapService
 import com.narae.fliwith.src.main.map.models.SpotRequest
 import com.narae.fliwith.src.main.map.models.SpotWithLocation
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
+import com.narae.fliwith.util.changeColorStatusBar
 import com.narae.fliwith.util.setOnSingleClickListener
 import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
@@ -139,10 +144,40 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.mapView
+
+        val window = requireActivity().window
+        // 플래그를 추가하여 시스템 바(상태바 및 네비게이션 바)가 윈도우 배경을 그리도록 설정
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        // 플래그를 제거하여 상태바를 반투명 모드에서 해제
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        // 상태바의 배경색을 투명으로 설정
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility = (
+                // 앱이 전체 화면 레이아웃 모드에서 작동, 시스템 UI의 레이아웃 안정성을 유지, 상태바의 아이콘과 텍스트를 진하게 설정
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                )
+
         checkPermissions()
         checkLocationActivated()
         setListeners()
 
+    }
+
+    // Fragment가 사라질 때 상태바 원상복구
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 상태바 및 시스템 UI 설정 원상복귀
+        val window = requireActivity().window
+        // 상태바 배경 그리는 플래그 다시 추가
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        // 반투명 모드에서 해제
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        // 상태바 색상 흰색으로 변경
+        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        // 상태바 아이콘과 텍스트를 진하게 설정
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
     private fun setListeners() {
@@ -332,4 +367,5 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         if (::mapView.isInitialized)
             mapView.pause()
     }
+
 }

@@ -4,7 +4,11 @@ import android.content.Context
 import android.media.Image
 import android.os.SystemClock
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.narae.fliwith.R
 import kotlin.math.roundToInt
 
@@ -55,4 +59,15 @@ fun userProfileImageConvert(type:String, view: ImageView) {
         "NONDISABLED" -> view.setImageResource(R.drawable.none_disabled_profile_icon)
         else -> view.setImageResource(R.drawable.none_profile_icon)
     }
+}
+
+// 상태바 색상 변경
+fun changeColorStatusBar(window: Window, context: Context, colorResId: Int, isLightStatusBars: Boolean) {
+    val decorView = window.decorView
+
+    window.statusBarColor = ContextCompat.getColor(context, colorResId)
+
+    // 상태 바 아이콘 색상 설정
+    val insetsController = WindowCompat.getInsetsController(window, decorView)
+    insetsController.isAppearanceLightStatusBars = isLightStatusBars
 }

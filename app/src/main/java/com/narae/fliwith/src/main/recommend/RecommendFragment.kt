@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
@@ -18,6 +19,7 @@ import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 import com.narae.fliwith.src.main.recommend.models.TourRequest
 import com.narae.fliwith.util.DISABILITY
+import com.narae.fliwith.util.changeColorStatusBar
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -30,12 +32,10 @@ class RecommendFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private lateinit var mainActivity: MainActivity
     private val viewModel: RecommendViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainActivity = context as MainActivity
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +57,12 @@ class RecommendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.lavender, true)
 
         binding.regionBtn.layoutSelectAiText.text = "지역"
         binding.tourBtn.layoutSelectAiText.text = "여행지"
@@ -171,6 +177,13 @@ class RecommendFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
+
         _binding = null
     }
 

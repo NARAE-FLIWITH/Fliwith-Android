@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.ItemViewPagerReviewBinding
 import com.narae.fliwith.src.main.recommend.models.ViewPagerReview
@@ -15,7 +16,13 @@ class ViewPagerReviewAdapter (private val viewPagerReviewDataList: MutableList<V
         fun bindInfo(review: ViewPagerReview) {
             binding.apply {
                 viewPagerReviewTv.text = review.content
-                viewPagerReviewIv.setImageResource(R.drawable.view_pager_review_img)
+                if (review.imgUrl != null) {
+                    Glide.with(viewPagerReviewIv.context)
+                        .load(review.imgUrl)
+                        .into(viewPagerReviewIv)
+                } else {
+                    viewPagerReviewIv.setImageResource(R.drawable.no_image) // 기본 이미지로 설정
+                }
             }
         }
     }
@@ -33,5 +40,12 @@ class ViewPagerReviewAdapter (private val viewPagerReviewDataList: MutableList<V
     }
 
     override fun getItemCount(): Int = viewPagerReviewDataList.size
+
+    fun updateData(newData: List<ViewPagerReview>) {
+        viewPagerReviewDataList.clear()
+        viewPagerReviewDataList.addAll(newData)
+        notifyDataSetChanged()
+    }
+
 
 }

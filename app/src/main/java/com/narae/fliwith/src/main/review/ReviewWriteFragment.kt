@@ -165,6 +165,9 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             }
         }
 
+        binding.reviewWriteBackIcon.setOnClickListener {
+            navController.popBackStack()
+        }
 
     }
 

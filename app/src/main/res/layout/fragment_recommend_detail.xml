@@ -42,17 +42,16 @@
 
     </LinearLayout>
 
-    <!--  page text 에 따라 갈아 끼우는 fragment  -->
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/recommend_detail_fr"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/send_recommend_detail_btn"
-        app:layout_constraintTop_toBottomOf="@id/page_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/page_layout"></androidx.fragment.app.FragmentContainerView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/send_recommend_detail_btn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="30dp"
         android:background="@drawable/btn_solid_violet"
@@ -61,7 +60,7 @@
         android:textAppearance="@style/btnText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
