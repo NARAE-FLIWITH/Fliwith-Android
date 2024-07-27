@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.narae.fliwith.R
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentLoginBinding
@@ -38,6 +39,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun setListeners() {
         binding.btnBack.setOnClickListener {
             navController.popBackStack()
+        }
+
+        binding.btnResetPw.setOnClickListener {
+            navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
         }
 
         binding.btnLogin.setOnClickListener {

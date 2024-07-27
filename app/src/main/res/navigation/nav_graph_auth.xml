@@ -61,7 +61,11 @@
         android:id="@+id/loginFragment"
         android:name="com.narae.fliwith.src.auth.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/completeFragment"
         android:name="com.narae.fliwith.src.auth.signup.CompleteFragment"
@@ -78,5 +82,10 @@
         android:name="com.narae.fliwith.src.auth.signup.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.narae.fliwith.src.auth.login.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
 
 </navigation>

@@ -32,6 +32,7 @@ private const val TAG = "CreateAccountFragment"
 class CreateAccountFragment :
     BaseFragment<FragmentCreateAccountBinding>(FragmentCreateAccountBinding::inflate) {
     private val viewModel by activityViewModels<AuthViewModel>()
+    val pattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\S]{8,}$")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -83,7 +84,6 @@ class CreateAccountFragment :
         }
 
         binding.etPw.addTextChangedListener {
-            val pattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\S]{8,}$")
             if (!it.isNullOrEmpty() && !pattern.containsMatchIn(it)) {
                 binding.layoutPw.error = "비밀번호 형식이 맞지 않습니다."
             } else {
