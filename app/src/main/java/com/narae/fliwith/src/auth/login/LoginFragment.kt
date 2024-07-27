@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.narae.fliwith.R
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentLoginBinding
@@ -40,6 +41,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             navController.popBackStack()
         }
 
+        binding.btnResetPw.setOnClickListener {
+            navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+        }
+
         binding.btnLogin.setOnClickListener {
             with(binding) {
                 layoutEmail.error = null
@@ -71,7 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     }
                     // 로그인 실패, 404
                     else {
-                        binding.layoutPw.error = "아이디 또는 비밀번호를 다시 확인해주세요."
+                        binding.msgError.visibility = View.VISIBLE
                     }
 
                 }

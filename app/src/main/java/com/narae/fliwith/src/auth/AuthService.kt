@@ -30,6 +30,9 @@ interface AuthService {
 
     @POST("user/login")
     suspend fun login(@Body dto: LoginRequest): Response<TokenResponse>
+
+    @GET("user/temporary-password")
+    suspend fun temporaryPassword(@Query("email") email: String): Response<ResponseDto>
 }
 
 object AuthApi {
