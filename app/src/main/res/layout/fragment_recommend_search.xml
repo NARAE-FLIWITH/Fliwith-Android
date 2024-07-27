@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="14dp"
+        android:layout_height="23dp"
         android:layout_gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"

@@ -32,7 +32,7 @@
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="13dp"
+            android:layout_width="14dp"
             android:layout_height="23dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="22dp"
