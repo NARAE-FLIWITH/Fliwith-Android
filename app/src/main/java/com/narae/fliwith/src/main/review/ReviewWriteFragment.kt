@@ -86,16 +86,41 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
         // 수정
         if(reviewId!=-1) {
+            binding.reviewWriteBtn.isEnabled = true
             // 수정 기본 데이터 유지 시켜 주기
             binding.reviewWriteImageFrame.visibility = View.VISIBLE
             // 장소
             binding.reviewWriteEt.setText(viewModel.reviewSpotName.value)
             // 기존에 서버에서 받아왔던 데이터를 가져와서 유지 시켜 줘야 하는 것임
             imageAdapter.setImages(viewModel.reviewImageUrls.value!!)
+            // reviewImageUrls의 각 URL을 uploadImageUrls에 추가
+            viewModel.reviewImageUrls.value?.forEach { url ->
+                viewModel.addUploadImageUrl(url)
+            }
             // 후기
             binding.reviewWriteComment.setText(viewModel.reviewWriteContent.value)
+            binding.reviewWriteCommentTv.text = "${viewModel.reviewWriteContent.value?.length}자 / 최소 20자"
             // contendId
             Log.d(TAG, "onViewCreated: 여기는 수정이다. ${viewModel.reviewSpotContentId.value}")
+        }else {
+            _isButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
+                if(isEnabled) {
+                    Log.d(TAG, "onViewCreated: 버튼 상태 - $isEnabled")
+                    binding.reviewWriteBtn.isEnabled = true
+                }else {
+                    binding.reviewWriteBtn.isEnabled = false
+                }
+            }
+        }
+
+        binding.reviewWriteBtn.setOnClickListener {
+            // 작성 하고 리뷰 화면 으로 다시 이동
+            val request = ReviewInsertRequest(
+                viewModel.reviewSpotContentId.value!!,
+                viewModel.reviewWriteContent.value!!,
+                viewModel.uploadImageUrls.value!!)
+            postReviewData(request)
+            viewModel.clearData()
         }
 
         // 이미지 기본 frame
@@ -131,24 +156,6 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
         viewModel.reviewSpotContentId.observe(viewLifecycleOwner) { id ->
             _checkSpotId.value = id != null
-        }
-
-        _isButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            if(isEnabled) {
-                Log.d(TAG, "onViewCreated: 버튼 상태 - $isEnabled")
-                binding.reviewWriteBtn.isEnabled = true
-                binding.reviewWriteBtn.setOnClickListener {
-                    // 작성 하고 리뷰 화면 으로 다시 이동
-                    val request = ReviewInsertRequest(
-                        viewModel.reviewSpotContentId.value!!,
-                        viewModel.reviewWriteContent.value!!,
-                        viewModel.uploadImageUrls.value!!)
-                    postReviewData(request)
-                    viewModel.clearData()
-                }
-            }else {
-                binding.reviewWriteBtn.isEnabled = false
-            }
         }
 
         binding.reviewWriteBackIcon.setOnClickListener {
