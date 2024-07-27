@@ -173,11 +173,11 @@ class ReviewDetailFragment :
         viewModel.setReviewLikeCount(response?.likes.toString().toInt())
         viewModel.setSpotName(binding.reviewDetailPlace.text.toString())
         viewModel.setReviewWriteContent(binding.reviewDetailContent.text.toString())
-        viewModel.setImageUrl(response.images[0])
+        viewModel.setReviewImageUrls(response.images)
         viewModel.setSpotContentId(response?.contentId!!)
         Log.d(TAG, "fetchData: contentId ${response?.contentId!!}")
 
-        Log.d(TAG, "fetchData: ${binding.reviewDetailPlace.text}, ${binding.reviewDetailContent.text}, ${response.images[0]}")
+        Log.d(TAG, "fetchData: ${binding.reviewDetailPlace.text}, ${binding.reviewDetailContent.text}, ${response.images}")
 
     }
 

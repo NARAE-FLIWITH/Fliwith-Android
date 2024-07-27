@@ -51,9 +51,6 @@ public interface ReviewService {
     @POST("review/presigned")
     suspend fun presignedReview(@Body request: ReviewPresignedRequest): Response<ReviewPresignedResponse>
 
-    @PUT
-    suspend fun uploadImageAWS(@Url presignedUrl: String, @Body file: RequestBody) : Response<Unit>
-
     // 관광지 이름 키워드로 검색
     @GET("review")
     suspend fun spotName(@Query("spotName") spotName: String) : Response<ReviewSpotNameResponse>

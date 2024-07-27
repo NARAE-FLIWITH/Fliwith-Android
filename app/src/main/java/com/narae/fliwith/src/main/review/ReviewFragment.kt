@@ -16,6 +16,7 @@ import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.Review
+import com.narae.fliwith.src.main.review.models.ReviewDetailData
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import okhttp3.internal.immutableListOf
 
@@ -32,6 +33,7 @@ class ReviewFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
 
     private val viewModel: ReviewViewModel by activityViewModels()
+    private lateinit var response: ReviewDetailData
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

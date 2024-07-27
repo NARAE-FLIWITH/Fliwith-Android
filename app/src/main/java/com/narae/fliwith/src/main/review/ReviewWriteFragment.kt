@@ -1,5 +1,6 @@
 package com.narae.fliwith.src.main.review
 
+import ReviewWriteImageAdapter
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -12,7 +13,10 @@ import android.widget.PopupMenu
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import com.bumptech.glide.Glide
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentReviewWriteBinding
@@ -20,10 +24,10 @@ import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kotlinx.coroutines.launch
+import java.io.File
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 private const val TAG = "ReviewWriteFragment_싸피"
 class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
@@ -32,54 +36,37 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     private lateinit var mainActivity: MainActivity
     private val viewModel: ReviewViewModel by activityViewModels()
     private var reviewId:Int=-1
+    private lateinit var imageAdapter: ReviewWriteImageAdapter
+    private val imageUrls: MutableList<String> = mutableListOf()
+    private val presignedUrls: MutableList<String> = mutableListOf()
+    private val _checkSpotId = MutableLiveData<Boolean>(false)
+    private val _checkContentLength = MutableLiveData<Boolean>(false)
+    private val _uploadSuccess = MutableLiveData<Boolean>(false)
 
-    // pickMedia 함수
-    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            Log.d(TAG, "photoPicker: 사진 선택 했다.")
-            Glide.with(requireContext()).load(uri).into(binding.reviewWriteImageFrame)
-            Log.d(TAG, "이미지 uri: $uri")
-            if(reviewId==-1) binding.reviewWriteImageFrameSmall.visibility = View.GONE
-            else binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
-
-            val imageExtension = getFileExtension(requireContext(), uri)
-            val mimeType = viewModel.getMimeType(requireContext(), uri)
-            Log.d(TAG, "선택된 확장자: $imageExtension")
-            Log.d(TAG, "MIME 타입: $mimeType")
-
-            if (mimeType != null) {
-                viewModel.fetchPresignedReview(ReviewPresignedRequest(imageExtension)) { success, presignedData ->
-                    if (success && presignedData != null) {
-                        Log.d(TAG, "presignedData: ${presignedData.imageUrl}")
-                        viewModel.setImageUrl(presignedData.imageUrl)
-
-                        val file = viewModel.uriToFile(requireContext(), uri)
-                        if (file != null) {
-                            viewModel.uploadImageAWS(presignedData.presignedUrl, file, mimeType) { uploadSuccess ->
-                                if (uploadSuccess) {
-                                    Log.d(TAG, "Image uploaded successfully.")
-                                } else {
-                                    Log.d(TAG, "Failed to upload image.")
-                                }
-                            }
-                        } else {
-                            Log.e(TAG, "Failed to convert URI to File")
-                        }
-                    } else {
-                        Log.d(TAG, "review write fragment : 갤러리 에서 사진 가져 오기 실패임 실패")
-                    }
-                }
-            } else {
-                Log.e(TAG, "Failed to determine MIME type")
-            }
-        } else {
-            binding.reviewWriteImageFrameSmall.visibility = View.GONE
-        }
+    private val _isButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(_checkContentLength) { checkButtonEnabled() }
+        addSource(_checkSpotId) { checkButtonEnabled() }
+        addSource(_uploadSuccess) { checkButtonEnabled() }
     }
 
-    private fun getFileExtension(context: Context, uri: Uri): String {
-        val mimeType = context.contentResolver.getType(uri)
-        return mimeType?.substringAfterLast('/') ?: "jpg"
+    // pickMedia 함수
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(10)) { uris ->
+        if (uris.isNotEmpty()) {
+            // uris 리스트에 값이 있을 경우
+            val imageUrls = uris.map { uri -> uri.toString() } // Uri를 String으로 변환
+            imageAdapter.setImages(imageUrls)
+
+            // 여러 장의 이미지 업로드 시작
+            uploadImagesSequentially(requireContext(), uris) { success ->
+                if (success) {
+                    Log.d(TAG, "All images uploaded successfully")
+                    _uploadSuccess.value  = true
+                } else {
+                    Log.e(TAG, "Failed to upload images")
+                    _uploadSuccess.value  = false
+                }
+            }
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -93,33 +80,27 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
         // 받아온 reviewId
         reviewId = arguments?.getInt("reviewId") ?: -1
 
+        // RecyclerView 설정
+        imageAdapter = ReviewWriteImageAdapter(requireContext(), imageUrls)
+        binding.reviewWriteImageRv.adapter = imageAdapter
+
         // 수정
         if(reviewId!=-1) {
             // 수정 기본 데이터 유지 시켜 주기
+            binding.reviewWriteImageFrame.visibility = View.VISIBLE
             // 장소
-            Log.d(TAG, "onViewCreated review update data check : ${viewModel.reviewSpotName.value}, ${viewModel.uploadedImageUrl}, ${viewModel.reviewWriteContent.value}")
             binding.reviewWriteEt.setText(viewModel.reviewSpotName.value)
-            // 이미지
-            binding.reviewWriteImageFrameSmall.visibility = View.VISIBLE
-            Glide.with(requireContext())
-                .load(viewModel.uploadedImageUrl.value)
-                .into(binding.reviewWriteImageFrame)
+            // 기존에 서버에서 받아왔던 데이터를 가져와서 유지 시켜 줘야 하는 것임
+            imageAdapter.setImages(viewModel.reviewImageUrls.value!!)
             // 후기
             binding.reviewWriteComment.setText(viewModel.reviewWriteContent.value)
             // contendId
             Log.d(TAG, "onViewCreated: 여기는 수정이다. ${viewModel.reviewSpotContentId.value}")
-        }else {
-            binding.reviewWriteImageFrameSmall.visibility = View.GONE
         }
 
-        // 1 번만 나오고 안나와
+        // 이미지 기본 frame
         binding.reviewWriteImageFrame.setOnClickListener {
             showPopUp(binding.reviewWriteImageFrame)
-        }
-
-        // 이미지 넣어 졌으면 이제는 작은 Frame
-        binding.reviewWriteImageFrameSmall.setOnClickListener {
-            showPopUp(binding.reviewWriteImageFrameSmall)
         }
 
         // 지역 작성 버튼을 누르면
@@ -144,19 +125,24 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             }
         })
 
-        // ReviewWriteContent 변경 관찰
         viewModel.reviewWriteContent.observe(viewLifecycleOwner) { content ->
-            if (content != null && content.length >= 20 &&
-                viewModel.reviewSpotName.value != null && viewModel.uploadedImageUrl.value != null) {
+            _checkContentLength.value = content != null && content.length >= 20
+        }
+
+        viewModel.reviewSpotContentId.observe(viewLifecycleOwner) { id ->
+            _checkSpotId.value = id != null
+        }
+
+        _isButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            if(isEnabled) {
+                Log.d(TAG, "onViewCreated: 버튼 상태 - $isEnabled")
                 binding.reviewWriteBtn.isEnabled = true
-                // 작성
                 binding.reviewWriteBtn.setOnClickListener {
-                    Log.d(TAG, "onViewCreated: ${viewModel.uploadedImageUrl.value }")
                     // 작성 하고 리뷰 화면 으로 다시 이동
                     val request = ReviewInsertRequest(
                         viewModel.reviewSpotContentId.value!!,
-                        content!!,
-                        listOf(viewModel.uploadedImageUrl.value!!))
+                        viewModel.reviewWriteContent.value!!,
+                        viewModel.uploadImageUrls.value!!)
                     postReviewData(request)
                     viewModel.clearData()
                 }
@@ -169,6 +155,16 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             navController.popBackStack()
         }
 
+    }
+
+    private fun checkButtonEnabled() {
+        _isButtonEnabled.value = _checkContentLength.value == true &&
+                _checkSpotId.value == true &&
+                _uploadSuccess.value == true
+        Log.d(TAG, "_isButtonEnabled.value: ${_isButtonEnabled.value}")
+        Log.d(TAG, "_checkContentLength.value: ${_checkContentLength.value}")
+        Log.d(TAG, "_checkSpotId.value: ${_checkSpotId.value}")
+        Log.d(TAG, "_uploadSuccess.value: ${_uploadSuccess.value}")
     }
 
     fun postReviewData(request : ReviewInsertRequest) {
@@ -222,6 +218,8 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             when (menuItem.itemId) {
                 R.id.gallery_menu -> {
                     // 갤러리 선택
+                    presignedUrls.clear()
+                    viewModel.clearUploadImageUrls()
                     photoPicker()
                 }
                 R.id.camera_menu -> {
@@ -241,6 +239,67 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
+    fun uploadImagesSequentially(context: Context, uris: List<Uri>, callback: (Boolean) -> Unit) {
+        lifecycleScope.launch {
+            var allSuccess = true
+            for (uri in uris) {
+                val file = viewModel.uriToFile(context, uri)
+                if (file != null) {
+                    val mimeType = viewModel.getMimeType(context, uri)
+                    if (mimeType != null) {
+                        // Presigned URL 발급 요청
+                        val success = fetchPresignedReviewAwait(viewModel.getFileExtension(context, uri))
+                        if (success) {
+                            val presignedUrl = presignedUrls.last()
+                            val uploadSuccess = uploadImageAWSAwait(presignedUrl, file, mimeType)
+                            if (!uploadSuccess) {
+                                allSuccess = false
+                                break
+                            } else {
+                                Log.d(TAG, "Image uploaded successfully")
+                            }
+                        } else {
+                            allSuccess = false
+                            break
+                        }
+                    } else {
+                        Log.d(TAG, "Failed to get MIME type for image: $uri")
+                        allSuccess = false
+                        break
+                    }
+                } else {
+                    Log.d(TAG, "Failed to convert URI to file: $uri")
+                    allSuccess = false
+                    break
+                }
+            }
+            Log.d(TAG, "uploadImagesSequentially: ${viewModel.uploadImageUrls.value}")
+            callback(allSuccess)
+        }
+    }
 
+    suspend fun fetchPresignedReviewAwait(fileExtension: String): Boolean {
+        return suspendCoroutine { continuation ->
+            viewModel.fetchPresignedReview(ReviewPresignedRequest(fileExtension)) { success, presignedData ->
+                if (success && presignedData != null) {
+                    Log.d(TAG, "fetchPresignedReviewAwait: 프리사인드 url 발급 완료")
+                    presignedUrls.add(presignedData.presignedUrl)
+                    viewModel.addUploadImageUrl(presignedData.imageUrl)
+                    continuation.resume(true)
+                } else {
+                    Log.d(TAG, "Failed to get presigned URL")
+                    continuation.resume(false)
+                }
+            }
+        }
+    }
+
+    suspend fun uploadImageAWSAwait(presignedUrl: String, file: File, mimeType: String): Boolean {
+        return suspendCoroutine { continuation ->
+            viewModel.uploadImageAWS(presignedUrl, file, mimeType) { success ->
+                continuation.resume(success)
+            }
+        }
+    }
 
 }
