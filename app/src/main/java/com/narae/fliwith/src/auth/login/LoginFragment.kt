@@ -71,7 +71,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     }
                     // 로그인 실패, 404
                     else {
-                        binding.layoutPw.error = "아이디 또는 비밀번호를 다시 확인해주세요."
+                        binding.msgError.visibility = View.VISIBLE
                     }
 
                 }

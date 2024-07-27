@@ -78,7 +78,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_pw"
         style="@style/textInputLayout"
-        android:layout_marginBottom="30dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tv_pw"
         tools:ignore="MissingConstraints">
 
@@ -89,16 +89,44 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/btn_reset_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_regular"
+        android:padding="5dp"
+        android:text="비밀번호를 잊으셨나요?"
+        android:textColor="#FF757575"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/layout_pw"
+        app:layout_constraintTop_toBottomOf="@id/layout_pw" />
+
+    <TextView
+        android:id="@+id/msg_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:gravity="start"
+        android:text="아이디 또는 비밀번호를 다시 확인해주세요."
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/layout_pw"
+        app:layout_constraintStart_toStartOf="@id/layout_pw"
+        app:layout_constraintTop_toBottomOf="@id/btn_reset_pw"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/selector_btn_round"
         android:backgroundTint="@color/btnEnabled"
         android:text="@string/login"
         android:textAppearance="@style/btnText"
-        app:layout_constraintTop_toBottomOf="@+id/layout_pw"
+        app:layout_constraintTop_toBottomOf="@id/msg_error"
         tools:layout_editor_absoluteX="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
