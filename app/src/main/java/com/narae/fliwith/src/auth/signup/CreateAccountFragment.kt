@@ -84,7 +84,7 @@ class CreateAccountFragment :
         }
 
         binding.etPw.addTextChangedListener {
-            if (!it.isNullOrEmpty() && !pattern.containsMatchIn(it)) {
+            if (!it.isNullOrEmpty() && !pattern.matches(it)) {
                 binding.layoutPw.error = "비밀번호 형식이 맞지 않습니다."
             } else {
                 binding.layoutPw.error = ""

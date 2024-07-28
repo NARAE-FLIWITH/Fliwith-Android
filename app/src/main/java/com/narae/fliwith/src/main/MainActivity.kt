@@ -4,7 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -62,7 +64,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 if (lastBackPressedTime > System.currentTimeMillis() - 2000) {
                     finish()
                 } else {
-                    showCustomSnackBar(this@MainActivity, binding.root, "앱을 종료하려면 뒤로 가기를 한 번 더 눌러주세요")
+                    showCustomSnackBar(
+                        this@MainActivity,
+                        binding.root,
+                        "앱을 종료하려면 뒤로 가기를 한 번 더 눌러주세요"
+                    )
                     lastBackPressedTime = System.currentTimeMillis()
                 }
             }
@@ -83,7 +89,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 바인딩
         NavigationUI.setupWithNavController(binding.mainBtmNav, navController)
-        binding.mainBtmNav.setOnItemSelectedListener {item ->
+        binding.mainBtmNav.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
             return@setOnItemSelectedListener true
         }
@@ -91,11 +97,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         observeLogout()
     }
 
-    private fun observeLogout(){
-        loginViewModel.loginStatus.observe(this){
-            if(!it){
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val imm: InputMethodManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun observeLogout() {
+        loginViewModel.loginStatus.observe(this) {
+            if (!it) {
                 val intent = Intent(this, AuthActivity::class.java)
-                intent.flags =  Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             }

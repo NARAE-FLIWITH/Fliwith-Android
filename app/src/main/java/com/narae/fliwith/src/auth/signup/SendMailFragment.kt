@@ -56,7 +56,7 @@ class SendMailFragment : BaseFragment<FragmentSendMailBinding>(FragmentSendMailB
                     viewModel.removeUser()
                     navController.navigate(R.id.action_sendMailFragment_to_completeFragment)
                 } else {
-                    showCustomSnackBar(requireContext(), binding.root, "이메일 인증을 완료해 주세요.")
+                    showCustomSnackBar(requireContext(), binding.root, "이메일 인증을 완료해 주세요")
                     Log.d(TAG, "Email Authentication Error : ${response.errorBody()?.string()}")
                 }
             }

@@ -27,7 +27,7 @@
         <activity
             android:name=".src.auth.AuthActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".src.splash.SplashActivity"
             android:exported="true"
@@ -42,7 +42,7 @@
         <activity
             android:name=".src.main.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

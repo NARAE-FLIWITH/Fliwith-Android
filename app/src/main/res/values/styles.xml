@@ -79,4 +79,16 @@
     <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="android:popupBackground">@drawable/popup_menu_background</item>
     </style>
+
+    <style name="UnderLineTextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxStrokeColor">@color/et_underline</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxStrokeErrorColor">@color/brightGrey</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="hintEnabled">false</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="errorTextAppearance">@style/helperTextAppearance</item>
+    </style>
 </resources>

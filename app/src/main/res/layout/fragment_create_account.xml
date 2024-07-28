@@ -72,6 +72,7 @@
                 style="@style/textInputEditText"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:maxLength="30"
                 android:maxLines="1"
                 android:text="@{user.email}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,6 +101,7 @@
                 style="@style/textInputEditText"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:text="@{user.password}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -128,6 +130,7 @@
                 style="@style/textInputEditText"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:text="@{user.password}" />
         </com.google.android.material.textfield.TextInputLayout>

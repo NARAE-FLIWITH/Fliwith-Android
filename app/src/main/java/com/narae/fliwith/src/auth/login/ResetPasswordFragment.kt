@@ -42,7 +42,7 @@ class ResetPasswordFragment :
                 dismissLoadingDialog()
                 if (response.isSuccessful) {
                     navController.popBackStack()
-                    showCustomSnackBar(requireContext(), binding.root, "임시 비밀번호가 발급되었습니다.")
+                    showCustomSnackBar(requireContext(), binding.root, "임시 비밀번호가 발급되었습니다")
                 } else {
                     showErrorText()
                 }

@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_menu_main_btm_nav_my_page_to_IWriteFragment"
             app:destination="@id/IWriteFragment" />
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_myPageDetailFragment"
+            app:destination="@id/myPageDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
@@ -148,4 +151,25 @@
             android:id="@+id/action_IWriteFragment_to_reviewDetailFragment"
             app:destination="@id/reviewDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myPageDetailFragment"
+        android:name="com.narae.fliwith.src.main.mypage.MyPageDetailFragment"
+        android:label="fragment_my_page_detail"
+        tools:layout="@layout/fragment_my_page_detail" >
+        <action
+            android:id="@+id/action_myPageDetailFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_myPageDetailFragment_to_changeNicknameFragment"
+            app:destination="@id/changeNicknameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/changeNicknameFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ChangeNicknameFragment"
+        android:label="fragment_change_nickname"
+        tools:layout="@layout/fragment_change_nickname" />
 </navigation>

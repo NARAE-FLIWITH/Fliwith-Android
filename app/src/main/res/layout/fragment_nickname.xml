@@ -3,6 +3,7 @@
 <layout>
 
     <data>
+
         <variable
             name="user"
             type="com.narae.fliwith.src.auth.models.User" />
@@ -69,8 +70,9 @@
                 android:id="@+id/et_nickname"
                 style="@style/textInputEditText"
                 android:layout_height="60dp"
-                android:maxLines="1"
                 android:hint="@string/nickname"
+                android:maxLength="20"
+                android:maxLines="1"
                 android:text="@{user.nickname}" />
         </com.google.android.material.textfield.TextInputLayout>
 
