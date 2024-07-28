@@ -24,7 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
-private const val TAG = "AddTokenInterceptor"
+private const val TAG = "싸피"
 
 /**
  * 액세스 토큰 accessBaseTime = 60 * 60 // 60분
@@ -45,15 +45,8 @@ class AddTokenInterceptor(private val context: Context) : Interceptor {
 
                 if (updatedTimeDifference > fiftyMinute) {
                     if (updatedTokenData.refreshTokenExpirationTime <= System.currentTimeMillis()) {
-                        val intent = Intent(context, AuthActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                        Log.d(TAG, "intercept: 리프레쉬 토큰 만료")
-                        context.startActivity(intent)
-
-                        Handler(Looper.getMainLooper()).post {
-                            Toast.makeText(context, "오랫동안 로그인하지 않아 로그아웃 되었습니다. 다시 로그인해 주세요.", Toast.LENGTH_SHORT).show()
-                        }
+                        // 리프레쉬 토큰 만료된 경우 재 로그인
+                        logout()
                     } else {
                         // 살아있는 리프레시 토큰으로 재발급
                         runBlocking {
@@ -61,8 +54,9 @@ class AddTokenInterceptor(private val context: Context) : Interceptor {
                                 val newTokenData = refreshAccessToken(updatedTokenData.refreshToken)
                                 sharedPreferences.setTokenData(newTokenData)
                             } catch (e: ReissueFailException) {
-                                // 재발급 실패 처리
+                                //다른 기기로 로그인, 기존 token 변경된 경우
                                 Log.e(TAG, "Token reissue failed", e)
+                                logout()
                             }
                         }
                     }
@@ -76,6 +70,19 @@ class AddTokenInterceptor(private val context: Context) : Interceptor {
             .build()
 
         return chain.proceed(newRequest)
+    }
+
+    private fun logout() {
+        val intent = Intent(context, AuthActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        Log.d(TAG, "intercept: 리프레쉬 토큰 만료")
+        sharedPreferences.removeTokenData()
+        context.startActivity(intent)
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, "토큰이 만료되었습니다. 다시 로그인해 주세요.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     private suspend fun refreshAccessToken(refreshToken: String): TokenData {
