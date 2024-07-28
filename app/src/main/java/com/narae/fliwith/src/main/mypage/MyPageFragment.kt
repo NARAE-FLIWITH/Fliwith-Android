@@ -1,9 +1,6 @@
 package com.narae.fliwith.src.main.mypage
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,9 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
-import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.config.BaseFragment
-import com.narae.fliwith.databinding.DialogProfileGuideBinding
 import com.narae.fliwith.databinding.FragmentMyPageBinding
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.LoginViewModel
@@ -31,6 +26,7 @@ private const val TAG = "MyPageFragment"
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
     private val reviewViewModel by activityViewModels<ReviewViewModel>()
     private val loginViewModel by activityViewModels<LoginViewModel>()
+    private val profileViewModel by activityViewModels<ProfileViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,6 +41,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             }
             if (response.isSuccessful) {
                 setNameAndColor(response.body()!!.data)
+                profileViewModel.disability = response.body()!!.data.disability
+                profileViewModel.nickname = response.body()!!.data.nickname
             } else {
                 Log.d(TAG, "setProfile Error: ${response.errorBody()?.string()}")
             }
@@ -103,6 +101,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             }
         }
 
+        binding.layoutMypageBox.setOnClickListener {
+            navController.navigate(R.id.action_menu_main_btm_nav_my_page_to_myPageDetailFragment)
+        }
+
         // 내가 좋아요 한 리뷰
         binding.layoutLikeReview.setOnClickListener {
             reviewViewModel.fetchLikeReviews(0)
@@ -120,18 +122,5 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             }
             navController.navigate(R.id.action_menu_main_btm_nav_my_page_to_IWriteFragment, bundle)
         }
-
-        binding.layoutMypageBox.setOnClickListener {
-            val dialogView = DialogProfileGuideBinding.inflate(layoutInflater)
-
-            val dialog = AlertDialog.Builder(requireContext()).setView(dialogView.root).show()
-            dialogView.apply {
-                btnClose.setOnClickListener {
-                    dialog.dismiss()
-                }
-            }
-            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-        }
-
     }
 }
