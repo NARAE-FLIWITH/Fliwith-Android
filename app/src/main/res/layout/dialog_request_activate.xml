@@ -10,22 +10,21 @@
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="25dp">
 
         <TextView
             android:id="@+id/tv_profile_guide"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:breakStrategy="high_quality"
             android:fontFamily="@font/pretendard_medium"
+            android:gravity="center_horizontal"
             android:paddingBottom="15dp"
             android:text="지도 서비스 이용을 위해 위치 기능을 활성화 해주세요."
             android:textAlignment="center"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
