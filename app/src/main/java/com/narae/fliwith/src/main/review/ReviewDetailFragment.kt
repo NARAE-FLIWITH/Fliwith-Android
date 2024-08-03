@@ -4,30 +4,27 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
-import com.narae.fliwith.databinding.FragmentRecommendAIBinding
 import com.narae.fliwith.databinding.FragmentReviewDetailBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.ReviewDetailData
-import com.narae.fliwith.src.main.review.models.ReviewDetailResponse
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import com.narae.fliwith.util.userProfileImageConvert
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "ReviewDetailFragment_싸피"
 
@@ -39,6 +36,10 @@ class ReviewDetailFragment :
 
     private val viewModel: ReviewViewModel by activityViewModels()
     private lateinit var response: ReviewDetailData
+
+    // 이미지 Slider
+    private lateinit var reviewSliderAdapter: ReviewSliderAdapter
+    private lateinit var layoutIndicator: LinearLayout
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -75,6 +76,16 @@ class ReviewDetailFragment :
         binding.reviewDetailBackIcon.setOnClickListener {
             navController.popBackStack()
         }
+
+        // 이미지 슬라이더 설정
+        reviewSliderAdapter = ReviewSliderAdapter(requireContext(), mutableListOf())
+        binding.reviewDetailImageVp.adapter = reviewSliderAdapter
+        binding.reviewDetailImageVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                setCurrentIndicator(position)
+            }
+        })
     }
 
     private fun updateLike(isLiked: Boolean) {
@@ -110,24 +121,22 @@ class ReviewDetailFragment :
         binding.reviewHeartCount.text = count.toString()
     }
 
-
     private fun postLikeStatus() {
-        viewModel.fetchLikeReview(reviewId) {success ->
-            if(success) {
+        viewModel.fetchLikeReview(reviewId) { success ->
+            if (success) {
                 Log.d(TAG, "postLikeStatus: 좋아요 누르기 성공")
-            }
-            else{
+            } else {
                 Log.e(TAG, "Failed to post review like")
             }
         }
     }
 
     private fun likeStatus(like: Boolean) {
-        if(like) { // true 이미 좋아요 누른 상태
+        if (like) { // true 이미 좋아요 누른 상태
             viewModel.setReviewLikeStatue(true)
             binding.reviewHeartImage.visibility = View.VISIBLE
             binding.reviewHeartImageDisable.visibility = View.GONE
-        }else {
+        } else {
             viewModel.setReviewLikeStatue(false)
             binding.reviewHeartImage.visibility = View.GONE
             binding.reviewHeartImageDisable.visibility = View.VISIBLE
@@ -137,30 +146,23 @@ class ReviewDetailFragment :
     private fun fetchData() {
         response = viewModel.reviewDetailData.value?.data!!
 
-        binding.reviewDetailUserName.text = response?.nickname
+        binding.reviewDetailUserName.text = response.nickname
 
         // profile image
-        response?.disability?.let { userProfileImageConvert(it, binding.reviewDetailProfileImage) }
+        response.disability?.let { userProfileImageConvert(it, binding.reviewDetailProfileImage) }
 
-        // response?.createdAt가 null일 경우 기본값 설정
-        val timeCal = response?.createdAt?.let { timeCalculate(it) } ?: 0
-        binding.reviewDetailTime.text = "$timeCal 시간전"
-        binding.reviewHeartCount.text = response?.likes.toString()
+        // response.createdAt가 null일 경우 기본값 설정
+        val timeCal = response.createdAt?.let { timeCalculate(it) } ?: 0
+        binding.reviewDetailTime.text = "$timeCal"
+        binding.reviewHeartCount.text = response.likes.toString()
 
-        binding.reviewDetailPlace.text = response?.spotName
-        binding.reviewDetailContent.text = response?.content
-
+        binding.reviewDetailPlace.text = response.spotName
+        binding.reviewDetailContent.text = response.content
 
         likeStatus(response.like)
 
-        Glide.with(requireContext())
-            .load(response?.images?.get(0))
-            .error(R.drawable.no_image)
-            .placeholder(R.drawable.placeholder)
-            .into(binding.reviewDefaultImage)
-
         // 수정, 삭제
-        if (response?.mine == true) { // 내 게시물
+        if (response.mine) { // 내 게시물
             binding.reviewDetailMenuIcon.visibility = View.VISIBLE
             binding.reviewDetailMenuIcon.setOnClickListener {
                 popUpMenu()
@@ -170,20 +172,64 @@ class ReviewDetailFragment :
         }
 
         // 데이터 미리 넣어 두기
-        viewModel.setReviewLikeCount(response?.likes.toString().toInt())
+        viewModel.setReviewLikeCount(response.likes.toString().toInt())
         viewModel.setSpotName(binding.reviewDetailPlace.text.toString())
         viewModel.setReviewWriteContent(binding.reviewDetailContent.text.toString())
         viewModel.setReviewImageUrls(response.images)
-        viewModel.setSpotContentId(response?.contentId!!)
-        Log.d(TAG, "fetchData: contentId ${response?.contentId!!}")
+        viewModel.setSpotContentId(response.contentId)
+        Log.d(TAG, "fetchData: contentId ${response.contentId}")
 
         Log.d(TAG, "fetchData: ${binding.reviewDetailPlace.text}, ${binding.reviewDetailContent.text}, ${response.images}")
 
+        // 이미지 슬라이더에 이미지 URL들 설정
+        reviewSliderAdapter.setImages(response.images)
+        setupIndicators(response.images.size)
+    }
+
+    private fun setupIndicators(count: Int) {
+        val indicators = arrayOfNulls<ImageView>(count)
+        val params = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(16, 8, 16, 8)
+        }
+
+        binding.reviewDetailImageIndicator.removeAllViews()
+
+        for (i in indicators.indices) {
+            indicators[i] = ImageView(context).apply {
+                setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.review_detail_image_indicator_inactive))
+                layoutParams = params
+            }
+            binding.reviewDetailImageIndicator.addView(indicators[i])
+        }
+        setCurrentIndicator(0)
+    }
+
+    private fun setCurrentIndicator(position: Int) {
+        val childCount = binding.reviewDetailImageIndicator.childCount
+        for (i in 0 until childCount) {
+            val imageView = binding.reviewDetailImageIndicator.getChildAt(i) as ImageView
+            if (i == position) {
+                imageView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.review_detail_image_indicator_active
+                    )
+                )
+            } else {
+                imageView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.review_detail_image_indicator_inactive
+                    )
+                )
+            }
+        }
     }
 
     private fun popUpMenu() {
-        val popupMenu =
-            PopupMenu(requireContext(), binding.reviewDetailMenuIcon, 0, 0, R.style.CustomPopupMenu)
+        val popupMenu = PopupMenu(requireContext(), binding.reviewDetailMenuIcon, 0, 0, R.style.CustomPopupMenu)
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.menu_review_detail_popup, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -211,21 +257,28 @@ class ReviewDetailFragment :
         popupMenu.show()
     }
 
-
-    private fun timeCalculate(time: String): Long {
+    private fun timeCalculate(time: String): String {
         // 서버에서 받아온 시간을 파싱
         val serverTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME)
         } else {
             // SDK 버전이 O 미만일 경우
-            return 0
+            return "시간 정보를 사용할 수 없습니다."
         }
 
         // 현재 시간을 구함
         val currentTime = LocalDateTime.now()
 
-        // 시간을 비교하여 차이를 계산
-        return ChronoUnit.HOURS.between(serverTime, currentTime)
+        // 시간을 비교 하여 차이를 계산
+        val diffInHours = ChronoUnit.HOURS.between(serverTime, currentTime)
+
+        return if (diffInHours < 24) {
+            Log.d(TAG, "timeCalculate: $diffInHours")
+            "$diffInHours 시간 전"
+        } else {
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
+            serverTime.format(dateFormatter)
+        }
     }
 
 }
