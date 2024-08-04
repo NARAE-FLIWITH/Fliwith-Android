@@ -69,33 +69,26 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-
     // https://github.com/ybq/Android-SpinKit
     implementation("com.github.ybq:Android-SpinKit:1.4.0")
-
     //framework ktx dependency 추가
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-
     // kakao map
     implementation("com.kakao.maps.open:android:2.9.5")
-
     // navigation
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-
     // Normal
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
-
     // glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     // photo picker
     implementation("androidx.activity:activity-ktx:1.6.0")
-
+    // kakao login
+    implementation("com.kakao.sdk:v2-user:2.20.3")
 }
 
-fun getProperty(keyName: String) : String {
+fun getProperty(keyName: String): String {
     return gradleLocalProperties(rootDir).getProperty(keyName)
 }
