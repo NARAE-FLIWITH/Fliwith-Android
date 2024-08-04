@@ -24,6 +24,9 @@ class RecommendViewModel : ViewModel() {
     private val _tourData = MutableLiveData<TourResponse?>()
     val tourData: MutableLiveData<TourResponse?> get() = _tourData
 
+    private val _tourReviewData = MutableLiveData<TourReviewResponse?>()
+    val tourReviewData: MutableLiveData<TourReviewResponse?> get() = _tourReviewData
+
     private val _tourRequest = MutableLiveData<TourRequest>()
     val tourRequest: LiveData<TourRequest> get() = _tourRequest
 
@@ -76,6 +79,25 @@ class RecommendViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(TAG, "API call failed", e)
                 callback(false)
+            }
+        }
+    }
+
+    fun fetchTourReviewData(pageNo: Int, contentId: String, callback: (Boolean, TourReviewResponse?) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = RecommendApi.recommendService.selectAllTourReviews(contentId, pageNo)
+                if (response.isSuccessful && response.body() != null) {
+                    val tourReviewResponse = response.body()
+                    Log.d(TAG, "API call successful: $tourReviewResponse")
+                    callback(true, tourReviewResponse)
+                } else {
+                    Log.e(TAG, "API call failed: ${response.errorBody()}")
+                    callback(false, null)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "API call failed", e)
+                callback(false, null)
             }
         }
     }
