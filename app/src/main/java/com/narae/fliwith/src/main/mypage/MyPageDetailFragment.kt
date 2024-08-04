@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogProfileGuideBinding
@@ -25,6 +27,11 @@ class MyPageDetailFragment :
         super.onViewCreated(view, savedInstanceState)
         setProfile(Profile(profileViewModel.disability, profileViewModel.nickname))
         setListeners()
+
+        // 카카오 회원은 비밀번호 변경 불가
+        if (AuthApiClient.instance.hasToken()) {
+            binding.layoutPw.visibility = View.GONE
+        }
     }
 
     private fun setListeners() {

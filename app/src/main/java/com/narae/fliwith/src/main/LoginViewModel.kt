@@ -8,14 +8,14 @@ import com.narae.fliwith.src.auth.models.TokenData
 
 class LoginViewModel : ViewModel() {
     private val _loginStatus = MutableLiveData<Boolean>()
-    val loginStatus : LiveData<Boolean> get() = _loginStatus
+    val loginStatus: LiveData<Boolean> get() = _loginStatus
 
-    fun login(tokenData : TokenData){
+    fun login(tokenData: TokenData) {
         sharedPreferences.setTokenData(tokenData)
         _loginStatus.value = true
     }
 
-    fun logout(){
+    fun logout() {
         sharedPreferences.removeTokenData()
         _loginStatus.value = false
     }

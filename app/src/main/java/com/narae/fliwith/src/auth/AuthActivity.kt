@@ -9,8 +9,6 @@ import com.narae.fliwith.databinding.ActivityAuthBinding
 
 class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::inflate) {
 
-    private val viewModel by viewModels<AuthViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
