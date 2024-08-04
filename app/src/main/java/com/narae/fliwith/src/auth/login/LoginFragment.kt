@@ -2,20 +2,16 @@ package com.narae.fliwith.src.auth.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
-import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentLoginBinding
-import com.narae.fliwith.src.auth.AuthApi
 import com.narae.fliwith.src.auth.AuthApi.authService
 import com.narae.fliwith.src.auth.models.LoginRequest
 import com.narae.fliwith.src.main.LoginViewModel
 import com.narae.fliwith.src.main.MainActivity
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
