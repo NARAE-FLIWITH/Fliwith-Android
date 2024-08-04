@@ -37,9 +37,8 @@ abstract class BaseFragment<B : ViewBinding>(
         networkUtil = NetworkUtil(requireContext())
     }
 
-    override fun onResume() {
-        super.onResume()
-        println("@@@@!#!@$@!$#@$#%^%$&$@$!@#$@!#%")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (!networkUtil.isNetworkAvailable()) {
             networkUtil.showNetworkDialog()
         }

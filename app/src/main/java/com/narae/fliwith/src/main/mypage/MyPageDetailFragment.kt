@@ -17,7 +17,7 @@ import com.narae.fliwith.util.DISABILITY
 
 class MyPageDetailFragment :
     BaseFragment<FragmentMyPageDetailBinding>(FragmentMyPageDetailBinding::inflate) {
-    val profileViewModel by activityViewModels<ProfileViewModel>()
+    private val profileViewModel by activityViewModels<ProfileViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
