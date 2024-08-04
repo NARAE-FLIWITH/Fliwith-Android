@@ -12,13 +12,12 @@ import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.Review
-import com.narae.fliwith.src.main.review.models.ReviewDetailData
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
-import okhttp3.internal.immutableListOf
 
 private const val TAG = "ReviewFragment_싸피"
 
@@ -28,12 +27,15 @@ class ReviewFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private var reviewList = immutableListOf<Review>()
+    private var reviewList = mutableListOf<Review>()
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var mainActivity: MainActivity
 
     private val viewModel: ReviewViewModel by activityViewModels()
-    private lateinit var response: ReviewDetailData
+
+    private var currentPage = 0
+    private var isLoading = false
+    private var currentOrder = "recent"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,7 +52,6 @@ class ReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentReviewBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -63,16 +64,19 @@ class ReviewFragment : Fragment() {
         reviewAdapter = ReviewAdapter(requireContext(), reviewList)
         binding.reviewRv.apply {
             adapter = reviewAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!recyclerView.canScrollVertically(1) && !isLoading) {
+                        loadMoreReviews()
+                    }
+                }
+            })
         }
 
         // 최신순 기본
-        viewModel.fetchSelectAllReviews(0, "recent") { success ->
-            if (success) {
-                observeReviewData()
-            } else {
-                Log.d(TAG, "onViewCreated: review 최신순 불러 오기 실패")
-            }
-        }
+        loadReviews(currentPage, currentOrder)
+        binding.reviewCount.text = "${reviewList.size}개의 리뷰"
 
         val navController = findNavController()
 
@@ -94,41 +98,52 @@ class ReviewFragment : Fragment() {
             val inflater: MenuInflater = popupMenu.menuInflater
             inflater.inflate(R.menu.menu_review_order_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
+                currentPage = 0
+                reviewList.clear()
                 when (menuItem.itemId) {
                     R.id.new_menu -> {
+                        currentOrder = "recent"
                         binding.reviewOrderSelectText.text = "최신순"
-                        viewModel.fetchSelectAllReviews(0, "recent") { success ->
-                            if (success) {
-                                observeReviewData()
-                            } else {
-                                Log.d(TAG, "onViewCreated: review 최신순 불러 오기 실패")
-                            }
-                        }
                     }
-
                     R.id.popular_menu -> {
+                        currentOrder = "like"
                         binding.reviewOrderSelectText.text = "인기순"
-                        viewModel.fetchSelectAllReviews(0, "like") { success ->
-                            if (success) {
-                                observeReviewData()
-                            } else {
-                                Log.d(TAG, "onViewCreated: review 인기순 불러 오기 실패")
-                            }
-                        }
                     }
                 }
+                loadReviews(currentPage, currentOrder)
                 false
             }
             popupMenu.show()
         }
     }
 
-    private fun observeReviewData() {
+    private fun loadReviews(pageNo: Int, order: String) {
+        isLoading = true
+        viewModel.fetchSelectAllReviews(pageNo, order) { success, lastPageNo ->
+            if (success) {
+                observeReviewData(lastPageNo)
+            } else {
+                Log.d(TAG, "review 불러 오기 실패")
+            }
+            isLoading = false
+        }
+    }
+
+    private fun loadMoreReviews() {
+        currentPage++
+        loadReviews(currentPage, currentOrder)
+    }
+
+    private fun observeReviewData(lastPageNo: Int) {
         viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
             reviewResponse?.data?.reviews?.let { reviews ->
-                reviewList = reviews
-                reviewAdapter.updateReviews(reviews)
+                reviewList.addAll(reviews)
+                reviewAdapter.updateReviews(reviewList)
                 binding.reviewCount.text = "${reviewList.size}개의 리뷰"
+            }
+            // 마지막 페이지 여부 확인
+            if (currentPage >= lastPageNo) {
+                isLoading = true // 더 이상 로딩하지 않도록 설정
             }
         })
     }

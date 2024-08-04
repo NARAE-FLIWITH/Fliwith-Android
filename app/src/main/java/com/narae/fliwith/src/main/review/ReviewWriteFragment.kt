@@ -24,6 +24,7 @@ import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
+import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.launch
 import java.io.File
 import kotlin.coroutines.resume
@@ -63,6 +64,7 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                     _uploadSuccess.value  = true
                 } else {
                     Log.e(TAG, "Failed to upload images")
+                    showCustomSnackBar(requireContext(), binding.root, "이미지 업로드에 실패 했습니다. 🥲")
                     _uploadSuccess.value  = false
                 }
             }

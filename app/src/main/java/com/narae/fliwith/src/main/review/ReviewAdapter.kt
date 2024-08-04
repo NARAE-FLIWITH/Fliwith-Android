@@ -67,4 +67,5 @@ class ReviewAdapter(context: Context, private var reviewDataList: List<Review>) 
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
     }
+
 }
