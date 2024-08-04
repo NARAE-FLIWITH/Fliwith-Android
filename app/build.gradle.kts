@@ -20,8 +20,6 @@ android {
 
         buildConfigField("String", "SERVER_URL", getProperty("SERVER_URL"))
         buildConfigField("String", "GPT_KEY", getProperty("GPT_KEY"))
-        buildConfigField("String", "KAKAO_APP_KEY", getProperty("KAKAO_APP_KEY"))
-        buildConfigField("String", "KAKAO_MAP_KEY", getProperty("KAKAO_MAP_KEY"))
         buildConfigField("String", "POLICY_CONTRACT_URL", getProperty("POLICY_CONTRACT_URL"))
         buildConfigField("String", "PRIVACY_CONTRACT_URL", getProperty("PRIVACY_CONTRACT_URL"))
         buildConfigField("String", "SENSITIVE_CONTRACT_URL", getProperty("SENSITIVE_CONTRACT_URL"))

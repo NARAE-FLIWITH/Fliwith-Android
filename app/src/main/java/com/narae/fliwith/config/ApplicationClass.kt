@@ -1,11 +1,13 @@
 package com.narae.fliwith.config
 
 import android.app.Application
+import android.content.res.Resources
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.vectormap.KakaoMapSdk
 import com.narae.fliwith.BuildConfig
+import com.narae.fliwith.R
 import com.narae.fliwith.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,9 +35,6 @@ class ApplicationClass : Application() {
 
         //ends with '/'
         val API_URL = BuildConfig.SERVER_URL
-        val GPT_KEY = BuildConfig.GPT_KEY
-        val KAKAO_APP_KEY = BuildConfig.KAKAO_APP_KEY
-        val KAKAO_MAP_KEY = BuildConfig.KAKAO_APP_KEY
 
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
@@ -51,9 +50,9 @@ class ApplicationClass : Application() {
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
 
+        val KAKAO_APP_KEY = getString(R.string.kakao_app_key)
         // kakao Map SDK 초기화
         KakaoMapSdk.init(this, KAKAO_APP_KEY);
-
         // Kakao SDK 초기화
         KakaoSdk.init(this, KAKAO_APP_KEY)
     }
