@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_loginHomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_loginHomeFragment_to_kakaoNicknameFragment"
+            app:destination="@id/kakaoNicknameFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
@@ -87,5 +90,32 @@
         android:name="com.narae.fliwith.src.auth.login.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" />
+    <fragment
+        android:id="@+id/kakaoNicknameFragment"
+        android:name="com.narae.fliwith.src.auth.kakao.KakaoNicknameFragment"
+        android:label="KakaoNicknameFragment" >
+        <action
+            android:id="@+id/action_kakaoNicknameFragment_to_kakaoSelectDisabilityFragment"
+            app:destination="@id/kakaoSelectDisabilityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kakaoSelectDisabilityFragment"
+        android:name="com.narae.fliwith.src.auth.kakao.KakaoSelectDisabilityFragment"
+        android:label="KakaoSelectDisabilityFragment" >
+        <action
+            android:id="@+id/action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment"
+            app:destination="@id/kakaoCompleteFragment" />
+        <action
+            android:id="@+id/action_kakaoSelectDisabilityFragment_to_kakaoWebViewFragment"
+            app:destination="@id/kakaoWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kakaoCompleteFragment"
+        android:name="com.narae.fliwith.src.auth.kakao.KakaoCompleteFragment"
+        android:label="KakaoCompleteFragment" />
+    <fragment
+        android:id="@+id/kakaoWebViewFragment"
+        android:name="com.narae.fliwith.src.auth.kakao.KakaoWebViewFragment"
+        android:label="KakaoWebViewFragment" />
 
 </navigation>

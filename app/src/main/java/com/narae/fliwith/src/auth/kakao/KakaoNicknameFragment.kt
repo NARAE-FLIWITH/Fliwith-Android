@@ -1,4 +1,4 @@
-package com.narae.fliwith.src.auth.signup
+package com.narae.fliwith.src.auth.kakao
 
 import android.content.Context
 import android.os.Bundle
@@ -9,25 +9,25 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
-import com.narae.fliwith.databinding.FragmentNicknameBinding
-import com.narae.fliwith.src.auth.AuthApi.authService
-import com.narae.fliwith.src.auth.AuthViewModel
+import com.narae.fliwith.databinding.FragmentKakaoNicknameBinding
+import com.narae.fliwith.src.auth.AuthApi
 import com.narae.fliwith.src.auth.models.NicknameRequest
 import com.narae.fliwith.util.setOnSingleClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+class KakaoNicknameFragment : BaseFragment<FragmentKakaoNicknameBinding>(
+    FragmentKakaoNicknameBinding::inflate
+) {
 
-class NicknameFragment : BaseFragment<FragmentNicknameBinding>(FragmentNicknameBinding::inflate) {
-
-    private val authViewModel by activityViewModels<AuthViewModel>()
+    private val kakaoAuthViewModel by activityViewModels<KakaoAuthViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                authViewModel.removeNickname()
+                kakaoAuthViewModel.removeNickname()
                 navController.popBackStack()
             }
         }
@@ -37,23 +37,23 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(FragmentNicknameB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        binding.user = authViewModel.user
+        binding.user = kakaoAuthViewModel.kakaoUser
     }
 
     private fun setListeners() {
         binding.btnBack.setOnClickListener {
-            authViewModel.removeNickname()
+            kakaoAuthViewModel.removeNickname()
             navController.popBackStack()
         }
 
         binding.btnNext.setOnSingleClickListener {
             lifecycleScope.launch {
                 val response = withContext(Dispatchers.IO) {
-                    authService.isNotDuplicateNickname(NicknameRequest(binding.etNickname.text.toString()))
+                    AuthApi.authService.isNotDuplicateNickname(NicknameRequest(binding.etNickname.text.toString()))
                 }
                 if (response.isSuccessful) {
-                    authViewModel.setNickname(binding.etNickname.text.toString())
-                    navController.navigate(R.id.action_nicknameFragment_to_selectDisabilityFragment)
+                    kakaoAuthViewModel.setNickname(binding.etNickname.text.toString())
+                    navController.navigate(R.id.action_kakaoNicknameFragment_to_kakaoSelectDisabilityFragment)
                 } else {
                     binding.layoutNickname.error = "이미 존재하는 닉네임입니다."
                 }
@@ -72,6 +72,4 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(FragmentNicknameB
             }
         }
     }
-
-
 }

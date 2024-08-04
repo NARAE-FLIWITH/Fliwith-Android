@@ -1,15 +1,16 @@
-package com.narae.fliwith.src.auth.signup
+package com.narae.fliwith.src.auth.kakao
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.narae.fliwith.config.BaseFragment
-import com.narae.fliwith.databinding.FragmentWebViewBinding
-import com.narae.fliwith.src.auth.AuthViewModel
+import com.narae.fliwith.databinding.FragmentKakaoWebViewBinding
 
-class WebViewFragment : BaseFragment<FragmentWebViewBinding>(FragmentWebViewBinding::inflate) {
-    private val authViewModel by activityViewModels<AuthViewModel>()
+class KakaoWebViewFragment : BaseFragment<FragmentKakaoWebViewBinding>(
+    FragmentKakaoWebViewBinding::inflate
+) {
+    private val kakaoAuthViewModel by activityViewModels<KakaoAuthViewModel>()
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -18,7 +19,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>(FragmentWebViewBind
         webView.settings.apply {
             javaScriptEnabled = true
         }
-        webView.loadUrl(authViewModel.getWebViewURL())
+        webView.loadUrl(kakaoAuthViewModel.getWebViewURL())
 
         binding.btnBack.setOnClickListener {
             navController.popBackStack()

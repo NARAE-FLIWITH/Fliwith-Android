@@ -15,9 +15,7 @@ import com.narae.fliwith.src.auth.AuthApi.authService
 import com.narae.fliwith.src.auth.AuthViewModel
 import com.narae.fliwith.src.auth.models.EmailRequest
 import com.narae.fliwith.util.setOnSingleClickListener
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -31,15 +29,15 @@ private const val TAG = "CreateAccountFragment"
          */
 class CreateAccountFragment :
     BaseFragment<FragmentCreateAccountBinding>(FragmentCreateAccountBinding::inflate) {
-    private val viewModel by activityViewModels<AuthViewModel>()
+    private val authViewModel by activityViewModels<AuthViewModel>()
     val pattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\S]{8,}$")
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                viewModel.removeEmail()
-                viewModel.removePassword()
+                authViewModel.removeEmail()
+                authViewModel.removePassword()
                 navController.popBackStack()
             }
         }
@@ -49,13 +47,13 @@ class CreateAccountFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        binding.user = viewModel.user
+        binding.user = authViewModel.user
     }
 
     private fun setListeners() {
         binding.btnBack.setOnClickListener {
-            viewModel.removeEmail()
-            viewModel.removePassword()
+            authViewModel.removeEmail()
+            authViewModel.removePassword()
             navController.popBackStack()
         }
 
@@ -65,8 +63,8 @@ class CreateAccountFragment :
                     authService.isNotDuplicateEmail(EmailRequest(binding.etEmail.text.toString()))
                 }
                 if (response.isSuccessful) {
-                    viewModel.setEmail(binding.etEmail.text.toString())
-                    viewModel.setPassword(binding.etPw.text.toString())
+                    authViewModel.setEmail(binding.etEmail.text.toString())
+                    authViewModel.setPassword(binding.etPw.text.toString())
                     navController.navigate(R.id.action_createAccountFragment_to_nicknameFragment)
                 } else {
                     binding.layoutEmail.error = "이미 가입된 이메일입니다."
