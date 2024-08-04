@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import com.narae.fliwith.config.ApplicationClass.Companion.API_URL
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.src.auth.AuthActivity
@@ -24,13 +26,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
-private const val TAG = "싸피"
 
 /**
  * 액세스 토큰 accessBaseTime = 60 * 60 // 60분
  * 리프레쉬 토큰 refreshBaseTime = 60 * 60 * 24 * 7 // 일주일
  * 액세스 토큰 유효시간이 60분이지만 넉넉하게 이전 콜을 보낸지 50분이 넘었으면 자동으로 토큰 재발급 하도록 함
  */
+private const val TAG = "AddTokenInterceptor"
+
 class AddTokenInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val tokenData = sharedPreferences.getTokenData()
@@ -78,6 +81,17 @@ class AddTokenInterceptor(private val context: Context) : Interceptor {
         }
         Log.d(TAG, "intercept: 리프레쉬 토큰 만료")
         sharedPreferences.removeTokenData()
+        // 카카오 로그아웃
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.logout { error ->
+                if (error != null) {
+                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                } else {
+                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                }
+            }
+        }
+
         context.startActivity(intent)
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(context, "토큰이 만료되었습니다. 다시 로그인해 주세요.", Toast.LENGTH_SHORT)
