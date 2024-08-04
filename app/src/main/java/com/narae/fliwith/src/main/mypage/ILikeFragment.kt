@@ -1,26 +1,23 @@
-package com.narae.fliwith.src.main.review
+package com.narae.fliwith.src.main.mypage
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentILikeBinding
 import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.src.main.review.ReviewAdapter
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import okhttp3.internal.immutableListOf
 
-class ILikeFragment : Fragment() {
-
-    private var _binding: FragmentILikeBinding? = null
-    private val binding
-        get() = _binding!!
+class ILikeFragment : BaseFragment<FragmentILikeBinding>(
+    FragmentILikeBinding::inflate
+) {
 
     private var reviewList = immutableListOf<Review>()
     private lateinit var reviewAdapter: ReviewAdapter
@@ -31,14 +28,6 @@ class ILikeFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentILikeBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,10 +65,5 @@ class ILikeFragment : Fragment() {
                 reviewAdapter.updateReviews(reviews)
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

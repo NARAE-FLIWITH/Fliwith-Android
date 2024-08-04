@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentDateBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
@@ -20,9 +21,9 @@ import java.util.Locale
 
 private const val TAG = "DateFragment_싸피"
 
-class DateFragment : Fragment() {
-    private var _binding: FragmentDateBinding? = null
-    private val binding get() = _binding!!
+class DateFragment : BaseFragment<FragmentDateBinding>(
+    FragmentDateBinding::inflate
+) {
     private var selectedDate: String? = null
 
     // 날짜 형식을 0000-00-00 로 변환
@@ -34,14 +35,6 @@ class DateFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDateBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,19 +68,5 @@ class DateFragment : Fragment() {
         if (!date.isNullOrBlank()) {
             dateFormat.parse(date)?.let { binding.calendarView.date = it.time }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DateFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

@@ -10,21 +10,14 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRegionBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-class RegionFragment : Fragment() {
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    private var _binding: FragmentRegionBinding? = null
-    private val binding
-        get() = _binding!!
+class RegionFragment : BaseFragment<FragmentRegionBinding>(
+    FragmentRegionBinding::inflate
+) {
 
     private lateinit var mainActivity: MainActivity
     private val viewModel: RecommendViewModel by activityViewModels()
@@ -32,23 +25,6 @@ class RegionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentRegionBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,22 +81,6 @@ class RegionFragment : Fragment() {
                         viewModel.setSelectedRegionButtonText(btn.text.toString())
                 }
                 findNavController().popBackStack()
-            }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 }

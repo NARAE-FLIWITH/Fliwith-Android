@@ -3,16 +3,14 @@ package com.narae.fliwith.src.main.review
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.Review
@@ -21,11 +19,9 @@ import okhttp3.internal.immutableListOf
 
 private const val TAG = "ReviewFragment_싸피"
 
-class ReviewFragment : Fragment() {
-
-    private var _binding: FragmentReviewBinding? = null
-    private val binding
-        get() = _binding!!
+class ReviewFragment : BaseFragment<FragmentReviewBinding>(
+    FragmentReviewBinding::inflate
+) {
 
     private var reviewList = immutableListOf<Review>()
     private lateinit var reviewAdapter: ReviewAdapter
@@ -42,15 +38,6 @@ class ReviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentReviewBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,10 +116,5 @@ class ReviewFragment : Fragment() {
                 binding.reviewCount.text = "${reviewList.size}개의 리뷰"
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

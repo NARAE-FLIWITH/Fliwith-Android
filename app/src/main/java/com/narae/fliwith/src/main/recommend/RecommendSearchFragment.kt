@@ -13,17 +13,11 @@ import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 import com.narae.fliwith.util.changeColorStatusBar
 import com.narae.fliwith.util.showCustomSnackBar
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 private const val TAG = "RecommendSearchFragment_싸피"
 class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(FragmentRecommendSearchBinding::inflate) {
 
     private val viewModel: RecommendViewModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
     // 여기서 API 연결 해서 받은 값을 다음 화면 에서 보여 주기
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +51,4 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
         changeColorStatusBar(window, context, R.color.lavender, true)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

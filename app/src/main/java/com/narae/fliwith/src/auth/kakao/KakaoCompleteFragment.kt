@@ -10,7 +10,8 @@ class KakaoCompleteFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnNext.setOnClickListener {
-            TODO("로그인 api 호출하고 바로 홈으로 보내기")
+//            TODO("로그인 api 호출하고 바로 홈으로 보내기")
+//            ㅇㅇㅇ
         }
     }
 }

@@ -131,19 +131,19 @@ class KakaoSelectDisabilityFragment : BaseFragment<FragmentKakaoSelectDisability
             }
             kakaoAuthViewModel.setDisability(selected)
 
-            lifecycleScope.launch {
-                val response = withContext(Dispatchers.IO) {
-                    TODO("카카오 회원번호가입으로 요청")
-                    AuthApi.authService.signUp(kakaoAuthViewModel.kakaoUser)
-                }
-                if (response.isSuccessful) {
-                    mLoadingDialog.dismiss()
-                    navController.navigate(R.id.action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment)
-                } else {
-                    mLoadingDialog.dismiss()
-                    Log.d(TAG, "SignUp Error : ${response.errorBody()?.string()}")
-                }
-            }
+//            lifecycleScope.launch {
+//                val response = withContext(Dispatchers.IO) {
+//                    TODO("카카오 회원번호가입으로 요청")
+//                    AuthApi.authService.signUp(kakaoAuthViewModel.kakaoUser)
+//                }
+//                if (response.isSuccessful) {
+//                    mLoadingDialog.dismiss()
+//                    navController.navigate(R.id.action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment)
+//                } else {
+//                    mLoadingDialog.dismiss()
+//                    Log.d(TAG, "SignUp Error : ${response.errorBody()?.string()}")
+//                }
+//            }
         }
     }
 

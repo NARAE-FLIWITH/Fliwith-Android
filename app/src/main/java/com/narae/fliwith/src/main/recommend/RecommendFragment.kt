@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
+import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendBinding
 import com.narae.fliwith.databinding.LayoutSelectAiBinding
 import com.narae.fliwith.src.main.MainActivity
@@ -21,39 +22,12 @@ import com.narae.fliwith.src.main.recommend.models.TourRequest
 import com.narae.fliwith.util.DISABILITY
 import com.narae.fliwith.util.changeColorStatusBar
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 private const val TAG = "RecommendFragment_싸피"
-class RecommendFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
-    private var _binding : FragmentRecommendBinding? = null
-    private val binding
-        get() = _binding!!
-
+class RecommendFragment : BaseFragment<FragmentRecommendBinding>(
+    FragmentRecommendBinding::inflate
+) {
     private val viewModel: RecommendViewModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentRecommendBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,27 +46,27 @@ class RecommendFragment : Fragment() {
 
         val navController = findNavController()
 
-        binding.regionBtn.layoutSelectAi.setOnClickListener{
+        binding.regionBtn.layoutSelectAi.setOnClickListener {
             val bundle = bundleOf("message" to "region")
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
-        binding.tourBtn.layoutSelectAi.setOnClickListener{
+        binding.tourBtn.layoutSelectAi.setOnClickListener {
             val bundle = bundleOf("message" to "type")
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
-        binding.selectDisableBtn.layoutSelectAi.setOnClickListener{
+        binding.selectDisableBtn.layoutSelectAi.setOnClickListener {
             val bundle = bundleOf("message" to "disable")
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
-        binding.memberBtn.layoutSelectAi.setOnClickListener{
+        binding.memberBtn.layoutSelectAi.setOnClickListener {
             val bundle = bundleOf("message" to "member")
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
 
-        binding.dateBtn.layoutSelectAi.setOnClickListener{
+        binding.dateBtn.layoutSelectAi.setOnClickListener {
             val bundle = bundleOf("message" to "date")
             navController.navigate(R.id.action_recommendFragment_to_recommendDetailFragment, bundle)
         }
@@ -125,22 +99,22 @@ class RecommendFragment : Fragment() {
             visitedDate = viewModel.selectDate.value ?: ""
         )
 
-        if(tourRequest.area.isNotEmpty()) {
+        if (tourRequest.area.isNotEmpty()) {
             viewChange(binding.regionBtn, tourRequest.area)
         }
-        if(tourRequest.contentType.isNotEmpty()) {
+        if (tourRequest.contentType.isNotEmpty()) {
             viewChange(binding.tourBtn, tourRequest.contentType)
         }
-        if(tourRequest.disability != DISABILITY.NOTSELECTED) {
+        if (tourRequest.disability != DISABILITY.NOTSELECTED) {
             var disabilityText = DISABILITY.fromEnum(tourRequest.disability)
             viewChange(binding.selectDisableBtn, disabilityText)
         }
-        if(tourRequest.peopleNum != 0) {
+        if (tourRequest.peopleNum != 0) {
             var numberText = "${tourRequest.peopleNum}인"
-            if(tourRequest.peopleNum==4) numberText = "4인 이상"
+            if (tourRequest.peopleNum == 4) numberText = "4인 이상"
             viewChange(binding.memberBtn, numberText)
         }
-        if(tourRequest.visitedDate.isNotEmpty()) {
+        if (tourRequest.visitedDate.isNotEmpty()) {
             val dateParts = tourRequest.visitedDate.split("-")
             if (dateParts.size == 3) {
                 val month = dateParts[1].toInt()
@@ -155,7 +129,8 @@ class RecommendFragment : Fragment() {
             tourRequest.contentType.isNotEmpty() &&
             tourRequest.disability != DISABILITY.NOTSELECTED &&
             tourRequest.peopleNum != 0 &&
-            tourRequest.visitedDate.isNotEmpty()) {
+            tourRequest.visitedDate.isNotEmpty()
+        ) {
 
             Log.d(TAG, "updateButtonVisibility: 전체 선택 완료")
             binding.btnRecommendationNonSelected.visibility = View.GONE
@@ -169,38 +144,29 @@ class RecommendFragment : Fragment() {
         }
     }
 
-    private fun viewChange(binding : LayoutSelectAiBinding, text : String){
+    private fun viewChange(binding: LayoutSelectAiBinding, text: String) {
         binding.layoutSelectAiText.text = text
         binding.layoutSelectAiIv.visibility = View.GONE
-        binding.layoutSelectAiText.setTextColor(ContextCompat.getColor(requireContext(), R.color.violet))
+        binding.layoutSelectAiText.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.violet
+            )
+        )
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-
         val window = requireActivity().window
         val context = requireContext()
 
         // 상태 바 색상 설정
         changeColorStatusBar(window, context, R.color.white, true)
 
-        _binding = null
+        super.onDestroyView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewModel.removeSelectedInfo()
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecommendFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -33,7 +33,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        setProfile()
+        if (networkUtil.isNetworkAvailable())
+            setProfile()
     }
 
     private fun setProfile() {

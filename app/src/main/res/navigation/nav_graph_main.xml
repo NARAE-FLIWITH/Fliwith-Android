@@ -137,7 +137,7 @@
         tools:layout="@layout/fragment_review_spot_name" />
     <fragment
         android:id="@+id/ILikeFragment"
-        android:name="com.narae.fliwith.src.main.review.ILikeFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ILikeFragment"
         android:label="ILikeFragment" >
         <action
             android:id="@+id/action_ILikeFragment_to_reviewDetailFragment"
@@ -145,7 +145,7 @@
     </fragment>
     <fragment
         android:id="@+id/IWriteFragment"
-        android:name="com.narae.fliwith.src.main.review.IWriteFragment"
+        android:name="com.narae.fliwith.src.main.mypage.IWriteFragment"
         android:label="IWriteFragment" >
         <action
             android:id="@+id/action_IWriteFragment_to_reviewDetailFragment"

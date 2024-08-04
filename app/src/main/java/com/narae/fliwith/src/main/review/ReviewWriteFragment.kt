@@ -22,9 +22,6 @@ import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 private const val TAG = "ReviewWriteFragment_싸피"
 class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     FragmentReviewWriteBinding::inflate) {

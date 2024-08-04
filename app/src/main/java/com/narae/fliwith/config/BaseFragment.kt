@@ -1,5 +1,6 @@
 package com.narae.fliwith.config
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
+import com.narae.fliwith.config.util.NetworkUtil
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.recommend.ViewPagerAdapter
 import com.narae.fliwith.util.LoadingDialog
@@ -25,9 +27,23 @@ abstract class BaseFragment<B : ViewBinding>(
     protected val mLoadingDialog: LoadingDialog by lazy {
         LoadingDialog(requireContext())
     }
+    lateinit var networkUtil: NetworkUtil
 
     protected val binding get() = _binding!!
     protected val navController get() = _navController!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        networkUtil = NetworkUtil(requireContext())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("@@@@!#!@$@!$#@$#%^%$&$@$!@#$@!#%")
+        if (!networkUtil.isNetworkAvailable()) {
+            networkUtil.showNetworkDialog()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

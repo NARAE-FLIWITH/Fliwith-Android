@@ -16,9 +16,6 @@ import com.narae.fliwith.databinding.FragmentRecommendAIBinding
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
 import com.narae.fliwith.util.changeColorStatusBar
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 private const val TAG = "RecommendAIFragment_싸피"
 
 class RecommendAIFragment :

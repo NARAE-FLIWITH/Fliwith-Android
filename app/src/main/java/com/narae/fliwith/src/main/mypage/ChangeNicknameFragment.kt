@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentChangeNicknameBinding
 import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService

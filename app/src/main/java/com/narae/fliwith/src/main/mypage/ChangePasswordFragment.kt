@@ -17,8 +17,6 @@ import kotlinx.coroutines.withContext
 
 class ChangePasswordFragment :
     BaseFragment<FragmentChangePasswordBinding>(FragmentChangePasswordBinding::inflate) {
-    private val profileViewModel by activityViewModels<ProfileViewModel>()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
