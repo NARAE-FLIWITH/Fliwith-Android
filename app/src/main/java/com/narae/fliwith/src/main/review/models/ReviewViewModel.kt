@@ -72,7 +72,8 @@ class ReviewViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val reviewDataList = response.body()
                     _reviewDataResponse.value = reviewDataList
-                    callback(true, reviewDataList?.data?.lastPageNo ?: pageNo) // 마지막 페이지 번호 전달
+                    val lastPageNo = reviewDataList?.data?.lastPageNo ?: pageNo
+                    callback(true, lastPageNo) // 마지막 페이지 번호 전달
                 } else {
                     Log.e(TAG, "Review Response not successful: ${response.errorBody()}")
                     callback(false, pageNo)

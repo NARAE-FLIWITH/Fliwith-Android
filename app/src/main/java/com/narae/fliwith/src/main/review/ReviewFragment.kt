@@ -2,7 +2,6 @@ package com.narae.fliwith.src.main.review
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuInflater
@@ -36,6 +35,7 @@ class ReviewFragment : Fragment() {
     private var currentPage = 0
     private var isLoading = false
     private var currentOrder = "recent"
+    private var lastPageNo = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,7 +67,7 @@ class ReviewFragment : Fragment() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    if (!recyclerView.canScrollVertically(1) && !isLoading) {
+                    if (!recyclerView.canScrollVertically(1) && !isLoading && currentPage < lastPageNo) {
                         loadMoreReviews()
                     }
                 }
@@ -76,7 +76,6 @@ class ReviewFragment : Fragment() {
 
         // 최신순 기본
         loadReviews(currentPage, currentOrder)
-        binding.reviewCount.text = "${reviewList.size}개의 리뷰"
 
         val navController = findNavController()
 
@@ -100,6 +99,7 @@ class ReviewFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 currentPage = 0
                 reviewList.clear()
+                reviewAdapter.notifyDataSetChanged()
                 when (menuItem.itemId) {
                     R.id.new_menu -> {
                         currentOrder = "recent"
@@ -117,34 +117,34 @@ class ReviewFragment : Fragment() {
         }
     }
 
-    private fun loadReviews(pageNo: Int, order: String) {
-        isLoading = true
-        viewModel.fetchSelectAllReviews(pageNo, order) { success, lastPageNo ->
-            if (success) {
-                observeReviewData(lastPageNo)
-            } else {
-                Log.d(TAG, "review 불러 오기 실패")
-            }
-            isLoading = false
-        }
-    }
-
     private fun loadMoreReviews() {
         currentPage++
         loadReviews(currentPage, currentOrder)
     }
 
-    private fun observeReviewData(lastPageNo: Int) {
+    private fun loadReviews(pageNo: Int, order: String) {
+        isLoading = true
+        viewModel.fetchSelectAllReviews(pageNo, order) { success, fetchedLastPageNo ->
+            if (success) {
+                lastPageNo = fetchedLastPageNo // 새로 얻은 마지막 페이지 번호를 업데이트
+                observeReviewData(pageNo == 0)
+            } else {
+                isLoading = false
+            }
+        }
+    }
+
+    private fun observeReviewData(isFirstPage: Boolean) {
         viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
             reviewResponse?.data?.reviews?.let { reviews ->
+                if (isFirstPage) {
+                    reviewList.clear()
+                }
                 reviewList.addAll(reviews)
                 reviewAdapter.updateReviews(reviewList)
                 binding.reviewCount.text = "${reviewList.size}개의 리뷰"
             }
-            // 마지막 페이지 여부 확인
-            if (currentPage >= lastPageNo) {
-                isLoading = true // 더 이상 로딩하지 않도록 설정
-            }
+            isLoading = false // 데이터 로드가 완료되면 isLoading을 false로 설정
         })
     }
 
