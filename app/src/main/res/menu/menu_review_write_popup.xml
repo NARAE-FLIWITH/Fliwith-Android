@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item  android:id="@+id/gallery_menu"
         android:title="사진 보관함"
-        android:icon="@drawable/gallery_icon"
         />
     <item  android:id="@+id/camera_menu"
         android:title="사진 찍기"
-        android:icon="@drawable/camera_icon"
         />
     <item  android:id="@+id/file_menu"
         android:title="파일 선택"
-        android:icon="@drawable/file_icon"
         />
 </menu>
+
+<!--
+android:icon="@drawable/gallery_icon"
+android:icon="@drawable/camera_icon"
+android:icon="@drawable/file_icon"
+-->

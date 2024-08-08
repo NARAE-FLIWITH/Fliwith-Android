@@ -63,7 +63,7 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 목록 전체 조회
-    fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean, Int) -> Unit) {
+    fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean, Int, List<Review>) -> Unit) {
         viewModelScope.launch {
             try {
                 val response = withContext(Dispatchers.IO) {
@@ -73,14 +73,15 @@ class ReviewViewModel : ViewModel() {
                     val reviewDataList = response.body()
                     _reviewDataResponse.value = reviewDataList
                     val lastPageNo = reviewDataList?.data?.lastPageNo ?: pageNo
-                    callback(true, lastPageNo) // 마지막 페이지 번호 전달
+                    val reviews = reviewDataList?.data?.reviews ?: emptyList()
+                    callback(true, lastPageNo, reviews) // 마지막 페이지 번호와 리뷰 목록 전달
                 } else {
                     Log.e(TAG, "Review Response not successful: ${response.errorBody()}")
-                    callback(false, pageNo)
+                    callback(false, pageNo, emptyList())
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "API 응답 실패 : ", e)
-                callback(false, pageNo)
+                callback(false, pageNo, emptyList())
             }
         }
     }

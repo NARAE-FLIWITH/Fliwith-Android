@@ -2,12 +2,14 @@ package com.narae.fliwith.src.main.review
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.databinding.Observable
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -56,26 +58,37 @@ class ReviewFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: 과연 언제 불릴까 ")
+        currentPage = 0
+        reviewList.clear()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.clearData()
+        currentPage = 0
+        reviewList.clear()
 
         reviewAdapter = ReviewAdapter(requireContext(), reviewList)
+
+        // 최신순 기본
+        loadReviews(currentPage, currentOrder)
+
         binding.reviewRv.apply {
             adapter = reviewAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!recyclerView.canScrollVertically(1) && !isLoading && currentPage < lastPageNo) {
+                        Log.d(TAG, "onScrolled: currentPage = ${currentPage}, lastPageNo = ${lastPageNo}")
                         loadMoreReviews()
                     }
                 }
             })
         }
-
-        // 최신순 기본
-        loadReviews(currentPage, currentOrder)
 
         val navController = findNavController()
 
@@ -99,7 +112,6 @@ class ReviewFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 currentPage = 0
                 reviewList.clear()
-                reviewAdapter.notifyDataSetChanged()
                 when (menuItem.itemId) {
                     R.id.new_menu -> {
                         currentOrder = "recent"
@@ -119,33 +131,27 @@ class ReviewFragment : Fragment() {
 
     private fun loadMoreReviews() {
         currentPage++
-        loadReviews(currentPage, currentOrder)
+        Log.d(TAG, "loadMoreReviews: currentPage = ${currentPage}, lastPageNo = ${lastPageNo}")
+        if(currentPage <= lastPageNo) loadReviews(currentPage, currentOrder)
     }
 
     private fun loadReviews(pageNo: Int, order: String) {
+        Log.d(TAG, "loadReviews: pageNo = $pageNo")
         isLoading = true
-        viewModel.fetchSelectAllReviews(pageNo, order) { success, fetchedLastPageNo ->
+        viewModel.fetchSelectAllReviews(pageNo, order) { success, fetchedLastPageNo, reviews ->
             if (success) {
-                lastPageNo = fetchedLastPageNo // 새로 얻은 마지막 페이지 번호를 업데이트
-                observeReviewData(pageNo == 0)
+                Log.d(TAG, "loadReviews: fetchedLastPageNo = $fetchedLastPageNo")
+                lastPageNo = fetchedLastPageNo // 마지막 페이지 번호
+
+                // reviewList 업데이트
+                reviewList.addAll(reviews)
+                reviewAdapter.updateReviews(reviewList)
+                binding.reviewCount.text = "${reviewList.size}개의 리뷰"
+                isLoading = false // 데이터 로드가 완료되면 isLoading을 false로 설정
             } else {
                 isLoading = false
             }
         }
-    }
-
-    private fun observeReviewData(isFirstPage: Boolean) {
-        viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
-            reviewResponse?.data?.reviews?.let { reviews ->
-                if (isFirstPage) {
-                    reviewList.clear()
-                }
-                reviewList.addAll(reviews)
-                reviewAdapter.updateReviews(reviewList)
-                binding.reviewCount.text = "${reviewList.size}개의 리뷰"
-            }
-            isLoading = false // 데이터 로드가 완료되면 isLoading을 false로 설정
-        })
     }
 
     override fun onDestroyView() {
