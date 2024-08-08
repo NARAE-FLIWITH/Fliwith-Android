@@ -58,13 +58,6 @@ class ReviewFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: 과연 언제 불릴까 ")
-        currentPage = 0
-        reviewList.clear()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

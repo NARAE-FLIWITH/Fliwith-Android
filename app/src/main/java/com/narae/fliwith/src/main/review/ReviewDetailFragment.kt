@@ -21,6 +21,7 @@ import com.narae.fliwith.databinding.FragmentReviewDetailBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.ReviewDetailData
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
+import com.narae.fliwith.util.showCustomSnackBar
 import com.narae.fliwith.util.userProfileImageConvert
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -166,6 +167,9 @@ class ReviewDetailFragment :
             binding.reviewDetailMenuIcon.visibility = View.VISIBLE
             binding.reviewDetailMenuIcon.setOnClickListener {
                 popUpMenu()
+            }
+            binding.reviewHeartImageDisable.setOnClickListener {
+                showCustomSnackBar(requireContext(), binding.root, "내 게시물은 하트를 누를 수 없어요 😂")
             }
         } else {
             binding.reviewDetailMenuIcon.visibility = View.GONE
