@@ -35,9 +35,24 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
         super.onAttach(context)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.lavender, true)
+    }
+
     // 여기서 API 연결 해서 받은 값을 다음 화면 에서 보여 주기
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val window = requireActivity().window
+        val context = requireContext()
+
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.lavender, true)
 
         val textView: TextView = binding.recommendSearchTv
         lifecycleScope.launch {
@@ -71,17 +86,4 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val window = requireActivity().window
-        val context = requireContext()
-
-        // 상태 바 색상 설정
-        changeColorStatusBar(window, context, R.color.lavender, true)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

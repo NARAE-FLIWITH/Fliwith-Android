@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentRecommendDetailBinding
 import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.util.changeColorStatusBar
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -36,7 +37,6 @@ class RecommendDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-//            Log.d(TAG, "onCreate: $param1")
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -55,6 +55,11 @@ class RecommendDetailFragment : Fragment() {
         var transaction = childFragmentManager.beginTransaction()
 
         val message = arguments?.getString("message")
+
+        val window = requireActivity().window
+        val context = requireContext()
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
 
         // 지역 페이지
         if (message == "region") {
