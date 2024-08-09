@@ -105,7 +105,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
         // 내가 좋아요 한 리뷰
         binding.layoutLikeReview.setOnClickListener {
-            reviewViewModel.fetchLikeReviews(0)
+//            reviewViewModel.fetchLikeReviews(0)
             val bundle = bundleOf().apply {
                 putString("starting", "ilike")
             }
@@ -114,7 +114,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
         // 내가 쓴 리뷰
         binding.layoutWriteReview.setOnClickListener {
-            reviewViewModel.fetchWriteReviews(0)
+//            reviewViewModel.fetchWriteReviews(0)
             val bundle = bundleOf().apply {
                 putString("starting", "iwrite")
             }
