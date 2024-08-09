@@ -100,13 +100,15 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:background="@drawable/image_radius_top"
-                    android:id="@+id/review_default_image"
+                <!-- viewPager2 이미지 슬라이더 -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/review_detail_image_vp"
                     android:layout_width="match_parent"
                     android:layout_height="360dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/review_default_image" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:padding="15dp"
@@ -146,13 +148,23 @@
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
+
+
                     </LinearLayout>
 
-                    <View
+<!--                    <View-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="0dp">-->
+<!--                    </View>-->
+
+                    <LinearLayout
+                        android:id="@+id/review_detail_image_indicator"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="0dp">
-                    </View>
+                        android:layout_height="24dp"
+                        android:orientation="horizontal"
+                        android:gravity="center" />
 
                     <ImageView
                         android:id="@+id/review_detail_share_icon"

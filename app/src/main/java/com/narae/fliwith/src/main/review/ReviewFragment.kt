@@ -9,15 +9,16 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.databinding.Observable
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentReviewBinding
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.Review
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
-import okhttp3.internal.immutableListOf
 
 private const val TAG = "ReviewFragment_싸피"
 
@@ -27,11 +28,16 @@ class ReviewFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private var reviewList = immutableListOf<Review>()
+    private var reviewList = mutableListOf<Review>()
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var mainActivity: MainActivity
 
     private val viewModel: ReviewViewModel by activityViewModels()
+
+    private var currentPage = 0
+    private var isLoading = false
+    private var currentOrder = "recent"
+    private var lastPageNo = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,7 +54,6 @@ class ReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentReviewBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,19 +62,25 @@ class ReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.clearData()
+        currentPage = 0
+        reviewList.clear()
 
         reviewAdapter = ReviewAdapter(requireContext(), reviewList)
-        binding.reviewRv.apply {
-            adapter = reviewAdapter
-        }
 
         // 최신순 기본
-        viewModel.fetchSelectAllReviews(0, "recent") { success ->
-            if (success) {
-                observeReviewData()
-            } else {
-                Log.d(TAG, "onViewCreated: review 최신순 불러 오기 실패")
-            }
+        loadReviews(currentPage, currentOrder)
+
+        binding.reviewRv.apply {
+            adapter = reviewAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!recyclerView.canScrollVertically(1) && !isLoading && currentPage < lastPageNo) {
+                        Log.d(TAG, "onScrolled: currentPage = ${currentPage}, lastPageNo = ${lastPageNo}")
+                        loadMoreReviews()
+                    }
+                }
+            })
         }
 
         val navController = findNavController()
@@ -92,43 +103,48 @@ class ReviewFragment : Fragment() {
             val inflater: MenuInflater = popupMenu.menuInflater
             inflater.inflate(R.menu.menu_review_order_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
+                currentPage = 0
+                reviewList.clear()
                 when (menuItem.itemId) {
                     R.id.new_menu -> {
+                        currentOrder = "recent"
                         binding.reviewOrderSelectText.text = "최신순"
-                        viewModel.fetchSelectAllReviews(0, "recent") { success ->
-                            if (success) {
-                                observeReviewData()
-                            } else {
-                                Log.d(TAG, "onViewCreated: review 최신순 불러 오기 실패")
-                            }
-                        }
                     }
-
                     R.id.popular_menu -> {
+                        currentOrder = "like"
                         binding.reviewOrderSelectText.text = "인기순"
-                        viewModel.fetchSelectAllReviews(0, "like") { success ->
-                            if (success) {
-                                observeReviewData()
-                            } else {
-                                Log.d(TAG, "onViewCreated: review 인기순 불러 오기 실패")
-                            }
-                        }
                     }
                 }
+                loadReviews(currentPage, currentOrder)
                 false
             }
             popupMenu.show()
         }
     }
 
-    private fun observeReviewData() {
-        viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
-            reviewResponse?.data?.reviews?.let { reviews ->
-                reviewList = reviews
-                reviewAdapter.updateReviews(reviews)
+    private fun loadMoreReviews() {
+        currentPage++
+        Log.d(TAG, "loadMoreReviews: currentPage = ${currentPage}, lastPageNo = ${lastPageNo}")
+        if(currentPage <= lastPageNo) loadReviews(currentPage, currentOrder)
+    }
+
+    private fun loadReviews(pageNo: Int, order: String) {
+        Log.d(TAG, "loadReviews: pageNo = $pageNo")
+        isLoading = true
+        viewModel.fetchSelectAllReviews(pageNo, order) { success, fetchedLastPageNo, reviews ->
+            if (success) {
+                Log.d(TAG, "loadReviews: fetchedLastPageNo = $fetchedLastPageNo")
+                lastPageNo = fetchedLastPageNo // 마지막 페이지 번호
+
+                // reviewList 업데이트
+                reviewList.addAll(reviews)
+                reviewAdapter.updateReviews(reviewList)
                 binding.reviewCount.text = "${reviewList.size}개의 리뷰"
+                isLoading = false // 데이터 로드가 완료되면 isLoading을 false로 설정
+            } else {
+                isLoading = false
             }
-        })
+        }
     }
 
     override fun onDestroyView() {

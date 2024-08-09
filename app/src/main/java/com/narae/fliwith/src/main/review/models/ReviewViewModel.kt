@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.webkit.MimeTypeMap
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -62,7 +63,7 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 목록 전체 조회
-    fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean) -> Unit) {
+    fun fetchSelectAllReviews(pageNo: Int, order: String, callback: (Boolean, Int, List<Review>) -> Unit) {
         viewModelScope.launch {
             try {
                 val response = withContext(Dispatchers.IO) {
@@ -71,14 +72,16 @@ class ReviewViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val reviewDataList = response.body()
                     _reviewDataResponse.value = reviewDataList
-                    callback(true)
+                    val lastPageNo = reviewDataList?.data?.lastPageNo ?: pageNo
+                    val reviews = reviewDataList?.data?.reviews ?: emptyList()
+                    callback(true, lastPageNo, reviews) // 마지막 페이지 번호와 리뷰 목록 전달
                 } else {
                     Log.e(TAG, "Review Response not successful: ${response.errorBody()}")
-                    callback(false)
+                    callback(false, pageNo, emptyList())
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Review Response API call failed", e)
-                callback(false)
+                Log.e(TAG, "API 응답 실패 : ", e)
+                callback(false, pageNo, emptyList())
             }
         }
     }
@@ -130,7 +133,6 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 좋아요 & 좋아요 취소
-
     private val _reviewLikeStatus = MutableLiveData<Boolean?>()
     val reviewLikeStatus: LiveData<Boolean?>
         get() = _reviewLikeStatus
@@ -166,7 +168,7 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
-    // review Request
+    // review 작성
     private val _reviewInsertRequest = MutableLiveData<ReviewInsertRequest>()
     val reviewInsertRequest: LiveData<ReviewInsertRequest> get() = _reviewInsertRequest
 
@@ -174,7 +176,6 @@ class ReviewViewModel : ViewModel() {
         _reviewInsertRequest.value = request
     }
 
-    // review 작성
     fun fetchInsert(request: ReviewInsertRequest?, callback: (Boolean) -> Unit) {
         request ?: return callback(false) // null 처리
         viewModelScope.launch {
@@ -195,11 +196,23 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
-    // 선택한 imageUrl
-    private val _uploadedImageUrl = MutableLiveData<String>()
-    val uploadedImageUrl: LiveData<String> get() = _uploadedImageUrl
-    fun setImageUrl(url: String) {
-        _uploadedImageUrl.value = url
+    // 서버에서 받아 온 이미지들
+    private val _reviewImageUrls = MutableLiveData<List<String>>()
+    val reviewImageUrls : LiveData<List<String>> get() = _reviewImageUrls
+    fun setReviewImageUrls(urls: List<String>) {
+        _reviewImageUrls.value = urls
+    }
+
+    // 업로드 할 이미지 url
+    private val _uploadImageUrls = MutableLiveData<MutableList<String>>(mutableListOf())
+    val uploadImageUrls: LiveData<MutableList<String>> get() = _uploadImageUrls
+
+    fun addUploadImageUrl(url: String) {
+        _uploadImageUrls.value?.add(url)
+    }
+
+    fun clearUploadImageUrls() {
+        _uploadImageUrls.value?.clear()
     }
 
     // presigend Response
@@ -209,7 +222,6 @@ class ReviewViewModel : ViewModel() {
     fun setPresignedData(data: PresignedData) {
         _presignedData.value = data
     }
-
 
     fun fetchPresignedReview(
         request: ReviewPresignedRequest,
@@ -259,7 +271,6 @@ class ReviewViewModel : ViewModel() {
                         .url(presignedUrl)
                         .put(requestBody)
                         .build()
-
                     val response = client.newCall(request).execute()
                     if (response.isSuccessful) {
                         callback(true)
@@ -278,6 +289,16 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
+    fun uriToFile(context: Context, uri: Uri): File? {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val file = File(context.cacheDir, "image_file_${System.currentTimeMillis()}.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+        return file
+    }
+
     fun getMimeType(context: Context, uri: Uri): String? {
         val contentResolver = context.contentResolver
         return contentResolver.getType(uri) ?: MimeTypeMap.getFileExtensionFromUrl(uri.toString())
@@ -286,14 +307,9 @@ class ReviewViewModel : ViewModel() {
             }
     }
 
-    fun uriToFile(context: Context, uri: Uri): File? {
-        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-        val file = File(context.cacheDir, "image_file.jpg")
-        val outputStream = FileOutputStream(file)
-        inputStream?.copyTo(outputStream)
-        inputStream?.close()
-        outputStream.close()
-        return file
+    fun getFileExtension(context: Context, uri: Uri): String {
+        val mimeType = context.contentResolver.getType(uri)
+        return mimeType?.substringAfterLast('/') ?: "jpg"
     }
 
     private val _reviewSpotNameResponse = MutableLiveData<ReviewSpotNameResponse?>()
@@ -372,7 +388,7 @@ class ReviewViewModel : ViewModel() {
     fun clearData() {
         _reviewWriteContent.value = ""
         _reviewSpotName.value = ""
-        _uploadedImageUrl.value = ""
+        _uploadImageUrls.value = mutableListOf()
     }
 
 }

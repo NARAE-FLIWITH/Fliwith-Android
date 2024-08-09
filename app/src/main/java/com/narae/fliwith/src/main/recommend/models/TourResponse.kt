@@ -1,6 +1,5 @@
 package com.narae.fliwith.src.main.recommend.models
 
-import com.narae.fliwith.src.main.review.models.Review
 import java.io.Serializable
 
 data class TourResponse(
@@ -12,8 +11,7 @@ data class TourResponse(
 data class TourData(
     val detailWithTour: DetailWithTour,
     val detailIntro: DetailIntro,
-    val detailCommon: DetailCommon,
-    val reviews: List<Review>
+    val detailCommon: DetailCommon
 )
 
 data class DetailWithTour(

@@ -90,22 +90,6 @@
 
                     </LinearLayout>
 
-<!--                    <EditText-->
-<!--                        android:id="@+id/review_write_et"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:ems="10"-->
-<!--                        android:backgroundTint="@color/purple"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textColor="@color/purple"-->
-<!--                        android:textSize="18dp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:fontWeight="600"-->
-<!--                        android:enabled="false"-->
-<!--                        android:focusable="false"-->
-<!--                        />-->
-
                 </LinearLayout>
 
                 <TextView
@@ -146,13 +130,12 @@
                         android:background="@drawable/image_radius"
                         android:src="@drawable/review_write_image_frame" />
 
-                    <ImageView
-                        android:id="@+id/review_write_image_frame_small"
-                        android:layout_width="62dp"
-                        android:layout_height="93dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="5dp"
-                        android:src="@drawable/review_write_image_frame_small" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/review_write_image_rv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
 
