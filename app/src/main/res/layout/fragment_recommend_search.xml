@@ -33,15 +33,16 @@
             android:src="@drawable/wing_white" />
 
         <TextView
+            android:id="@+id/recommend_search_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="찾아보는 중..."
-            android:textStyle="bold"
-            android:textSize="26dp"
+            android:font="@font/pretendard_medium"
             android:fontWeight="700"
             android:gravity="center"
-            android:font="@font/pretendard_medium"
-            android:textColor="@color/white" />
+            android:text="찾아보는 중..."
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
