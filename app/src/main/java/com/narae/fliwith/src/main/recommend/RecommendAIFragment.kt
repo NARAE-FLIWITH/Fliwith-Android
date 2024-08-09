@@ -43,12 +43,12 @@ class RecommendAIFragment :
         val context = requireContext()
 
         // 상태 바 색상 설정
-        changeColorStatusBar(window, context, R.color.lavender, true)
+        changeColorStatusBar(window, context, R.color.white, true)
     }
 
     private fun setFromMap() {
         if (arguments?.getBoolean("fromMap") == true) {
-            binding.appBar.visibility = View.INVISIBLE
+            binding.appBar.visibility = View.GONE
             binding.btnBack.setColorFilter(ContextCompat.getColor(requireContext(), R.color.black))
             val layoutParams = (binding.layoutInfo.layoutParams) as LinearLayout.LayoutParams
             layoutParams.topMargin = 0
