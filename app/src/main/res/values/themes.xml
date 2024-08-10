@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Fliwith" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Fliwith" parent="Theme.Material3.Light.NoActionBar">
         <!--custom font-family 적용-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customButtonFontStyle</item>
