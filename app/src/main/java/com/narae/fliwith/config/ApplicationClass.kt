@@ -3,6 +3,7 @@ package com.narae.fliwith.config
 import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.KakaoSdk
 import com.kakao.vectormap.KakaoMapSdk
 import com.narae.fliwith.BuildConfig
 import com.narae.fliwith.util.SharedPreferencesUtil
@@ -50,7 +51,8 @@ class ApplicationClass : Application() {
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
 
-        KakaoMapSdk.init(this, KAKAO_APP_KEY);
+        KakaoMapSdk.init(this, KAKAO_APP_KEY)
+        KakaoSdk.init(this, BuildConfig.KAKAO_APP_KEY)
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.

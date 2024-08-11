@@ -79,6 +79,9 @@ dependencies {
     // kakao map
     implementation("com.kakao.maps.open:android:2.9.5")
 
+    // kakao link
+    implementation ("com.kakao.sdk:v2-share:2.20.3")
+
     // navigation
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")

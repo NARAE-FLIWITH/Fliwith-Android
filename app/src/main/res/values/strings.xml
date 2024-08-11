@@ -34,4 +34,7 @@
     <string name="write_review">내가 쓴 리뷰</string>
     <string name="complete">완료</string>
     <string name="logout">로그아웃</string>
+    <string name="kakao_app_key">3ecb6ddddf6522c5f01f1fc953c55bad</string>
+    <string name="kakao_scheme">kakao3ecb6ddddf6522c5f01f1fc953c55bad</string>
+    <string name="kakaolink_host">kakaolink</string>
 </resources>

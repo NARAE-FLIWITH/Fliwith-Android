@@ -1,6 +1,9 @@
 package com.narae.fliwith.src.main.review
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +17,16 @@ import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import com.kakao.sdk.common.util.KakaoCustomTabsClient
+import com.kakao.sdk.share.ShareClient
+import com.kakao.sdk.share.WebSharerClient
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Content
+import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.ItemContent
+import com.kakao.sdk.template.model.ItemInfo
+import com.kakao.sdk.template.model.Link
+import com.kakao.sdk.template.model.Social
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentReviewDetailBinding
@@ -40,7 +52,6 @@ class ReviewDetailFragment :
 
     // 이미지 Slider
     private lateinit var reviewSliderAdapter: ReviewSliderAdapter
-    private lateinit var layoutIndicator: LinearLayout
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,6 +65,69 @@ class ReviewDetailFragment :
         heartStatus()
         back()
         setImageSlider()
+        setShareLink()
+
+    }
+
+    private fun setShareLink() {
+        // 카카오 공유 링크 생성
+        binding.reviewDetailShareIcon.setOnClickListener {
+            val defaultFeed = FeedTemplate(
+                content = Content(
+                    title = viewModel.reviewSpotName.value.toString(),
+                    description = viewModel.reviewWriteContent.value.toString(),
+                    imageUrl = viewModel.reviewImageUrls.value?.get(0).toString(),
+                    link = Link(
+                        webUrl = "https://developers.kakao.com",
+                        mobileWebUrl = "https://developers.kakao.com",
+                        androidExecutionParams = mapOf("reviewId" to "$reviewId"),
+                        iosExecutionParams = mapOf("reviewId" to "$reviewId")
+                    )
+                ),
+                buttons = listOf(
+                    Button(
+                        "게시물 확인하러 가기 🤩",
+                        Link(
+                            androidExecutionParams = mapOf("reviewId" to "$reviewId"),
+                            iosExecutionParams = mapOf("reviewId" to "$reviewId")
+                        )
+                    )
+                )
+            )
+
+            val isKakaoTalkAvailable = ShareClient.instance.isKakaoTalkSharingAvailable(requireContext())
+
+            // 카카오톡 설치여부 확인
+            if (isKakaoTalkAvailable) {
+                // 카카오톡으로 공유
+                ShareClient.instance.shareDefault(requireContext(), defaultFeed) { sharingResult, error ->
+                    if (error != null) {
+                        Log.e(TAG, "카카오톡 공유 실패", error)
+                    } else if (sharingResult != null) {
+                        Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
+                        startActivity(sharingResult.intent)
+
+                        Log.w(TAG, "Warning Msg: ${sharingResult.warningMsg}")
+                        Log.w(TAG, "Argument Msg: ${sharingResult.argumentMsg}")
+                    }
+                }
+            } else {
+                // 웹으로 공유
+                val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
+                try {
+                    KakaoCustomTabsClient.openWithDefault(requireContext(), sharerUrl)
+                } catch (e: UnsupportedOperationException) {
+                    Log.e(TAG, "CustomTabs 지원 브라우저가 없습니다.", e)
+                    // CustomTabs 지원 브라우저가 없을 때, 기본 웹 브라우저로 열기
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl.toString()))
+                        startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        Log.e(TAG, "인터넷 브라우저가 없습니다.", e)
+                    }
+                }
+            }
+        }
     }
 
     private fun init() {
@@ -190,7 +264,6 @@ class ReviewDetailFragment :
             binding.reviewDetailMenuIcon.visibility = View.GONE
         }
 
-        // 데이터 미리 넣어 두기
         viewModel.setReviewLikeCount(response.likes.toString().toInt())
         viewModel.setSpotName(binding.reviewDetailPlace.text.toString())
         viewModel.setReviewWriteContent(binding.reviewDetailContent.text.toString())
