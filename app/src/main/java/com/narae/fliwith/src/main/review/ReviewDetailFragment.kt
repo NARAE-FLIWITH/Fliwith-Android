@@ -49,18 +49,20 @@ class ReviewDetailFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        init()
+        heartStatus()
+        back()
+        setImageSlider()
+    }
+
+    private fun init() {
 
         // 받아온 reviewId
         reviewId = arguments?.getInt("reviewId") ?: -1
 
-        viewModel.reviewLikeStatus.observe(viewLifecycleOwner) { isLiked ->
-            updateLike(isLiked!!)
-        }
-
-        // 좋아요 개수 관찰
-        viewModel.reviewLikeCount.observe(viewLifecycleOwner) { count ->
-            updateLikeCount(count!!)
-        }
+        // 일단 지우고
+        binding.reviewDetailMenuIcon.visibility = View.GONE
 
         // fetchSelectReview 호출 및 콜백에서 fetchData 호출
         viewModel.fetchSelectReview(reviewId) { success ->
@@ -71,13 +73,26 @@ class ReviewDetailFragment :
             }
         }
 
-        // 일단 지우고
-        binding.reviewDetailMenuIcon.visibility = View.GONE
+    }
 
+    private fun heartStatus() {
+        viewModel.reviewLikeStatus.observe(viewLifecycleOwner) { isLiked ->
+            updateLike(isLiked!!)
+        }
+
+        // 좋아요 개수 관찰
+        viewModel.reviewLikeCount.observe(viewLifecycleOwner) { count ->
+            updateLikeCount(count!!)
+        }
+    }
+
+    private fun back() {
         binding.reviewDetailBackIcon.setOnClickListener {
             navController.popBackStack()
         }
+    }
 
+    private fun setImageSlider() {
         // 이미지 슬라이더 설정
         reviewSliderAdapter = ReviewSliderAdapter(requireContext(), mutableListOf())
         binding.reviewDetailImageVp.adapter = reviewSliderAdapter

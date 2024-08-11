@@ -13,6 +13,7 @@ import com.narae.fliwith.src.auth.models.TokenData
 import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.home.models.Store
 import com.narae.fliwith.src.main.home.models.Tour
+import com.narae.fliwith.util.changeColorStatusBar
 
 // TODO: Rename parameter arguments, choose names that match
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -30,6 +31,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val window = requireActivity().window
+        val context = requireContext()
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
 
         for (i in 1..10) {
             storeList.add(Store(storeName = "식당1"))
@@ -63,6 +69,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onResume() {
         super.onResume()
+        val window = requireActivity().window
+        val context = requireContext()
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
         mainActivity.viewVisible()
     }
 }

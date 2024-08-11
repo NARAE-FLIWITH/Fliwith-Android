@@ -8,6 +8,7 @@ import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentRecommendDetailBinding
 import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.util.changeColorStatusBar
 
 private const val TAG = "RecommendDetailFragment_싸피"
 
@@ -26,6 +27,11 @@ class RecommendDetailFragment : BaseFragment<FragmentRecommendDetailBinding>(
         var transaction = childFragmentManager.beginTransaction()
 
         val message = arguments?.getString("message")
+
+        val window = requireActivity().window
+        val context = requireContext()
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
 
         // 지역 페이지
         if (message == "region") {

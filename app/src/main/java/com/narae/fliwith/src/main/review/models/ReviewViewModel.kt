@@ -33,14 +33,17 @@ class ReviewViewModel : ViewModel() {
         get() = _reviewDataResponse
 
     // 내가 좋아요 한 리뷰 조회
-    fun fetchLikeReviews(pageNo: Int) {
+    fun fetchLikeReviews(pageNo: Int, callback: (Boolean, Int, List<Review>) -> Unit) {
         viewModelScope.launch {
             val response = withContext(Dispatchers.IO) {
                 myPageService.getLikeReviews(pageNo)
             }
-
             if (response.isSuccessful) {
-                _reviewDataResponse.value = response.body()
+                val reviewDataList = response.body()
+                _reviewDataResponse.value = reviewDataList
+                val lastPageNo = reviewDataList?.data?.lastPageNo ?: pageNo
+                val reviews = reviewDataList?.data?.reviews ?: emptyList()
+                callback(true, lastPageNo, reviews)
             } else {
                 Log.d(TAG, "fetchLikeReviews Error: ${response.errorBody()?.string()}")
             }
@@ -48,14 +51,17 @@ class ReviewViewModel : ViewModel() {
     }
 
     // 내가 쓴 리뷰 조회
-    fun fetchWriteReviews(pageNo: Int) {
+    fun fetchWriteReviews(pageNo: Int, callback: (Boolean, Int, List<Review>) -> Unit) {
         viewModelScope.launch {
             val response = withContext(Dispatchers.IO) {
                 myPageService.getWriteReviews(pageNo)
             }
-
             if (response.isSuccessful) {
-                _reviewDataResponse.value = response.body()
+                val reviewDataList = response.body()
+                _reviewDataResponse.value = reviewDataList
+                val lastPageNo = reviewDataList?.data?.lastPageNo ?: pageNo
+                val reviews = reviewDataList?.data?.reviews ?: emptyList()
+                callback(true, lastPageNo, reviews)
             } else {
                 Log.d(TAG, "fetchWriteReviews Error: ${response.errorBody()?.string()}")
             }
