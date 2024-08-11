@@ -18,7 +18,6 @@ class ReviewAdapter(context: Context, private var reviewDataList: List<Review>) 
         RecyclerView.ViewHolder(binding.root) {
         fun bindInfo(review: Review) {
             binding.apply {
-//                reviewDefaultImage.setImageResource(R.drawable.store_default_image)
                 Glide.with(binding.root)
                     .load(review.image)
                     .placeholder(R.drawable.placeholder)
@@ -56,16 +55,14 @@ class ReviewAdapter(context: Context, private var reviewDataList: List<Review>) 
         notifyDataSetChanged()
     }
 
-    // Item click listener interface
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
     }
 
-    // Click listener declaration
     private lateinit var itemClickListener: ItemClickListener
 
-    // Click listener registration method
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
     }
+
 }

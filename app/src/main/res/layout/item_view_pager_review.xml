@@ -23,6 +23,8 @@
             android:layout_height="73dp"
             android:layout_marginRight="10dp"
             android:adjustViewBounds="true"
+            android:background="@drawable/review_image_radius"
+            android:scaleType="centerCrop"
             android:src="@drawable/view_pager_review_img"
             tools:src="@drawable/view_pager_review_img" />
 
