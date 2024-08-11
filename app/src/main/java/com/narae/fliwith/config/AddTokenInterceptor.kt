@@ -67,6 +67,7 @@ class AddTokenInterceptor(private val context: Context) : Interceptor {
             }
         }
 
+        Log.d(TAG, "intercept: ${sharedPreferences.getTokenData().accessToken}")
         val updatedToken = sharedPreferences.getTokenData().accessToken
         val newRequest = chain.request().newBuilder()
             .header("Authorization", "Bearer $updatedToken")

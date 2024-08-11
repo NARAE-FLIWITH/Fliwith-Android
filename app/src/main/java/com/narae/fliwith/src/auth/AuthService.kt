@@ -3,6 +3,8 @@ package com.narae.fliwith.src.auth
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.models.ResponseDto
 import com.narae.fliwith.src.auth.models.EmailRequest
+import com.narae.fliwith.src.auth.models.KakaoLoginRequest
+import com.narae.fliwith.src.auth.models.KakaoSignUpRequest
 import com.narae.fliwith.src.auth.models.LoginRequest
 import com.narae.fliwith.src.auth.models.NicknameRequest
 import com.narae.fliwith.src.auth.models.TokenResponse
@@ -33,6 +35,12 @@ interface AuthService {
 
     @GET("user/temporary-password")
     suspend fun temporaryPassword(@Query("email") email: String): Response<ResponseDto>
+
+    @POST("user/signup/kakao")
+    suspend fun kakaoSignUp(@Body dto: KakaoSignUpRequest): Response<ResponseDto>
+
+    @POST("user/login/kakao")
+    suspend fun kakaoLogin(@Body dto: KakaoLoginRequest): Response<TokenResponse>
 }
 
 object AuthApi {

@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.kakao.sdk.user.UserApiClient
 import com.narae.fliwith.R
 import com.narae.fliwith.config.ApplicationClass
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentKakaoSelectDisabilityBinding
 import com.narae.fliwith.src.auth.AuthApi
+import com.narae.fliwith.src.auth.AuthApi.authService
+import com.narae.fliwith.src.auth.models.KakaoSignUpRequest
 import com.narae.fliwith.util.DISABILITY
 import com.narae.fliwith.util.setOnSingleClickListener
 import kotlinx.coroutines.Dispatchers
@@ -131,19 +134,33 @@ class KakaoSelectDisabilityFragment : BaseFragment<FragmentKakaoSelectDisability
             }
             kakaoAuthViewModel.setDisability(selected)
 
-//            lifecycleScope.launch {
-//                val response = withContext(Dispatchers.IO) {
-//                    TODO("카카오 회원번호가입으로 요청")
-//                    AuthApi.authService.signUp(kakaoAuthViewModel.kakaoUser)
-//                }
-//                if (response.isSuccessful) {
-//                    mLoadingDialog.dismiss()
-//                    navController.navigate(R.id.action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment)
-//                } else {
-//                    mLoadingDialog.dismiss()
-//                    Log.d(TAG, "SignUp Error : ${response.errorBody()?.string()}")
-//                }
-//            }
+
+            UserApiClient.instance.me { user, error ->
+                if (error != null) {
+                    Log.e(TAG, "사용자 정보 요청 실패", error)
+                } else if (user != null) {
+                    lifecycleScope.launch {
+                        val response = withContext(Dispatchers.IO) {
+                            val kakaoUser = kakaoAuthViewModel.kakaoUser
+                            authService.kakaoSignUp(
+                                KakaoSignUpRequest(
+                                    user.id!!, kakaoUser.nickname, kakaoUser.disability!!
+                                )
+                            )
+                        }
+                        // 회원가입 성공시
+                        if (response.isSuccessful) {
+                            mLoadingDialog.dismiss()
+                            navController.navigate(R.id.action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment)
+                            kakaoAuthViewModel.removeKakaoUser()
+                        } else {
+                            mLoadingDialog.dismiss()
+                            Log.d(TAG, "SignUp Error : ${response.errorBody()?.string()}")
+                        }
+                    }
+                }
+            }
+
         }
     }
 

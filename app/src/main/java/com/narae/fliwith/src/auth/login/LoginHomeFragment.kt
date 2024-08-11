@@ -1,9 +1,12 @@
 package com.narae.fliwith.src.auth.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -13,11 +16,20 @@ import com.kakao.sdk.user.UserApiClient
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.FragmentLoginHomeBinding
+import com.narae.fliwith.src.auth.AuthApi.authService
+import com.narae.fliwith.src.auth.models.KakaoLoginRequest
+import com.narae.fliwith.src.main.LoginViewModel
+import com.narae.fliwith.src.main.MainActivity
+import com.narae.fliwith.util.showCustomSnackBar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val TAG = "LoginHomeFragment"
 
 class LoginHomeFragment :
     BaseFragment<FragmentLoginHomeBinding>(FragmentLoginHomeBinding::inflate) {
+    private val loginViewModel by activityViewModels<LoginViewModel>();
 
     private val mCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -25,6 +37,7 @@ class LoginHomeFragment :
         } else if (token != null) {
             Log.e(TAG, "로그인 성공 ${token.accessToken}")
             loggingUserInfo()
+            loginOrSignUp()
         }
     }
 
@@ -52,6 +65,7 @@ class LoginHomeFragment :
                         //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
                         Log.e(TAG, "유효한 카카오 토큰입니다.")
                         loggingUserInfo()
+                        loginOrSignUp()
                     }
                 }
             } else {
@@ -68,6 +82,35 @@ class LoginHomeFragment :
         // 일반 로그인
         binding.loginGroup.setOnClickListener {
             navController.navigate(R.id.action_loginHomeFragment_to_loginFragment)
+        }
+    }
+
+    private fun loginOrSignUp() {
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+                Log.e(TAG, "사용자 정보 요청 실패", error)
+            } else if (user != null) {
+                lifecycleScope.launch {
+                    val response = withContext(Dispatchers.IO) {
+                        authService.kakaoLogin(KakaoLoginRequest(user.id!!))
+                    }
+                    // 로그인 성공, 200
+                    if (response.isSuccessful) {
+                        // 유저 토큰정보 저장
+                        loginViewModel.login(response.body()!!.data.apply {
+                            createdAt = System.currentTimeMillis()
+                        })
+                        startActivity(Intent(context, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        })
+                    }
+                    // 로그인 실패, 카카오로 가입한 계정 없음
+                    else {
+                        Log.d(TAG, "serviceLogin: Login Failed")
+                        navController.navigate(R.id.action_loginHomeFragment_to_kakaoNicknameFragment)
+                    }
+                }
+            }
         }
     }
 
@@ -104,6 +147,7 @@ class LoginHomeFragment :
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = mCallback)
                 } else if (token != null) {
                     Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    loginOrSignUp()
                 }
             }
         } else {

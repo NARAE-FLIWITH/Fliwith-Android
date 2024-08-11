@@ -104,7 +104,8 @@
         android:label="KakaoSelectDisabilityFragment" >
         <action
             android:id="@+id/action_kakaoSelectDisabilityFragment_to_kakaoCompleteFragment"
-            app:destination="@id/kakaoCompleteFragment" />
+            app:destination="@id/kakaoCompleteFragment"
+            app:popUpTo="@id/loginHomeFragment" />
         <action
             android:id="@+id/action_kakaoSelectDisabilityFragment_to_kakaoWebViewFragment"
             app:destination="@id/kakaoWebViewFragment" />

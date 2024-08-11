@@ -92,26 +92,23 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
         binding.layoutLogout.setOnClickListener {
             lifecycleScope.launch {
                 val response = withContext(Dispatchers.IO) { myPageService.logout() }
-                if (response.isSuccessful) {
-                    // 카카오 로그아웃
-                    if (AuthApiClient.instance.hasToken()) {
-                        UserApiClient.instance.logout { error ->
-                            if (error != null) {
-                                Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-                            } else {
-                                Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                            }
+                // 카카오 로그아웃
+                if (AuthApiClient.instance.hasToken()) {
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                        } else {
+                            Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
                         }
                     }
-
-                    loginViewModel.logout()
-                    val intent = Intent(requireContext(), AuthActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    }
-                    startActivity(intent)
-                } else {
-                    Log.d(TAG, "myPage: 로그아웃 실패 ${response.errorBody()?.string()}")
                 }
+
+                loginViewModel.logout()
+                val intent = Intent(requireContext(), AuthActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
+
             }
         }
 
