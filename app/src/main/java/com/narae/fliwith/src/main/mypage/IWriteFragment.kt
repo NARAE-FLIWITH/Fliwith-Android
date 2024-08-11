@@ -2,6 +2,7 @@ package com.narae.fliwith.src.main.review
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.narae.fliwith.R
 import com.narae.fliwith.databinding.FragmentIWriteBinding
 import com.narae.fliwith.src.main.MainActivity
@@ -22,9 +24,13 @@ class IWriteFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private var reviewList = immutableListOf<Review>()
+    private var reviewList = mutableListOf<Review>()
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var mainActivity: MainActivity
+
+    private var currentPage = 0
+    private var isLoading = false
+    private var lastPageNo = 0
 
     private val viewModel: ReviewViewModel by activityViewModels()
 
@@ -45,9 +51,24 @@ class IWriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
 
+        currentPage = 0
+        reviewList.clear()
+
         reviewAdapter = ReviewAdapter(requireContext(), reviewList)
+
+        // pageNo=0 데이터 List
+        loadReviews(currentPage)
+
         binding.reviewRv.apply {
             adapter = reviewAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!recyclerView.canScrollVertically(1) && !isLoading && currentPage < lastPageNo) {
+                        loadMoreReviews()
+                    }
+                }
+            })
         }
 
         val navController = findNavController()
@@ -59,8 +80,6 @@ class IWriteFragment : Fragment() {
                 navController.navigate(R.id.action_IWriteFragment_to_reviewDetailFragment, bundle)
             }
         })
-
-        observeReviewData()
     }
 
     private fun setListeners() {
@@ -69,13 +88,25 @@ class IWriteFragment : Fragment() {
         }
     }
 
-    private fun observeReviewData() {
-        viewModel.reviewDataResponse.observe(viewLifecycleOwner, Observer { reviewResponse ->
-            reviewResponse?.data?.reviews?.let { reviews ->
-                reviewList = reviews
-                reviewAdapter.updateReviews(reviews)
+    private fun loadMoreReviews() {
+        currentPage++
+        if(currentPage <= lastPageNo) loadReviews(currentPage)
+    }
+
+    private fun loadReviews(pageNo: Int) {
+        isLoading = true
+        viewModel.fetchWriteReviews(pageNo) { success, fetchedLastPageNo, reviews ->
+            if (success) {
+                lastPageNo = fetchedLastPageNo // 마지막 페이지 번호
+
+                // reviewList 업데이트
+                reviewList.addAll(reviews)
+                reviewAdapter.updateReviews(reviewList)
+                isLoading = false // 데이터 로드가 완료되면 isLoading을 false로 설정
+            } else {
+                isLoading = false
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
