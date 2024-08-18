@@ -167,6 +167,10 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding>(
 
     override fun onDestroy() {
         super.onDestroy()
+        val window = requireActivity().window
+        val context = requireContext()
+        // 상태 바 색상 설정
+        changeColorStatusBar(window, context, R.color.white, true)
         viewModel.removeSelectedInfo()
     }
 }
