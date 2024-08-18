@@ -49,7 +49,7 @@ class ApplicationClass : Application() {
 
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
-
+        
         val KAKAO_APP_KEY = getString(R.string.kakao_app_key)
         // kakao Map SDK 초기화
         KakaoMapSdk.init(this, KAKAO_APP_KEY);
