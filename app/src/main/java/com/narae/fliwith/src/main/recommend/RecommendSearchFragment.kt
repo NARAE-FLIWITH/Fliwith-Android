@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
@@ -17,9 +18,12 @@ import kotlinx.coroutines.launch
 
 
 private const val TAG = "RecommendSearchFragment_싸피"
-class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(FragmentRecommendSearchBinding::inflate) {
+
+class RecommendSearchFragment :
+    BaseFragment<FragmentRecommendSearchBinding>(FragmentRecommendSearchBinding::inflate) {
 
     private val viewModel: RecommendViewModel by activityViewModels()
+    private var isActive = false
 
     override fun onResume() {
         super.onResume()
@@ -36,6 +40,7 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
 
         val window = requireActivity().window
         val context = requireContext()
+        isActive = true
 
         // 상태 바 색상 설정
         changeColorStatusBar(window, context, R.color.lavender, true)
@@ -55,13 +60,19 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
         }
 
         viewModel.tourRequest.value?.let { request ->
-            viewModel.fetchTourData(request) { success ->
-                if (success) {
-                    navController.navigate(R.id.action_recommendSearchFragment_to_recommendAIFragment)
-                } else {
-                    navController.popBackStack()
-                    showCustomSnackBar(requireContext(), binding.root, "잠시 후 다시 시도해 주세요")
-                    Log.d(TAG, "onViewCreated: 데이터를 받아오지 못함")
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.fetchTourData(request) { success ->
+                    if (isActive) {
+                        if (success) {
+                            navController.navigate(R.id.action_recommendSearchFragment_to_recommendAIFragment)
+                        } else {
+                            navController.popBackStack()
+                            showCustomSnackBar(requireContext(), binding.root, "잠시 후 다시 시도해 주세요")
+                            Log.d(TAG, "onViewCreated: 데이터를 받아오지 못함")
+                        }
+                    } else {
+                        Log.d(TAG, "Fragment is no longer active, ignoring callback.")
+                    }
                 }
             }
         }
@@ -69,7 +80,11 @@ class RecommendSearchFragment : BaseFragment<FragmentRecommendSearchBinding>(Fra
         binding.btnBack.setOnClickListener {
             navController.popBackStack()
         }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isActive = false // 뷰가 파괴되었음을 명시
     }
 
 }

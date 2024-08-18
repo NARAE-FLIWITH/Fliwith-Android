@@ -22,10 +22,10 @@ class RecommendViewModel : ViewModel() {
     private val _selectedDate = MutableLiveData<String>()
 
     private val _tourData = MutableLiveData<TourResponse?>()
-    val tourData: MutableLiveData<TourResponse?> get() = _tourData
+    val tourData: LiveData<TourResponse?> get() = _tourData
 
     private val _tourReviewData = MutableLiveData<TourReviewResponse?>()
-    val tourReviewData: MutableLiveData<TourReviewResponse?> get() = _tourReviewData
+    val tourReviewData: LiveData<TourReviewResponse?> get() = _tourReviewData
 
     private val _tourRequest = MutableLiveData<TourRequest>()
     val tourRequest: LiveData<TourRequest> get() = _tourRequest
