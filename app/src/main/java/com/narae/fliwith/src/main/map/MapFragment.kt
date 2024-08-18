@@ -10,25 +10,20 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnAttachStateChangeListener
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.vectormap.KakaoMap
-import com.kakao.vectormap.KakaoMap.OnVisibleChangeListener
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
@@ -44,12 +39,10 @@ import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogRequestActivateBinding
 import com.narae.fliwith.databinding.DialogRequestPermissionsBinding
 import com.narae.fliwith.databinding.FragmentMapBinding
-import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.map.MapApi.mapService
 import com.narae.fliwith.src.main.map.models.SpotRequest
 import com.narae.fliwith.src.main.map.models.SpotWithLocation
 import com.narae.fliwith.src.main.recommend.models.RecommendViewModel
-import com.narae.fliwith.util.changeColorStatusBar
 import com.narae.fliwith.util.setOnSingleClickListener
 import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
@@ -94,7 +87,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                     .setTextStyles(LabelTextStyle.from(22, R.color.grey))))!!
             labelStyles = map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
             map.cameraMaxLevel = 19
-            map.cameraMinLevel = 12
+            map.cameraMinLevel = 8
 
             if (::centerPosition.isInitialized) {
                 restoreMap()
