@@ -67,14 +67,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     private val lifecycleCallback = object : MapLifeCycleCallback() {
         // 지도 API 가 정상적으로 종료될 때 호출됨
         override fun onMapDestroy() {
-            Log.d("가나", "onMapDestroy: ")
         }
 
         // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
         override fun onMapError(p0: Exception?) {
         }
-
-
     }
 
     private val kakaoMapReadyCallback = object : KakaoMapReadyCallback() {
@@ -83,9 +80,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         override fun onMapReady(p0: KakaoMap) {
             map = p0
             homeLabelStyles =
-                map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.home_marker)
-                    .setTextStyles(LabelTextStyle.from(22, R.color.grey))))!!
-            labelStyles = map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
+                map.labelManager?.addLabelStyles(
+                    LabelStyles.from(
+                        LabelStyle.from(R.drawable.home_marker)
+                            .setTextStyles(LabelTextStyle.from(22, R.color.grey))
+                    )
+                )!!
+            labelStyles =
+                map.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.spot)))!!
             map.cameraMaxLevel = 19
             map.cameraMinLevel = 8
 
@@ -132,6 +134,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             setLabel(it)
         }
         setHomeLabel()
+        setMarkerTouchEvent()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -205,14 +208,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
             if (response.isSuccessful) {
                 // 기존 모든 라벨 지우기
-                val layer: LabelLayer = map.labelManager?.getLayer()!!
+                val layer: LabelLayer = map.labelManager?.layer!!
                 layer.removeAll()
                 // 홈 라벨 찍어주기
                 setHomeLabel()
                 spots = response.body()?.spotList!!
 
                 // 조회 결과가 비어 있으면
-                if (spots.isEmpty() != false) {
+                if (spots.isEmpty()) {
                     showCustomSnackBar(requireContext(), binding.root, "주변에 관광지가 없어요 😭")
                 }
                 // 있으면
@@ -220,6 +223,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                     spots.forEach {
                         setLabel(it)
                     }
+                    setMarkerTouchEvent()
                     showCustomSnackBar(requireContext(), binding.root, "주변 관광지를 찾았어요")
                 }
                 mLoadingDialog.dismiss()
@@ -232,13 +236,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     private fun setLabel(spot: SpotWithLocation) {
         val options =
             LabelOptions.from(LatLng.from(spot.latitude, spot.longitude)).setStyles(labelStyles)
-        val layer: LabelLayer = map.labelManager?.getLayer()!!
+        options.tag = spot
+        val layer: LabelLayer = map.labelManager?.layer!!
         layer.addLabel(options)
+    }
 
+    private fun setMarkerTouchEvent() {
         // 맵 라벨 클릭시 상세 페이지 보여주기
-        map.setOnLabelClickListener { _, _, _ ->
+        map.setOnLabelClickListener { _, _, label ->
             mLoadingDialog.show()
-            val request = SpotRequest(spot.contentTypeId.toString(), spot.contentId.toString())
+
+            val spotItem = label.tag as SpotWithLocation
+            val request = SpotRequest(spotItem.contentTypeId.toString(), spotItem.contentId.toString())
             recommendViewModel.fetchTourDetailData(request) { success ->
                 if (success) {
 
@@ -259,7 +268,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setHomeLabel() {
-        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles).setTexts("현위치").apply { isClickable = false }
+        val options = LabelOptions.from(homeLocation).setStyles(homeLabelStyles).setTexts("현위치")
+            .apply { isClickable = false }
         val layer: LabelLayer = map.labelManager?.getLayer()!!
         layer.addLabel(options)
     }
