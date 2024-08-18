@@ -97,6 +97,7 @@ class LoginHomeFragment :
                     // 로그인 성공, 200
                     if (response.isSuccessful) {
                         // 유저 토큰정보 저장
+                        Log.d(TAG, "로그인 성공, 토큰 저장: ${response.body()!!.data.accessToken}")
                         loginViewModel.login(response.body()!!.data.apply {
                             createdAt = System.currentTimeMillis()
                         })
