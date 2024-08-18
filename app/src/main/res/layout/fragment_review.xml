@@ -93,11 +93,11 @@
     <FrameLayout
         android:id="@+id/review_write_btn"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/btn_solid_review_write"
         android:paddingVertical="8dp"
-        android:paddingHorizontal="28dp"
+        android:paddingHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

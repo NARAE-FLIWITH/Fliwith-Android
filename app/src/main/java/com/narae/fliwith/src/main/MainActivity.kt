@@ -25,7 +25,6 @@ import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.util.convertDPtoPX
 import com.narae.fliwith.util.showCustomSnackBar
 
-private const val TAG = "MainActivity_싸피"
 enum class DISABILITY {
     HEARING, VISUAL, PHYSICAL, NONDISABLED, NONE, NONSELECTED;
 

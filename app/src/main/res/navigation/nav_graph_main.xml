@@ -129,7 +129,12 @@
         android:id="@+id/recommendAIFragment"
         android:name="com.narae.fliwith.src.main.recommend.RecommendAIFragment"
         android:label="fragment_recommend_a_i"
-        tools:layout="@layout/fragment_recommend_a_i" />
+        tools:layout="@layout/fragment_recommend_a_i" >
+        <action
+            android:id="@+id/exit"
+            app:popUpTo="@id/recommendAIFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/reviewSpotNameFragment"
         android:name="com.narae.fliwith.src.main.review.ReviewSpotNameFragment"

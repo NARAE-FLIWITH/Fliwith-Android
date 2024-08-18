@@ -3,7 +3,9 @@ package com.narae.fliwith.src.main.recommend
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginTop
 import androidx.fragment.app.activityViewModels
@@ -31,6 +33,13 @@ class RecommendAIFragment :
         setListeners()
         setFromMap()
 
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    navController.popBackStack()
+                }
+            })
     }
 
     override fun onResume() {
@@ -46,14 +55,19 @@ class RecommendAIFragment :
     private fun setFromMap() {
         if (arguments?.getBoolean("fromMap") == true) {
             binding.appBar.visibility = View.GONE
-            binding.btnBack.setColorFilter(ContextCompat.getColor(requireContext(), R.color.black))
-            val layoutParams = (binding.layoutInfo.layoutParams) as LinearLayout.LayoutParams
-            layoutParams.topMargin = 0
+            binding.btnBackMap.visibility = View.VISIBLE
+        } else {
+            binding.appBar.visibility = View.VISIBLE
+            binding.btnBackMap.visibility = View.GONE
         }
     }
 
     private fun setListeners() {
         binding.btnBack.setOnClickListener {
+            navController.popBackStack()
+        }
+
+        binding.btnBackMap.setOnClickListener {
             navController.popBackStack()
         }
     }
