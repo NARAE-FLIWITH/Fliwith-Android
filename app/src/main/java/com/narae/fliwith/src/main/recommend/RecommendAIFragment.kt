@@ -103,11 +103,9 @@ class RecommendAIFragment :
         var responseData = viewModel.tourData.value?.data
         binding.aiTvCategory.text = viewModel.tourRequest.value?.contentType
         binding.aiTvName.text = responseData?.detailCommon?.title
-        binding.aiTvUsetime.text = "연중무휴"
-        binding.aiTvAddress.text = responseData?.detailCommon?.addr1
+        binding.aiTvUsetime.text = responseData?.detailCommon?.addr1
+        binding.aiTvAddress.text = "우편번호(" + responseData?.detailCommon?.zipcode + ")"
 
-        Log.d(TAG, "fetchView firstimage1 : ${responseData?.detailCommon?.firstimage}")
-        Log.d(TAG, "fetchView firstimage2 : ${responseData?.detailCommon?.firstimage2}")
         if (responseData?.detailCommon?.firstimage?.isNotEmpty() == true) {
             Glide.with(requireContext())
                 .load(responseData.detailCommon.firstimage)
