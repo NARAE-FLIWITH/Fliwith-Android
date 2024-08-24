@@ -339,7 +339,7 @@ class ReviewDetailFragment :
                         if (success) {
                             navController.popBackStack()
                         } else {
-                            Log.e(TAG, "Failed to fetch review delete")
+                            showCustomSnackBar(requireContext(), binding.root, "게시글 삭제를 실패 했습니다. 🥲")
                         }
                     }
                 }

@@ -40,7 +40,7 @@
                 android:font="@font/pretendard_medium"
                 android:fontWeight="500"
                 android:gravity="start|center_vertical"
-                android:text="192개의 리뷰"
+                android:text="0개의 리뷰"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 

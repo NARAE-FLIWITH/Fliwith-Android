@@ -175,6 +175,22 @@ class ReviewViewModel : ViewModel() {
     }
 
     // review 작성
+    private val _isImageSelect = MutableLiveData<Boolean>()
+    val isImageSelect: LiveData<Boolean?>
+        get() = _isImageSelect
+
+    fun setIsImageSelect(check : Boolean) {
+        _isImageSelect.value = check
+    }
+
+    private val _selectedUris = MutableLiveData<List<Uri>>()
+    val selectedUris: List<Uri>?
+        get() = _selectedUris.value
+
+    fun setSelectedUris(uris: List<Uri>) {
+        _selectedUris.value = uris
+    }
+
     private val _reviewInsertRequest = MutableLiveData<ReviewInsertRequest>()
     val reviewInsertRequest: LiveData<ReviewInsertRequest> get() = _reviewInsertRequest
 

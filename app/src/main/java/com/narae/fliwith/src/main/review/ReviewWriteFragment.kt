@@ -33,7 +33,6 @@ private const val TAG = "ReviewWriteFragment_싸피"
 class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     FragmentReviewWriteBinding::inflate) {
 
-    private lateinit var mainActivity: MainActivity
     private val viewModel: ReviewViewModel by activityViewModels()
     private var reviewId:Int=-1
     private lateinit var imageAdapter: ReviewWriteImageAdapter
@@ -41,12 +40,12 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     private val presignedUrls: MutableList<String> = mutableListOf()
     private val _checkSpotId = MutableLiveData<Boolean>(false)
     private val _checkContentLength = MutableLiveData<Boolean>(false)
-    private val _uploadSuccess = MutableLiveData<Boolean>(false)
+    private val _checkImageSelect = MutableLiveData<Boolean>(false)
 
     private val _isButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSource(_checkContentLength) { checkButtonEnabled() }
         addSource(_checkSpotId) { checkButtonEnabled() }
-        addSource(_uploadSuccess) { checkButtonEnabled() }
+        addSource(_checkImageSelect) { checkButtonEnabled() }
     }
 
     // pickMedia 함수
@@ -56,23 +55,9 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             val imageUrls = uris.map { uri -> uri.toString() } // Uri를 String으로 변환
             imageAdapter.setImages(imageUrls)
 
-            // 여러 장의 이미지 업로드 시작
-            uploadImagesSequentially(requireContext(), uris) { success ->
-                if (success) {
-                    Log.d(TAG, "All images uploaded successfully")
-                    _uploadSuccess.value  = true
-                } else {
-                    Log.e(TAG, "Failed to upload images")
-                    showCustomSnackBar(requireContext(), binding.root, "이미지 업로드에 실패 했습니다. 🥲")
-                    _uploadSuccess.value  = false
-                }
-            }
+            viewModel.setSelectedUris(uris)
+            viewModel.setIsImageSelect(true)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainActivity = context as MainActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,13 +100,37 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
         }
 
         binding.reviewWriteBtn.setOnClickListener {
-            // 작성 하고 리뷰 화면 으로 다시 이동
-            val request = ReviewInsertRequest(
-                viewModel.reviewSpotContentId.value!!,
-                viewModel.reviewWriteContent.value!!,
-                viewModel.uploadImageUrls.value!!)
-            postReviewData(request)
-            viewModel.clearData()
+            showCustomSnackBar(requireContext(), binding.root, "게시글 업로드 중 입니다! 조금만 기다려주세요 😁")
+            viewModel.selectedUris?.let { uris ->
+                uploadImagesSequentially(requireContext(), uris) { success ->
+                    if (success) {
+                        // Proceed with posting the review data
+                        val request = ReviewInsertRequest(
+                            viewModel.reviewSpotContentId.value!!,
+                            viewModel.reviewWriteContent.value!!,
+                            viewModel.uploadImageUrls.value!!)
+
+                        postReviewData(request)
+                        viewModel.clearData()
+                        // 업로드 완료 후 성공 메시지 표시
+                        showCustomSnackBar(requireContext(), binding.root, "게시글이 성공적으로 업로드되었습니다! 🎉")
+                    } else {
+                        // 업로드 실패 시 메시지 표시
+                        showCustomSnackBar(requireContext(), binding.root, "이미지 업로드에 실패 했습니다. 🥲")
+                    }
+                }
+            } ?: run {
+                // If there are no images to upload, just post the review data
+                val request = ReviewInsertRequest(
+                    viewModel.reviewSpotContentId.value!!,
+                    viewModel.reviewWriteContent.value!!,
+                    viewModel.uploadImageUrls.value!!)
+
+                postReviewData(request)
+                viewModel.clearData()
+                // 업로드 완료 후 성공 메시지 표시
+                showCustomSnackBar(requireContext(), binding.root, "게시글이 성공적으로 업로드되었습니다! 🎉")
+            }
         }
 
         // 이미지 기본 frame
@@ -159,6 +168,10 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
             _checkSpotId.value = id != null
         }
 
+        viewModel.isImageSelect.observe(viewLifecycleOwner) { check ->
+            _checkImageSelect.value = check != null
+        }
+
         binding.reviewWriteBackIcon.setOnClickListener {
             navController.popBackStack()
         }
@@ -167,12 +180,11 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
     private fun checkButtonEnabled() {
         _isButtonEnabled.value = _checkContentLength.value == true &&
-                _checkSpotId.value == true &&
-                _uploadSuccess.value == true
+                _checkSpotId.value == true && _checkImageSelect.value == true
         Log.d(TAG, "_isButtonEnabled.value: ${_isButtonEnabled.value}")
         Log.d(TAG, "_checkContentLength.value: ${_checkContentLength.value}")
         Log.d(TAG, "_checkSpotId.value: ${_checkSpotId.value}")
-        Log.d(TAG, "_uploadSuccess.value: ${_uploadSuccess.value}")
+        Log.d(TAG, "_checkImageSelect.value: ${_checkImageSelect.value}")
     }
 
     fun postReviewData(request : ReviewInsertRequest) {
