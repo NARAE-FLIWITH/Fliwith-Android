@@ -108,11 +108,21 @@
                     android:font="@font/pretendard_medium"
                     android:fontWeight="600"
                     android:text="다녀온 장소, 본인의 사진 등을 한 장 이상 첨부해주세요."
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="3dp"
                     android:textSize="14dp"
                     android:textStyle="normal"
                     android:textColor="@color/grey"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:font="@font/pretendard_medium"
+                    android:fontWeight="600"
+                    android:text="* 최대 10장까지 선택 가능합니다."
+                    android:layout_marginBottom="15dp"
+                    android:textSize="11dp"
+                    android:textStyle="normal"
+                    android:textColor="@color/red"/>
 
                 <LinearLayout
                     android:layout_marginBottom="25dp"

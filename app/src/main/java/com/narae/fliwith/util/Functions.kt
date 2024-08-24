@@ -1,11 +1,14 @@
 package com.narae.fliwith.util
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.Image
 import android.os.SystemClock
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -70,4 +73,25 @@ fun changeColorStatusBar(window: Window, context: Context, colorResId: Int, isLi
     // 상태 바 아이콘 색상 설정
     val insetsController = WindowCompat.getInsetsController(window, decorView)
     insetsController.isAppearanceLightStatusBars = isLightStatusBars
+}
+
+// 카메라 권한
+fun Context.requestCameraPermission(onGrant: ()->Unit, onDenied: ()->Unit) {
+    when {
+        ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED -> {
+            onGrant()
+        }
+
+        else -> {
+            this.showCameraPermissionDeniedMessage()
+            onDenied()
+        }
+    }
+}
+
+fun Context.showCameraPermissionDeniedMessage() {
+    Toast.makeText(this, "카메라 사용을 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
 }

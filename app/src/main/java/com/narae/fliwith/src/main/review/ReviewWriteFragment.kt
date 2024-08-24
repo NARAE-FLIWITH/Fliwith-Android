@@ -1,9 +1,13 @@
 package com.narae.fliwith.src.main.review
 
 import ReviewWriteImageAdapter
+import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,6 +16,7 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,9 +28,15 @@ import com.narae.fliwith.src.main.MainActivity
 import com.narae.fliwith.src.main.review.models.ReviewInsertRequest
 import com.narae.fliwith.src.main.review.models.ReviewPresignedRequest
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
+import com.narae.fliwith.util.requestCameraPermission
 import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -42,6 +53,9 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     private val _checkContentLength = MutableLiveData<Boolean>(false)
     private val _checkImageSelect = MutableLiveData<Boolean>(false)
 
+    // 카메라에서 생성한 사진 uri
+    private var currentPhotoUri: Uri? = null
+
     private val _isButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSource(_checkContentLength) { checkButtonEnabled() }
         addSource(_checkSpotId) { checkButtonEnabled() }
@@ -57,6 +71,30 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
 
             viewModel.setSelectedUris(uris)
             viewModel.setIsImageSelect(true)
+        }
+    }
+
+    // 카메라 앱을 통해 사진을 촬영한 후의 결과를 처리
+    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            // 성공 했을 때
+            imageAdapter.setImages(listOf(currentPhotoUri.toString()))
+
+            viewModel.setSelectedUris(listOf(currentPhotoUri!!))
+            viewModel.setIsImageSelect(true)
+        } else {
+            //실패 했을 때
+            Log.d(TAG, "camera 사진 가져 오기 실패")
+        }
+    }
+
+    // 카메라 권한 수정 launcher
+    private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if(it) {
+            // 성공 했을 때
+            takePickture()
+        } else {
+            Log.d(TAG, "camera 권한 받아 오기 실패")
         }
     }
 
@@ -244,9 +282,16 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
                 }
                 R.id.camera_menu -> {
                     // 사진 찍기
-                }
-                R.id.file_menu -> {
-                    // 파일 탐색
+                    presignedUrls.clear()
+                    viewModel.clearUploadImageUrls()
+                    requireContext().requestCameraPermission(
+                        onGrant = {
+                            takePickture()
+                        },
+                        onDenied = {
+                            cameraPermission.launch(Manifest.permission.CAMERA)
+                        }
+                    )
                 }
             }
             false
@@ -257,6 +302,40 @@ class ReviewWriteFragment : BaseFragment<FragmentReviewWriteBinding>(
     fun photoPicker() {
         // 이미지만
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    fun takePickture() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // 카메라 앱이 설치 되어 있는지 확인
+        if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
+            try {
+                // 이미지 파일 생성
+                val photoFile: File? = createImageFile()
+                photoFile?.let {
+                    // FileProvider를 통해 안전하게 Uri 공유
+                    currentPhotoUri = FileProvider.getUriForFile(
+                        requireContext(),
+                        "${requireContext().packageName}.provider",
+                        it
+                    )
+                    takePictureLauncher.launch(currentPhotoUri)
+                    Log.d(TAG, "takePickture: ${currentPhotoUri}")
+                }
+            } catch (e: Exception) {
+                // 예외 처리 (카메라 앱이 설치되어 있지 않은 경우 포함)
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun createImageFile(): File? {
+        val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir: File? = requireContext().externalCacheDir
+        return File.createTempFile(
+            "image_file_$timestamp", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
     }
 
     fun uploadImagesSequentially(context: Context, uris: List<Uri>, callback: (Boolean) -> Unit) {
