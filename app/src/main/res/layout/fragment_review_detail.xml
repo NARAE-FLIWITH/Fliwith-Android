@@ -91,6 +91,18 @@
                         android:layout_weight="1">
                     </View>
 
+                    <TextView
+                        android:id="@+id/review_report_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:font="@font/pretendard_medium"
+                        android:layout_gravity="center"
+                        android:fontWeight="600"
+                        android:text="신고하기"
+                        android:textColor="@color/grey"
+                        android:textSize="15dp"
+                        />
+
                     <ImageView
                         android:id="@+id/review_detail_menu_icon"
                         android:layout_width="34dp"

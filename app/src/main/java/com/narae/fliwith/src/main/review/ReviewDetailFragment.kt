@@ -260,8 +260,14 @@ class ReviewDetailFragment :
             binding.reviewHeartImageDisable.setOnClickListener {
                 showCustomSnackBar(requireContext(), binding.root, "내 게시물은 하트를 누를 수 없어요 😂")
             }
+            binding.reviewReportTv.visibility = View.GONE
         } else {
             binding.reviewDetailMenuIcon.visibility = View.GONE
+            binding.reviewReportTv.visibility = View.VISIBLE
+        }
+
+        binding.reviewReportTv.setOnClickListener {
+            showCustomSnackBar(requireContext(), binding.root, "해당 게시글을 성공적으로 신고했습니다. 🚨")
         }
 
         viewModel.setReviewLikeCount(response.likes.toString().toInt())
