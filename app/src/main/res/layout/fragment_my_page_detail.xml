@@ -152,4 +152,28 @@
         android:layout_height="1dp"
         android:background="#FFE7EEF0" />
 
+    <LinearLayout
+        android:id="@+id/layout_resign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="18dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="회원탈퇴"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFE7EEF0" />
+
 </LinearLayout>
