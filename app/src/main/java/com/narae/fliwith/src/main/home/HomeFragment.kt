@@ -43,8 +43,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         storeList = mutableListOf(
             Store(R.drawable.store2, "피에르 가니에르"),
-            Store(R.drawable.store4, "합정 르프리크"),
             Store(R.drawable.store3, "수담 한정식"),
+            Store(R.drawable.store4, "청담 아티초크0125"),
             Store(R.drawable.store1, "수라선 역삼"),
         )
         storeAdapter = HomeStoreAdapter(storeList)
