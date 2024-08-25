@@ -42,19 +42,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         storeList = mutableListOf(
-            Store(R.drawable.store2, "라플란드 베이커리"),
-            Store(R.drawable.store3, "글로리 페어몬트"),
-            Store(R.drawable.store1, "애월더힐 브런치 카페"),
+            Store(R.drawable.store2, "피에르 가니에르"),
             Store(R.drawable.store4, "합정 르프리크"),
+            Store(R.drawable.store3, "수담 한정식"),
+            Store(R.drawable.store1, "수라선 역삼"),
         )
         storeAdapter = HomeStoreAdapter(storeList)
         binding.storeRv.adapter = storeAdapter
 
         tourList = mutableListOf(
-            Tour(R.drawable.tour1, "고불총림 백양사"),
-            Tour(R.drawable.tour2, "고령군 가야 꽃길"),
+            Tour(R.drawable.tour1, "아산 공세리성당"),
+            Tour(R.drawable.tour2, "하동 십리벚꽃길"),
             Tour(R.drawable.tour3, "경복궁"),
-            Tour(R.drawable.tour4, "영암 바람의 언덕")
+            Tour(R.drawable.tour4, "고불총림 백양사")
         )
         tourAdapter = HomeTourAdapter(tourList)
         binding.tourRv.adapter = tourAdapter
