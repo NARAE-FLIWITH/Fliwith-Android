@@ -114,6 +114,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
                 map.moveCamera(CameraUpdateFactory.newCenterPosition(location))
                 homeLocation = LatLng.from(location.latitude, location.longitude)
+                centerPosition = homeLocation
                 setHomeLabel()
             }
         }
@@ -247,7 +248,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             mLoadingDialog.show()
 
             val spotItem = label.tag as SpotWithLocation
-            val request = SpotRequest(spotItem.contentTypeId.toString(), spotItem.contentId.toString())
+            val request =
+                SpotRequest(spotItem.contentTypeId.toString(), spotItem.contentId.toString())
             recommendViewModel.fetchTourDetailData(request) { success ->
                 if (success) {
 
