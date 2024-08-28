@@ -177,4 +177,7 @@
         android:name="com.narae.fliwith.src.main.mypage.ChangeNicknameFragment"
         android:label="fragment_change_nickname"
         tools:layout="@layout/fragment_change_nickname" />
+    <action
+        android:id="@+id/action_global_reviewDetailFragment"
+        app:destination="@id/reviewDetailFragment" />
 </navigation>

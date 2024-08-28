@@ -91,6 +91,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.6.0")
     // kakao login
     implementation("com.kakao.sdk:v2-user:2.20.3")
+
+    // splash Screen api
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }
 
 fun getProperty(keyName: String): String {

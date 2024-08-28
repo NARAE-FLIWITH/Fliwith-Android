@@ -19,9 +19,12 @@ abstract class BaseActivity<B : ViewBinding>(private val inflate: (LayoutInflate
     // 즉 매번 onCreate에서 setContentView를 하지 않아도 됨.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        preload()
         binding = inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+    open fun preload(){}
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.

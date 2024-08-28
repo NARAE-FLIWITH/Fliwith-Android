@@ -3,36 +3,37 @@ package com.narae.fliwith.src.splash
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.WindowManager
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import com.narae.fliwith.config.ApplicationClass.Companion.sharedPreferences
 import com.narae.fliwith.config.BaseActivity
 import com.narae.fliwith.databinding.ActivitySplashBinding
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.MainActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-private const val TAG = "싸피"
+private const val TAG = "SplashActivity"
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        setFullScreen()
-        delaySplash(1500)
-    }
 
-    private fun delaySplash(delayMillis: Long) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, getDestination()))
-            finish()
-        }, delayMillis)
+    private lateinit var splashScreen: SplashScreen
+    override fun preload() {
+        super.preload()
+        splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition { true }
+
+        val destinationActivity = getDestination()
+
+        val intent = Intent(this@SplashActivity, destinationActivity)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun getDestination(): Class<out Activity> {
@@ -51,19 +52,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         }
     }
 
-    private fun setFullScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            window.apply {
-                setFlags(
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                )
-            }
-        } else {
-            val windowInsetsController = WindowInsetsControllerCompat(
-                window, window.decorView
-            )
-            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-        }
+    override fun onDestroy() {
+        splashScreen.setKeepOnScreenCondition { false }
+        super.onDestroy()
     }
 }

@@ -1,28 +1,20 @@
 package com.narae.fliwith.src.main
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.snackbar.Snackbar
+import androidx.navigation.ui.setupWithNavController
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseActivity
 import com.narae.fliwith.databinding.ActivityMainBinding
-import com.narae.fliwith.databinding.SnackbarCustomBinding
 import com.narae.fliwith.src.auth.AuthActivity
-import com.narae.fliwith.util.convertDPtoPX
 import com.narae.fliwith.util.showCustomSnackBar
 
 enum class DISABILITY {
@@ -88,14 +80,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         // 네비게이션 컨트롤러
         val navController = navHostFragment.navController
 
-        if(Intent.ACTION_VIEW == intent.action) {
+        if (Intent.ACTION_VIEW == intent.action) {
             intent?.data?.let { uri ->
                 val reviewId = uri.getQueryParameter("reviewId")
                 val bundle = Bundle()
                 if (reviewId != null) {
                     bundle.putInt("reviewId", reviewId.toInt())
                 }
-                navController.navigate(R.id.action_reviewFragment_to_reviewDetailFragment, bundle)
+
+                // 먼저 Navigation 수행
+                navController.navigate(R.id.action_global_reviewDetailFragment, bundle)
+
+                // 마지막으로 리뷰 탭을 프로그래매틱하게 선택
+                binding.mainBtmNav.selectedItemId = R.id.menu_main_btm_nav_review
             }
         }
 
