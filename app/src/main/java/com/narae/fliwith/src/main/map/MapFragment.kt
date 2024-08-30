@@ -94,6 +94,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             if (::centerPosition.isInitialized) {
                 restoreMap()
             } else {
+                centerPosition = LatLng.from(37.547850180, 127.074454848)
                 setInitialLocation()
             }
 
