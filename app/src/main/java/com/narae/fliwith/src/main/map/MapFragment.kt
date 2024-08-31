@@ -28,6 +28,7 @@ import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.LabelOptions
@@ -55,11 +56,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
     private lateinit var mapView: MapView
     private lateinit var homeLocation: LatLng
-    private val defaultLocation = LatLng.from(37.547850180, 127.074454848)
-    private lateinit var centerPosition: LatLng
-    lateinit var homeLabelStyles: LabelStyles
-    lateinit var labelStyles: LabelStyles
-    lateinit var map: KakaoMap
+    private var centerPosition = LatLng.from(37.547850180, 127.074454848)
+    private lateinit var homeLabelStyles: LabelStyles
+    private lateinit var labelStyles: LabelStyles
+    private lateinit var map: KakaoMap
     private var spots: List<SpotWithLocation> = mutableListOf()
 
     private val recommendViewModel by activityViewModels<RecommendViewModel>()
@@ -91,10 +91,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             map.cameraMaxLevel = 19
             map.cameraMinLevel = 8
 
-            if (::centerPosition.isInitialized) {
+            if (::homeLocation.isInitialized) {
                 restoreMap()
             } else {
-                centerPosition = LatLng.from(37.547850180, 127.074454848)
                 setInitialLocation()
             }
 
@@ -110,7 +109,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 val location = if (it.isSuccessful && it.result != null) {
                     LatLng.from(it.result.latitude, it.result.longitude)
                 } else {
-                    defaultLocation
+                    centerPosition
                 }
 
                 map.moveCamera(CameraUpdateFactory.newCenterPosition(location))
@@ -160,6 +159,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
         checkPermissions()
         checkLocationActivated()
         setListeners()
+        mapView.start(lifecycleCallback, kakaoMapReadyCallback)
 
     }
 
@@ -179,7 +179,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setListeners() {
-        // 검색 버튼 클릭 시
+        // 검색 버튼 터차 시
         binding.layoutFab.setOnSingleClickListener {
             if (!(requireContext().getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                     LocationManager.FUSED_PROVIDER
@@ -194,13 +194,21 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 return@setOnSingleClickListener
             }
 
-            mLoadingDialog.show()
             searchSpots()
+        }
+
+        // 현 위치 터치 시
+        binding.btnHome.setOnSingleClickListener {
+            map.moveCamera(
+                CameraUpdateFactory.newCenterPosition(homeLocation),
+                CameraAnimation.from(500, true, true)
+            )
         }
     }
 
     private fun searchSpots() {
         lifecycleScope.launch {
+            mLoadingDialog.show()
             val response = withContext(Dispatchers.IO) {
                 mapService.searchByLocation(
                     centerPosition.latitude,
@@ -228,10 +236,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                     setMarkerTouchEvent()
                     showCustomSnackBar(requireContext(), binding.root, "주변 관광지를 찾았어요")
                 }
-                mLoadingDialog.dismiss()
             } else {
                 Log.d(TAG, "searchSpots Error:  ${response.errorBody()?.string()}")
             }
+            mLoadingDialog.dismiss()
         }
     }
 
@@ -321,10 +329,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     private fun checkPermissions() {
         TedPermission.create().setPermissionListener(
             object : PermissionListener {
-                override fun onPermissionGranted() {
-                    mapView.start(lifecycleCallback, kakaoMapReadyCallback)
-
-                }
+                override fun onPermissionGranted() {}
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                     showPermissionDialog()
