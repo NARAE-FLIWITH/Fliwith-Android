@@ -179,7 +179,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     }
 
     private fun setListeners() {
-        // 검색 버튼 터차 시
+        // 검색 버튼 터치 시
         binding.layoutFab.setOnSingleClickListener {
             if (!(requireContext().getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                     LocationManager.FUSED_PROVIDER
@@ -193,7 +193,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
                 showPermissionDialog()
                 return@setOnSingleClickListener
             }
-
             searchSpots()
         }
 
@@ -209,37 +208,44 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     private fun searchSpots() {
         lifecycleScope.launch {
             mLoadingDialog.show()
-            val response = withContext(Dispatchers.IO) {
-                mapService.searchByLocation(
-                    centerPosition.latitude,
-                    centerPosition.longitude,
-                )
-            }
-
-            if (response.isSuccessful) {
-                // 기존 모든 라벨 지우기
-                val layer: LabelLayer = map.labelManager?.layer!!
-                layer.removeAll()
-                // 홈 라벨 찍어주기
-                setHomeLabel()
-                spots = response.body()?.spotList!!
-
-                // 조회 결과가 비어 있으면
-                if (spots.isEmpty()) {
-                    showCustomSnackBar(requireContext(), binding.root, "주변에 관광지가 없어요 😭")
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    mapService.searchByLocation(
+                        centerPosition.latitude,
+                        centerPosition.longitude,
+                    )
                 }
-                // 있으면
-                else {
-                    spots.forEach {
-                        setLabel(it)
+            }.onSuccess { response ->
+                if (response.isSuccessful) {
+                    // 기존 모든 라벨 지우기
+                    val layer: LabelLayer = map.labelManager?.layer!!
+                    layer.removeAll()
+                    // 홈 라벨 찍어주기
+                    setHomeLabel()
+                    spots = response.body()?.spotList!!
+
+                    // 조회 결과가 비어 있으면
+                    if (spots.isEmpty()) {
+                        showCustomSnackBar(requireContext(), binding.root, "주변에 관광지가 없어요 😭")
                     }
-                    setMarkerTouchEvent()
-                    showCustomSnackBar(requireContext(), binding.root, "주변 관광지를 찾았어요")
+                    // 있으면
+                    else {
+                        spots.forEach {
+                            setLabel(it)
+                        }
+                        setMarkerTouchEvent()
+                        showCustomSnackBar(requireContext(), binding.root, "주변 관광지를 찾았어요")
+                    }
+                } else {
+                    Log.d(TAG, "searchSpots Error: ${response.errorBody()?.string()}")
+                    showCustomSnackBar(requireContext(), binding.root, "검색 중 오류가 발생했습니다.")
                 }
-            } else {
-                Log.d(TAG, "searchSpots Error:  ${response.errorBody()?.string()}")
+            }.onFailure { e ->
+                Log.e(TAG, "Network error: ${e.message}")
+                showCustomSnackBar(requireContext(), binding.root, "잠시 후 다시 시도해 주세요.")
+            }.also {
+                mLoadingDialog.dismiss()
             }
-            mLoadingDialog.dismiss()
         }
     }
 
