@@ -100,6 +100,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
             map.setOnCameraMoveEndListener { _, cameraPosition, _ ->
                 centerPosition = cameraPosition.position
             }
+
+            setListeners()
         }
 
         @SuppressLint("MissingPermission")
@@ -141,6 +143,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.mapView
+        mapView.start(lifecycleCallback, kakaoMapReadyCallback)
 
         val window = requireActivity().window
         // 플래그를 추가하여 시스템 바(상태바 및 네비게이션 바)가 윈도우 배경을 그리도록 설정
@@ -158,9 +161,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate
 
         checkPermissions()
         checkLocationActivated()
-        setListeners()
-        mapView.start(lifecycleCallback, kakaoMapReadyCallback)
-
     }
 
     // Fragment가 사라질 때 상태바 원상복구
