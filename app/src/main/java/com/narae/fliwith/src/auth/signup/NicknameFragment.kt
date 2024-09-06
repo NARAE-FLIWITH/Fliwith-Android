@@ -61,14 +61,12 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding>(FragmentNicknameB
         }
 
         binding.etNickname.addTextChangedListener {
-            if (it != null) {
-                if (it.length > 8) {
-                    binding.btnNext.isEnabled = false
-                    binding.layoutNickname.error = "닉네임은 최대 8글자까지 가능합니다."
-                } else {
-                    binding.btnNext.isEnabled = true
-                    binding.layoutNickname.error = ""
-                }
+            binding.btnNext.isEnabled = !it.isNullOrBlank()
+
+            if (it != null && it.length > 8) {
+                binding.layoutNickname.error = "닉네임은 최대 8글자까지 가능합니다."
+            } else {
+                binding.layoutNickname.error = ""
             }
         }
     }
