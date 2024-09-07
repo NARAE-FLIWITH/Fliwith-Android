@@ -138,6 +138,26 @@ class ReviewViewModel : ViewModel() {
         }
     }
 
+    // review 신고
+    fun fetchBlockReview(reviewId: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    reviewService.blockReview(reviewId)
+                }
+                if(response.isSuccessful) {
+                    callback(true)
+                } else {
+                    Log.e(TAG, "Review Delete Response not successful")
+                    callback(false)
+                }
+            }catch (e:Exception) {
+                Log.e(TAG, "Review Block API call failed", e)
+                callback(false)
+            }
+        }
+    }
+
     // review 좋아요 & 좋아요 취소
     private val _reviewLikeStatus = MutableLiveData<Boolean?>()
     val reviewLikeStatus: LiveData<Boolean?>

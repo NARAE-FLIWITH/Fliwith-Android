@@ -55,6 +55,10 @@ public interface ReviewService {
     @GET("review")
     suspend fun spotName(@Query("spotName") spotName: String) : Response<ReviewSpotNameResponse>
 
+    // 리뷰 차단 (신고)
+    @POST("/review/block/{reviewId}")
+    suspend fun blockReview(@Path("reviewId") reviewId:Int):Response<ResponseDto>
+
 }
 
 object ReviewApi {
