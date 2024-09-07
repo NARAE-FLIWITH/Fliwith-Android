@@ -10,11 +10,12 @@
 
     <ImageView
         android:id="@+id/img_hello_login_home"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:adjustViewBounds="true"
         android:src="@drawable/hello_without_constraint"
+        android:paddingHorizontal="28dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_introduce"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
