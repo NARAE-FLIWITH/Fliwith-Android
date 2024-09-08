@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
+        android:paddingHorizontal="28dp"
         android:paddingTop="10dp"
-        android:paddingRight="20dp">
+        >
 
         <TextView
             android:layout_width="match_parent"
