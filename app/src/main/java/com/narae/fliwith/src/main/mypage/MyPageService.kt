@@ -26,11 +26,15 @@ interface MyPageService {
     @POST("user/change-password")
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<ResponseDto>
 
+    @POST("user/withdraw")
+    suspend fun resign() : Response<ResponseDto>
+
     @GET("review/list/like")
     suspend fun getLikeReviews(@Query("pageNo") pageNo: Int): Response<ReviewResponse>
 
     @GET("review/list/write")
     suspend fun getWriteReviews(@Query("pageNo") pageNo: Int): Response<ReviewResponse>
+
 
 }
 

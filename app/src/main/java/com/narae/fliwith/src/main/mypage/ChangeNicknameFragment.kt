@@ -34,17 +34,19 @@ class ChangeNicknameFragment :
         }
 
         binding.btnNext.setOnSingleClickListener {
-            lifecycleScope.launch {
-                val response = withContext(Dispatchers.IO) {
-                    myPageService.changeNickname(ChangeNicknameRequest(binding.etNickname.text.toString()))
-                }
-                if (response.isSuccessful) {
-                    navController.popBackStack()
-                    profileViewModel.nickname = binding.etNickname.text.toString()
-                    showCustomSnackBar(requireContext(), binding.root, "닉네임이 변경되었습니다")
-                } else {
-                    binding.btnNext.isEnabled = false
-                    binding.layoutNickname.error = "중복된 닉네임입니다."
+            if (networkUtil.isNetworkAvailable()) {
+                lifecycleScope.launch {
+                    val response = withContext(Dispatchers.IO) {
+                        myPageService.changeNickname(ChangeNicknameRequest(binding.etNickname.text.toString()))
+                    }
+                    if (response.isSuccessful) {
+                        navController.popBackStack()
+                        profileViewModel.nickname = binding.etNickname.text.toString()
+                        showCustomSnackBar(requireContext(), binding.root, "닉네임이 변경되었습니다")
+                    } else {
+                        binding.btnNext.isEnabled = false
+                        binding.layoutNickname.error = "중복된 닉네임입니다."
+                    }
                 }
             }
         }

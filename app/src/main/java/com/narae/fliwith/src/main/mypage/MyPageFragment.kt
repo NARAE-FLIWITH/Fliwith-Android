@@ -19,6 +19,7 @@ import com.narae.fliwith.src.main.mypage.MyPageApi.myPageService
 import com.narae.fliwith.src.main.mypage.models.Profile
 import com.narae.fliwith.src.main.review.models.ReviewViewModel
 import com.narae.fliwith.util.DISABILITY.*
+import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,27 +89,33 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
     }
 
     private fun setListeners() {
+        if (networkUtil.isNetworkAvailable().not())
+            return
+
         // 로그아웃
         binding.layoutLogout.setOnClickListener {
             lifecycleScope.launch {
                 val response = withContext(Dispatchers.IO) { myPageService.logout() }
-                // 카카오 로그아웃
-                if (AuthApiClient.instance.hasToken()) {
-                    UserApiClient.instance.logout { error ->
-                        if (error != null) {
-                            Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-                        } else {
-                            Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                if (response.isSuccessful) {
+                    // 카카오 로그아웃
+                    if (AuthApiClient.instance.hasToken()) {
+                        UserApiClient.instance.logout { error ->
+                            if (error != null) {
+                                Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                            } else {
+                                Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                            }
                         }
                     }
-                }
 
-                loginViewModel.logout()
-                val intent = Intent(requireContext(), AuthActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    loginViewModel.logout()
+                    val intent = Intent(requireContext(), AuthActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(intent)
+                } else {
+                    showCustomSnackBar(requireContext(), binding.root, "로그아웃에 실패했습니다.")
                 }
-                startActivity(intent)
-
             }
         }
 

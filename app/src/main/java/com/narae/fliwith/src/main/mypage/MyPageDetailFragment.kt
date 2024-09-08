@@ -4,8 +4,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -15,16 +18,20 @@ import com.kakao.sdk.user.UserApiClient
 import com.narae.fliwith.R
 import com.narae.fliwith.config.BaseFragment
 import com.narae.fliwith.databinding.DialogProfileGuideBinding
+import com.narae.fliwith.databinding.DialogRequestPermissionsBinding
+import com.narae.fliwith.databinding.DialogResignBinding
 import com.narae.fliwith.databinding.FragmentMyPageDetailBinding
 import com.narae.fliwith.src.auth.AuthActivity
 import com.narae.fliwith.src.main.LoginViewModel
 import com.narae.fliwith.src.main.mypage.models.Profile
 import com.narae.fliwith.util.DISABILITY
+import com.narae.fliwith.util.showCustomSnackBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 private const val TAG = "MyPageDetailFragment_싸피"
+
 class MyPageDetailFragment :
     BaseFragment<FragmentMyPageDetailBinding>(FragmentMyPageDetailBinding::inflate) {
     private val profileViewModel by activityViewModels<ProfileViewModel>()
@@ -67,27 +74,61 @@ class MyPageDetailFragment :
         }
 
         binding.layoutResign.setOnClickListener {
-            lifecycleScope.launch {
-                val response = withContext(Dispatchers.IO) { MyPageApi.myPageService.logout() }
-                // 카카오 로그아웃
-                if (AuthApiClient.instance.hasToken()) {
-                    UserApiClient.instance.logout { error ->
-                        if (error != null) {
-                            Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-                        } else {
-                            Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+            showResignDialog()
+        }
+    }
+
+    private fun showResignDialog() {
+        lateinit var dialog: AlertDialog
+        val dialogBinding =
+            DialogResignBinding.inflate(LayoutInflater.from(requireContext()))
+                .apply {
+                    btnCancel.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    btnResign.setOnClickListener {
+                        if (networkUtil.isNetworkAvailable()) {
+                            lifecycleScope.launch {
+                                val response =
+                                    withContext(Dispatchers.IO) { MyPageApi.myPageService.resign() }
+                                if (response.isSuccessful) {
+                                    // 카카오 로그아웃
+                                    if (AuthApiClient.instance.hasToken()) {
+                                        UserApiClient.instance.logout { error ->
+                                            if (error != null) {
+                                                Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                                            } else {
+                                                Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                                            }
+                                        }
+                                    }
+
+                                    loginViewModel.logout()
+                                    val intent =
+                                        Intent(requireContext(), AuthActivity::class.java).apply {
+                                            flags =
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        }
+                                    startActivity(intent)
+                                    showCustomSnackBar(
+                                        requireContext(),
+                                        binding.root,
+                                        "회원탈퇴 되었습니다."
+                                    )
+                                } else {
+                                    showCustomSnackBar(
+                                        requireContext(),
+                                        binding.root,
+                                        "회원탈퇴에 실패했습니다."
+                                    )
+                                }
+                            }
+                            dialog.dismiss()
                         }
                     }
                 }
-
-                loginViewModel.logout()
-                val intent = Intent(requireContext(), AuthActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(intent)
-
-            }
-        }
+        dialog = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).show()
+        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
     }
 
     private fun setProfile(profile: Profile) {

@@ -62,21 +62,23 @@ class ChangePasswordFragment :
         }
 
         binding.btnNext.setOnSingleClickListener {
-            lifecycleScope.launch {
-                val response = withContext(Dispatchers.IO) {
-                    myPageService.changePassword(
-                        ChangePasswordRequest(
-                            binding.etPwOld.text.toString(),
-                            binding.etPwNew.text.toString()
+            if (networkUtil.isNetworkAvailable()) {
+                lifecycleScope.launch {
+                    val response = withContext(Dispatchers.IO) {
+                        myPageService.changePassword(
+                            ChangePasswordRequest(
+                                binding.etPwOld.text.toString(),
+                                binding.etPwNew.text.toString()
+                            )
                         )
-                    )
-                }
+                    }
 
-                if (response.isSuccessful) {
-                    navController.popBackStack()
-                    showCustomSnackBar(requireContext(), binding.root, "비밀번호가 변경되었습니다.")
-                } else {
-                    binding.layoutPwOld.error = "비밀번호가 올바르지 않습니다."
+                    if (response.isSuccessful) {
+                        navController.popBackStack()
+                        showCustomSnackBar(requireContext(), binding.root, "비밀번호가 변경되었습니다.")
+                    } else {
+                        binding.layoutPwOld.error = "비밀번호가 올바르지 않습니다."
+                    }
                 }
             }
         }
