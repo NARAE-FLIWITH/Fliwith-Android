@@ -267,7 +267,14 @@ class ReviewDetailFragment :
         }
 
         binding.reviewReportTv.setOnClickListener {
-            showCustomSnackBar(requireContext(), binding.root, "해당 게시글을 성공적으로 신고했습니다. 🚨")
+            viewModel.fetchBlockReview(reviewId) { success ->
+                if (success) {
+                    showCustomSnackBar(requireContext(), binding.root, "해당 게시글을 성공적으로 신고했습니다. 🚨")
+                    navController.popBackStack()
+                } else {
+                    showCustomSnackBar(requireContext(), binding.root, "게시글 신고를 실패 했습니다. 🥲")
+                }
+            }
         }
 
         viewModel.setReviewLikeCount(response.likes.toString().toInt())
