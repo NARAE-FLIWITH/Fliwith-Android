@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".src.main.review.ReviewDetailFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/review_detail_back_icon"
+            android:layout_width="14dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/arrow" />
+
+        <View
+            android:id="@+id/review_detail_grey_view"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/review_detail_profile_image"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/profile_image" />
+
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/review_detail_user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:font="@font/pretendard_medium"
+                                android:fontWeight="600"
+                                android:text="유유"
+                                android:textSize="18dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/review_detail_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:font="@font/pretendard_medium"
+                                android:fontWeight="600"
+                                android:text="3시간전"
+                                android:textSize="12dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/grey"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    </View>
+
+                    <TextView
+                        android:id="@+id/review_report_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:font="@font/pretendard_medium"
+                        android:layout_gravity="center"
+                        android:fontWeight="600"
+                        android:text="신고하기"
+                        android:textColor="@color/grey"
+                        android:textSize="15dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/review_detail_menu_icon"
+                        android:layout_width="34dp"
+                        android:layout_height="44dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/review_detail_menu_icon" />
+
+                </LinearLayout>
+
+                <!-- viewPager2 이미지 슬라이더 -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/review_detail_image_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <!-- heart image -->
+                        <ImageView
+                            android:id="@+id/review_heart_image"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/heart_icon" />
+
+                        <ImageView
+                            android:id="@+id/review_heart_image_disable"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/disabled_heart_icon" />
+
+                        <!-- heart count -->
+                        <TextView
+                            android:id="@+id/review_heart_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:font="@font/pretendard_medium"
+                            android:fontWeight="600"
+                            android:text="18"
+                            android:textColor="@color/heartSolid"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+
+
+                    </LinearLayout>
+
+<!--                    <View-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="0dp">-->
+<!--                    </View>-->
+
+                    <LinearLayout
+                        android:id="@+id/review_detail_image_indicator"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:orientation="horizontal"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/review_detail_share_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/share_icon" />
+
+                </LinearLayout>
+
+                <View
+                    android:background="@color/grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp">
+                </View>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/review_detail_map_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/map_pin_icon" />
+
+                        <TextView
+                            android:id="@+id/review_detail_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:font="@font/pretendard_medium"
+                            android:fontWeight="600"
+                            android:text="낙상공원"
+                            android:layout_gravity="center"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/review_detail_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:font="@font/pretendard_medium"
+                        android:fontWeight="500"
+                        android:text="여기서 리뷰 보고 갔는데 자연 만끽하며 다니기 참 좋은 것 같아요! 추천합니다 :)"
+                        android:textSize="15dp"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

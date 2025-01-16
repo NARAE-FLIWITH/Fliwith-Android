@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    tools:background="@color/white"
+    tools:context=".src.auth.login.LoginHomeFragment">
+
+    <ImageView
+        android:id="@+id/img_hello_login_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/hello_without_constraint"
+        android:paddingHorizontal="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_introduce"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="102dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="@string/introduce"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/img_logo"
+        app:layout_constraintEnd_toEndOf="@id/img_hello_login_home"
+        app:layout_constraintStart_toStartOf="@id/img_hello_login_home"
+        app:layout_constraintTop_toBottomOf="@+id/img_hello_login_home"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="104dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo_lavender"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp_kakaotalk"
+        app:layout_constraintEnd_toEndOf="@id/img_hello_login_home"
+        app:layout_constraintStart_toStartOf="@id/img_hello_login_home"
+        app:layout_constraintTop_toBottomOf="@+id/tv_introduce"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <LinearLayout
+        android:id="@+id/btn_signUp_kakaotalk"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/btn_solid"
+        android:backgroundTint="@color/yellow"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp_email"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="16dp">
+
+        <ImageView
+            android:id="@+id/img_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/kakaotalk_bubble" />
+
+        <TextView
+            android:id="@+id/tv_continue_kakaotalk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/continue_kakaotalk"
+            android:textAppearance="@style/btnText"
+            android:textColor="@color/kakaoDark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_signUp_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_solid_outlined_grey"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signUp_kakaotalk"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="-15dp">
+
+        <ImageView
+            android:id="@+id/img_mail"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/mail" />
+
+        <TextView
+            android:id="@+id/tv_continue_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/continue_email"
+            android:textAppearance="@style/btnText"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_signUp_email">
+
+        <TextView
+            android:id="@+id/tv_already_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/already_signup"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/login_underline"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

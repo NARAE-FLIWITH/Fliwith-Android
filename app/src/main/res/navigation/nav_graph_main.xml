@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/menu_main_btm_nav_home">
+
+    <fragment
+        android:id="@+id/dateFragment"
+        android:name="com.narae.fliwith.src.main.recommend.DateFragment"
+        android:label="DateFragment" />
+    <fragment
+        android:id="@+id/disableFragment"
+        android:name="com.narae.fliwith.src.main.recommend.DisableFragment"
+        android:label="fragment_disable"
+        tools:layout="@layout/fragment_disable" />
+    <fragment
+        android:id="@+id/menu_main_btm_nav_home"
+        android:name="com.narae.fliwith.src.main.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_recommendFragment"
+            app:destination="@id/recommendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_main_btm_nav_map"
+        android:name="com.narae.fliwith.src.main.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_menu_main_btm_nav_map_to_recommendAIFragment"
+            app:destination="@id/recommendAIFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/memberFragment"
+        android:name="com.narae.fliwith.src.main.recommend.MemberFragment"
+        android:label="fragment_member"
+        tools:layout="@layout/fragment_member" />
+    <fragment
+        android:id="@+id/menu_main_btm_nav_my_page"
+        android:name="com.narae.fliwith.src.main.mypage.MyPageFragment"
+        android:label="fragment_my_page"
+        tools:layout="@layout/fragment_my_page" >
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_ILikeFragment"
+            app:destination="@id/ILikeFragment" />
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_IWriteFragment"
+            app:destination="@id/IWriteFragment" />
+        <action
+            android:id="@+id/action_menu_main_btm_nav_my_page_to_myPageDetailFragment"
+            app:destination="@id/myPageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RecommendFragment"
+        android:label="fragment_recommend"
+        tools:layout="@layout/fragment_recommend" >
+        <action
+            android:id="@+id/action_recommendFragment_to_recommendDetailFragment"
+            app:destination="@id/recommendDetailFragment" />
+        <action
+            android:id="@+id/action_recommendFragment_to_recommendSearchFragment"
+            app:destination="@id/recommendSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendDetailFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RecommendDetailFragment"
+        android:label="fragment_recommend_detail"
+        tools:layout="@layout/fragment_recommend_detail" />
+    <fragment
+        android:id="@+id/recommendSearchFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RecommendSearchFragment"
+        android:label="fragment_recommend_search"
+        tools:layout="@layout/fragment_recommend_search" >
+        <action
+            android:id="@+id/action_recommendSearchFragment_to_recommendAIFragment"
+            app:destination="@id/recommendAIFragment"
+            app:popUpTo="@id/menu_main_btm_nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/regionFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RegionFragment"
+        android:label="fragment_region"
+        tools:layout="@layout/fragment_region" />
+    <fragment
+        android:id="@+id/menu_main_btm_nav_review"
+        android:name="com.narae.fliwith.src.main.review.ReviewFragment"
+        android:label="fragment_review"
+        tools:layout="@layout/fragment_review" >
+        <action
+            android:id="@+id/action_reviewFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_reviewFragment_to_reviewWriteFragment"
+            app:destination="@id/reviewWriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.narae.fliwith.src.main.review.ReviewDetailFragment"
+        android:label="fragment_review_detail"
+        tools:layout="@layout/fragment_review_detail" >
+        <action
+            android:id="@+id/action_reviewDetailFragment_to_reviewWriteFragment"
+            app:destination="@id/reviewWriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewWriteFragment"
+        android:name="com.narae.fliwith.src.main.review.ReviewWriteFragment"
+        android:label="fragment_review_write"
+        tools:layout="@layout/fragment_review_write" >
+        <action
+            android:id="@+id/action_reviewWriteFragment_to_reviewSpotNameFragment"
+            app:destination="@id/reviewSpotNameFragment" />
+        <action
+            android:id="@+id/action_reviewWriteFragment_to_menu_main_btm_nav_review"
+            app:destination="@id/menu_main_btm_nav_review"
+            app:popUpTo="@id/menu_main_btm_nav_review"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/typeFragment"
+        android:name="com.narae.fliwith.src.main.recommend.TypeFragment"
+        android:label="fragment_type"
+        tools:layout="@layout/fragment_type" />
+    <fragment
+        android:id="@+id/recommendAIFragment"
+        android:name="com.narae.fliwith.src.main.recommend.RecommendAIFragment"
+        android:label="fragment_recommend_a_i"
+        tools:layout="@layout/fragment_recommend_a_i" >
+        <action
+            android:id="@+id/exit"
+            app:popUpTo="@id/recommendAIFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewSpotNameFragment"
+        android:name="com.narae.fliwith.src.main.review.ReviewSpotNameFragment"
+        android:label="fragment_review_spot_name"
+        tools:layout="@layout/fragment_review_spot_name" />
+    <fragment
+        android:id="@+id/ILikeFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ILikeFragment"
+        android:label="ILikeFragment" >
+        <action
+            android:id="@+id/action_ILikeFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IWriteFragment"
+        android:name="com.narae.fliwith.src.main.mypage.IWriteFragment"
+        android:label="IWriteFragment" >
+        <action
+            android:id="@+id/action_IWriteFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageDetailFragment"
+        android:name="com.narae.fliwith.src.main.mypage.MyPageDetailFragment"
+        android:label="fragment_my_page_detail"
+        tools:layout="@layout/fragment_my_page_detail" >
+        <action
+            android:id="@+id/action_myPageDetailFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_myPageDetailFragment_to_changeNicknameFragment"
+            app:destination="@id/changeNicknameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/changeNicknameFragment"
+        android:name="com.narae.fliwith.src.main.mypage.ChangeNicknameFragment"
+        android:label="fragment_change_nickname"
+        tools:layout="@layout/fragment_change_nickname" />
+    <action
+        android:id="@+id/action_global_reviewDetailFragment"
+        app:destination="@id/reviewDetailFragment" />
+</navigation>

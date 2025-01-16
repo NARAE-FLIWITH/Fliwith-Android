@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".src.main.recommend.RecommendAIFragment">
+
+    <ImageView
+        android:id="@+id/btn_back_map"
+        android:layout_width="14dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lavender"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@id/scrollView"
+        app:layout_constraintTop_toBottomOf="@id/btn_back_map"
+        >
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="13dp"
+            android:layout_height="23dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/arrow"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:text="이 여행지를 추천드려요!"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:id="@+id/ai_tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/btn_solid"
+                    android:backgroundTint="@color/btnChecked"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:text="@string/spot"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/ai_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="9dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="해운대 블루라인파크"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:id="@+id/ai_tv_usetime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="연중무휴"
+                    android:textColor="@color/lightBlue"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ai_tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="부산광역시"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/ai_img_thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/no_image"
+                        />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ai_layout_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/ai_tab_layout"
+                    style="@style/Widget.MaterialComponents.TabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/lightBlue"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabMaxWidth="0dp"
+                    app:tabSelectedTextAppearance="@style/btnText"
+                    app:tabSelectedTextColor="@color/lightBlue"
+                    app:tabTextAppearance="@style/btnText" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/ai_viewpager"
+                    android:background="@drawable/viewpager_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

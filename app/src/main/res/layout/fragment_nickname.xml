@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.narae.fliwith.src.auth.models.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        tools:background="@color/white"
+        tools:context=".src.auth.signup.NicknameFragment">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="14dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:src="@drawable/arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <ImageView
+            android:id="@+id/img_hello_go_trip"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/hello_go_trip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guide_line"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
+            android:text="@string/nickname"
+            android:textColor="@color/dark"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/img_hello_go_trip"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_nickname"
+            style="@style/textInputLayout"
+            android:layout_marginBottom="280dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_nickname"
+                style="@style/textInputEditText"
+                android:layout_height="60dp"
+                android:hint="@string/nickname"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:text="@{user.nickname}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/selector_btn_round"
+            android:enabled="false"
+            android:text="@string/next"
+            android:textAppearance="@style/btnText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

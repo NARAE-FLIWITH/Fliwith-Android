@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    tools:context=".src.main.mypage.ChangeNicknameFragment">
+
+    <LinearLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="15dp"
+        app:layout_constraintBaseline_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="3dp">
+
+            <TextView
+                android:id="@+id/tv_title_my"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="닉네임 변경"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="end"
+                android:src="@drawable/baseline_close_24" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:fontFamily="@font/pretendard_semibold"
+        android:padding="12dp"
+        android:text="닉네임"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_nickname"
+        style="@style/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_nickname">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_nickname"
+            style="@style/textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:fontFamily="@font/pretendard_regular"
+            android:hint="힌트"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/selector_btn_round"
+        android:enabled="false"
+        android:text="설정 완료"
+        android:textAppearance="@style/btnText"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/layout_nickname" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

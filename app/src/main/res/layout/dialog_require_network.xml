@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp">
+
+        <TextView
+            android:id="@+id/tv_network_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="1dp"
+            android:paddingBottom="15dp"
+            android:text="정상적인 서비스 이용을 위해 인터넷 연결이 필요합니다. 와이파이 또는 모바일 데이터를 활성화 해주세요"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/btn_outlined"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="취소"
+            android:textColor="@color/darkGrey"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_settings"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_network_guide" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_settings"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/btn_outlined"
+            android:backgroundTint="@color/lavender"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="설정하기"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel"
+            app:layout_constraintTop_toBottomOf="@id/tv_network_guide" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

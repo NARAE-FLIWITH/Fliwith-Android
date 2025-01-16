@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="textInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:textColorHint">@color/brightGrey</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="hintEnabled">false</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="errorTextAppearance">@style/helperTextAppearance</item>
+    </style>
+
+    <style name="textInputEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:background">@drawable/btn_outlined</item>
+        <item name="android:drawableStart">@drawable/transparent_icon</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="textInputEditTextSearch" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">34dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:background">@drawable/review_radius_spot_name_search</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="btnText" parent="TextAppearance.AppCompat">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="bigRadioBtn" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:layout_width">143dp</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FF020202</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:button">@android:color/transparent</item>
+    </style>
+
+    <style name="smallRadioBtn" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:layout_width">95dp</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FF020202</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:button">@android:color/transparent</item>
+    </style>
+
+    <style name="helperTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/lavender</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/violet</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@drawable/calender_date_selector</item>
+    </style>
+
+    <!-- Custom PopupMenu Style -->
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_menu_background</item>
+    </style>
+
+    <style name="UnderLineTextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxStrokeColor">@color/et_underline</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxStrokeErrorColor">@color/brightGrey</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="hintEnabled">false</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="errorTextAppearance">@style/helperTextAppearance</item>
+    </style>
+</resources>

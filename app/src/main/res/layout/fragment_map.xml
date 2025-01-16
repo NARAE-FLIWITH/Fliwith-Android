@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".src.main.map.MapFragment">
+
+    <com.kakao.vectormap.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/fab_search"
+        android:elevation="7dp"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="7dp"
+        app:layout_constraintEnd_toEndOf="@id/mapView"
+        app:layout_constraintStart_toStartOf="@+id/mapView"
+        app:layout_constraintTop_toTopOf="@+id/mapView">
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/search"
+            android:textColor="#FF6B6B6B"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/img_refresh"
+            android:layout_width="12dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_refresh_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_circle"
+        android:backgroundTint="#CCFFFFFF"
+        android:elevation="10dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/home_location"
+            app:tint="#FF6B6B6B" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
